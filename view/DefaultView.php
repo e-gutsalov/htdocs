@@ -2,17 +2,7 @@
 
 namespace view;
 
-use view\ViewPage;
-
-/*spl_autoload_register(
-	function ($class)
-	{
-		$class = str_replace("\\", "/", $class);
-		$class = explode('/', $class);
-		array_pop($class);
-		$class = implode('/', $class);
-		spl_autoload($class);
-	});*/
+use model\LoadContent;
 
 spl_autoload_register();
 
@@ -21,7 +11,7 @@ class DefaultView extends ViewPage
 	public $content;
 	protected $model;
 	
-	public function __construct($content)
+	public function __construct(LoadContent $content)
 	{
 		$this->content = $content;
 	}

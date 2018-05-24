@@ -2,22 +2,9 @@
 
 use controller\Controller;
 
-/*spl_autoload_register(
-	function ($class)
-	{
-		$class = str_replace("\\", "/", $class);
-		$class = explode('/', $class);
-		array_pop($class);
-		$class = implode('/', $class);
-		spl_autoload($class);
-	});*/
-
-//set_include_path($_SERVER['DOCUMENT_ROOT']);
 spl_autoload_register();
 
 session_start();
-
-mb_internal_encoding("UTF-8");
 
 $load_page = isset($_GET['load_page']) ? $_GET['load_page'] : FALSE;	// Загрузка каталога
 

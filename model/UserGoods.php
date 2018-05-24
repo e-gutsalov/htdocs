@@ -4,17 +4,7 @@
 
 namespace model;
 
-//use  model\ViewGoods;
-
-/*spl_autoload_register(
-    function ($class)
-    {
-        $class = str_replace("\\", "/", $class);
-        $class = explode('/', $class);
-        array_pop($class);
-        $class = implode('/', $class);
-        spl_autoload($class);
-    });*/
+use \Exception;
 
 spl_autoload_register();
 
@@ -22,25 +12,35 @@ class UserGoods extends ViewGoods
 {
 	public function __construct($article)
 	{
+        parent::__construct($article);
 		$this->article = $article;
-		$this->action = '../view/Zakaz.php';
+		$this->action = '../view/Order.php';
 	}
 	public function Query()
 	{
-		$query = "SELECT * FROM `goods` WHERE `id_goods`=$this->article";
-		if ($result = $this->db->query($query)) {
-			while ($pole = $result->fetch_object()) {
-				$this->article = $pole->id_goods;
-				$this->img = $pole->images_path;
-				$this->sum = $pole->sum;
-				$this->text = $pole->text;
-				$this->Displey();
-			}
-			$result->close();
-		}
-		$this->db->close();
+	    try
+        {
+            $this->ConnectDB();
+            $query = "SELECT * FROM `goods` WHERE `id_goods`=$this->article";
+            if ($result = $this->db->query($query)) {
+                while ($pole = $result->fetch_object()) {
+                    $this->article = $pole->id_goods;
+                    $this->img = $pole->images_path;
+                    $this->sum = $pole->sum;
+                    $this->text = $pole->text;
+                    $this->Display();
+                }
+                $result->close();
+            }
+            $this->db->close();
+        }
+        catch (Exception $exception)
+        {
+            echo $exception->getMessage();
+        }
 	}
-	public function Displey()
+
+	public function Display()
 	{
 ?>
 	<div class="columns">

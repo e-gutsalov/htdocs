@@ -4,15 +4,19 @@
 
 namespace model;
 
+use \mysqli;
+use \Exception;
+
 class ViewGoods
 {
-	protected $load_page;
-	protected $article;
-	protected $action;
-	protected $img;
-	protected $sum;
-	protected $text;
-	protected $db;
+	protected
+        $load_page,
+        $article,
+        $action,
+        $img,
+        $sum,
+        $text,
+        $db;
 	
 	public function __construct($load_page)
 	{
@@ -20,31 +24,42 @@ class ViewGoods
 		$this->action = 'Index.php';
 	}
 	
-	public function ConnectDB($host, $user, $pass)
+	public function ConnectDB()
 	{
-		@ $this->db = new \mysqli($host, $user, $pass); //Подключение к базе
+		@ $this->db = new mysqli(Constant::DBHOST, Constant::DBUSER, Constant::DBPASS); // Connect DataBase
 		if (!$this->db->connect_errno) {
 			$this->db->set_charset('utf8mb4');
 			$this->db->select_db("base_betaphase");
+			return $this->db;
 		} else {
-			throw new Exception('<span style="color: red"><b>В данный момент каталог с товарами недоступен. Повторите попытку позже!</b></span><br>');
+            throw new Exception('<span style="color: red"><b>В данный момент каталог с товарами недоступен. Повторите попытку позже!</b></span><br>');
 	  		}
 	}
 	
 	public function Query()
 	{
-		$query = "SELECT * FROM `goods` WHERE `category`='$this->load_page' ORDER BY `id_goods` ASC";
-		if ($result = $this->db->query($query)) {
-			while ($row = $result->fetch_object()) {
-				$this->article = $row->id_goods;
-				$this->img = $row->images_path;
-				$this->sum = $row->sum;
-				$this->text = $row->text;
-				$this->Display();
-			}
-			$result->close();
-		}
-		$this->db->close();
+	    try
+        {
+            $this->db = $this->ConnectDB();
+            $query = "SELECT * FROM `goods` WHERE `category`='$this->load_page' ORDER BY `id_goods` ASC";
+            if ($result = $this->db->query($query))
+            {
+                while ($row = $result->fetch_object())
+                {
+                    $this->article = $row->id_goods;
+                    $this->img = $row->images_path;
+                    $this->sum = $row->sum;
+                    $this->text = $row->text;
+                    $this->Display();
+                }
+                $result->close();
+            }
+            $this->db->close();
+        }
+        catch (Exception $exception)
+        {
+            echo $exception->getMessage();
+        }
 	}
 	
 	public function Display()

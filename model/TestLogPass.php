@@ -4,19 +4,24 @@
 
 namespace model;
 
+use \mysqli;
+use \Exception;
+
 class TestLogPass
 {
-	protected $login;
-	protected $passw;
-	protected $db;
-	public function __construct($login, $passw)
+	protected
+        $login,
+        $pass,
+        $db;
+
+	public function __construct($login, $pass)
 	{
 		$this->login = $login;
-		$this->passw = $passw;
+		$this->pass = $pass;
 	}
-	public function ConnectDB($host, $user, $pass) // Подключение к базе
+	public function ConnectDB() // Подключение к базе
 	{
-		@ $this->db = new \mysqli($host, $user, $pass);
+		@ $this->db = new mysqli(Constant::DBHOST, Constant::DBUSER, Constant::DBPASS);
 		if (!$this->db->connect_errno) {
 			$this->db->set_charset('utf8mb4');
 			$this->db->select_db("base_betaphase");
@@ -26,23 +31,24 @@ class TestLogPass
 	}
 	public function Query() // Запрос в базу
 	{
+	    $this->ConnectDB();
 		$this->login = $this->db->real_escape_string($this->login);
 		$query = "SELECT `user_password` FROM `users` WHERE `user_login`='$this->login'";
 		if ($result = $this->db->query($query)) {
-			if ($passw = $result->fetch_object()) {
-				if ($this->passw == $passw->user_password) {
+			if ($password = $result->fetch_object()) {
+				if ($this->pass == $password->user_password) {
 					$result->close();
 					$this->db->close();
-					return(TRUE);
+					return TRUE;
 				} else {
 					$result->close();
 					$this->db->close();
-					return(FALSE);
-					}		
+					return FALSE;
+					}
 			} else {
 				$result->close();
 				$this->db->close();
-				return(FALSE);
+				return FALSE;
 			}
 		}
 	}

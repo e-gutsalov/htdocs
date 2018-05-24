@@ -2,28 +2,15 @@
 
 namespace model;
 
-use Constant;
-use TestLogPass;
-use TestEmail;
-//use model\RegLk;
-
-/*spl_autoload_register(
-    function ($class)
-    {
-        $class = str_replace("\\", "/", $class);
-        $class = explode('/', $class);
-        array_pop($class);
-        $class = implode('/', $class);
-        spl_autoload($class);
-    }
-);*/
+use \Exception;
 
 spl_autoload_register();
 
 class Authorization
 {
-	public $msg = '<span style="color: green"><b>Для входа необходимо ввести E-Mail и пароль!</b></span><br>';
-	public $msg_reg = '<span style="color: green"><b>Для регистрации введите E-Mail и пароль!</b></span><br>';
+	public
+        $msg = '<span style="color: green"><b>Для входа необходимо ввести E-Mail и пароль!</b></span><br>',
+        $msg_reg = '<span style="color: green"><b>Для регистрации введите E-Mail и пароль!</b></span><br>';
 	
 	public function Auth()
 	{
@@ -33,13 +20,12 @@ class Authorization
 				$login = $_POST['login'];
 				$pass = $_POST['passw'] = md5($_POST['passw']);
 				$LogPass = new TestLogPass($login, $pass);
-				$LogPass->ConnectDB(Constant::DBHOST, Constant::DBUSER, Constant::DBPASS);
 				if ($LogPass->Query()) {
 					if ($_SESSION['cap_code'] == $_POST['captchacode']) {
 						$_SESSION['sess_login'] = $_POST['login'];
 						$_SESSION['sess_passw'] = $_POST['passw'];
 						unset($LogPass);
-						return(TRUE);
+						return TRUE;
 					} else	{
 						$this->msg = '<span style="color: red"><b>Введен неверный код</b></span><br>';
 					}

@@ -4,8 +4,9 @@ namespace model;
 
 class TestEmail
 {
-	protected $email;
-	protected $pattern;
+	protected
+        $email,
+        $pattern;
 	
 	public function __construct($email)
 	{

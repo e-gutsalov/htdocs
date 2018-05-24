@@ -4,23 +4,17 @@ namespace view;
 
 class ViewPage
 {
-	public $content;
-	
-	public function __construct()
-	{
 
-	}
-	
 	public function Display()
 	{
-		echo($this->Header());
-		echo($this->Nav());
-		echo($this->Body());
-		echo($this->Footer());
+		$this->Header();
+		$this->Nav();
+		$this->Body();
+		$this->Footer();
 	}
-	
+
 	public function Header()
-	{ 
+	{
 ?>
 		<!doctype html>
 		<html>
@@ -37,7 +31,7 @@ class ViewPage
 		</head>
 <?php
 	}
-	
+
 	public function Nav()
 	{
 ?>
@@ -107,7 +101,7 @@ class ViewPage
 	    <p class="social_icon"><img src="../images/SocSety/insta.jpeg" width="100" alt="" class="thumbnail_0"/></p>
 	  </div>
 	  <footer class="secondary_header footer">
-	    <div class="copyright">&copy;2018 - <strong>BETAPHASE</strong></div><div align="center"><img src="../model/att_count.php"/></div>
+	    <div class="copyright">&copy;2018 - <strong>BETAPHASE</strong></div><div align="center"><img src="../model/AttCount.php"/></div>
 	  </footer>
 	</div>
 	</body>
