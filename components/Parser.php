@@ -28,13 +28,13 @@ class Parser
 
         $xpath = new \DOMXpath( $html );
         //$elementsDom = $xpath->query( '//*[@class="layout__col i-bem layout__col_search-results_normal"]' );
-        $elementsDom = $xpath->query( '//*[@class="n-snippet-card2 i-bem b-zone b-spy-visible"]' );
+        $elementsDom = $xpath->query( '//*[@class="n-filter-applied-results__content preloadable"]' );
 
         /*foreach ( $elementsDom as $value )
         {
             var_dump( $value );
-        }
-        //var_dump( $elementsDom->item(0)->attributes->item(3) );*/
+        }*/
+        //var_dump( $elementsDom->item(0)->attributes->item(3) );
 
         $elements = '';
         for ( $i = 0; $i < $elementsDom->length; $i++ )
