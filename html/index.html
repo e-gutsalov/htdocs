@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta http-equiv="Content-Type" content="text/html" charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link type="text/css" href="/css/bootstrap.css" rel="stylesheet">
+    <link type="text/css" href="/css/bootstrap-theme.css" rel="stylesheet">
+    <link type="text/css" href="/css/style.css" rel="stylesheet">
+    <script type="text/javascript" src="/js/jquery-3.3.1.js"></script>
+    <script type="text/javascript" src="/js/bootstrap.js"></script>
+    <script type="text/javascript" src="/js/chart.js"></script>
+    <title>Wanna Buy</title>
+</head>
+<body>
+
+    <header>
+        <nav class="navbar navbar-default">
+            <div class="container-fluid">
+                <div class="navbar-header">
+                    <a class="navbar-brand" href="#">
+                        <img alt="Wanna Buy" src="../icons/icons8-shopping-cart-filled-24.png">
+                    </a>
+                </div>
+                <div class="container">
+                    <ul class="nav navbar-nav">
+                        <li class="active"><a href="#">Главная<span class="sr-only">(current)</span></a></li>
+                        <li class=""><a href="search.html">Поиск</a></li>
+                        <li><a href="#">Документация</a></li>
+                        <li><a href="download.html">Загрузка</a></li>
+                        <li><a href="#">О нас</a></li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <div class="jumbotron">
+        <div class="container">
+            <p>WannaBuy инновационный сервис для поиска и покупки товаров по самой низкой цене</p>
+            <p>
+                <a class="btn btn-primary btn-lg" href="#" role="button">Узнать о проекте
+                    <span class="glyphicon glyphicon-info-sign" aria-hidden="true"> </span>
+                </a>
+            </p>
+        </div>
+    </div>
+
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-2">
+                <div class="list-group">
+                    <a href="#" class="list-group-item">Dapibus ac facilisis in<div class="switch-btn"></div></a>
+                    <button type="button" class="list-group-item">Телевизор Samsung</button>
+                    <button type="button" class="list-group-item">Телевизор LG</button>
+                    <button type="button" class="list-group-item">Телевизор Sony</button>
+                    <button type="button" class="list-group-item">Телевизор Philips</button>
+                    <button type="button" class="list-group-item">Телевизор Panasonic</button>
+                </div>
+            </div>
+            <div class="col-md-8">
+                <canvas id="canvas" style="width:60vw; height:50vh"> </canvas>
+            </div>
+        </div>
+    </div>
+    <br>
+    <footer>
+        <div class="container">
+            <p>&copy; 2019 Company, Inc.</p>
+        </div>
+    </footer>
+
+    <script>
+
+        let data = {
+            labels: ['21.01.19', "22.01.19", "23.01.19", "24.01.19", "25.01.19", "26.01.19", "27.01.19"],
+            datasets: [
+                {
+                    label: "LG",
+                    backgroundColor: 'rgb(255, 99, 132)',
+                    borderColor: 'rgb(255, 99, 132)',
+                    data: [100, 150, 500, 200, 250, 300, 450],
+                    "fill":false
+                },
+                {
+                    label: "Samsung",
+                    backgroundColor: 'rgb(192, 192, 192)',
+                    borderColor: 'rgb(192, 192, 192)',
+                    data: [1000, 200, 250, 300, 250, 300, 450],
+                    "fill":false
+                }
+            ]
+        };
+
+        $(function() {
+            new Chart($("#canvas"), {
+                type: 'line',
+                data: data,
+                options: {
+                    responsive: true,
+                    title: {
+                        display: true,
+                        text: 'Димамика изменения цены'
+                    }
+                }
+            })
+        });
+
+        $('.switch-btn').click(function(){
+            $(this).toggleClass('switch-on');
+        });
+
+    </script>
+
+</body>
+</html>

@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta http-equiv="Content-Type" content="text/html" charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link type="text/css" href="../css/bootstrap.css" rel="stylesheet">
+    <link type="text/css" href="../css/bootstrap-theme.css" rel="stylesheet">
+    <link type="text/css" href="../css/style.css" rel="stylesheet">
+    <script type="text/javascript" src="../js/jquery-3.3.1.js"></script>
+    <script type="text/javascript" src="../js/bootstrap.js"></script>
+    <title>Wanna Buy</title>
+</head>
+<body>
+
+<header>
+    <nav class="navbar navbar-default">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <a class="navbar-brand" href="#">
+                    <img alt="Wanna Buy" src="...">
+                </a>
+            </div>
+            <div class="container">
+                <ul class="nav navbar-nav">
+                    <li ><a href="index.html">Главная</a></li>
+                    <li ><a href="#">Поиск</a></li>
+                    <li><a href="#">Документация</a></li>
+                    <li><a href="download.html">Загрузка</a></li>
+                    <li class="active"><a href="#">О нас<span class="sr-only">(current)</span></a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+</header>
+
+<div class="page-header">
+    <h1>Example page header <small>Subtext for header</small></h1>
+</div>
+
+<div class="container">
+    <div class="row">
+
+        <form>
+            <div class="form-group">
+                <label for="InputName">Введите имя</label>
+                <input type="text" class="form-control" id="InputName" name="InputName" placeholder="Имя" >
+            </div>
+            <div class="form-group">
+                <label for="InputEmail">Электронная почта</label>
+                <input type="email" class="form-control" id="InputEmail" name="InputEmail" placeholder="Электронная почта">
+            </div>
+            <div class="form-group">
+                <label for="InputText">Текст вашего обращения</label>
+                <textarea class="form-control" rows="3" id="InputText" name="InputText" placeholder="Введите текст"></textarea>
+            </div>
+           <button type="submit" class="btn btn-default">Отправить</button>
+        </form>
+
+        <div id="results"></div>
+
+    </div>
+</div>
+
+<br>
+
+<footer>
+    <div class="container">
+        <p>&copy; 2019 Wanna Buy.</p>
+    </div>
+</footer>
+
+<script>
+
+    $(document).ready(function() {
+
+        $('form').submit(function (event) {
+            event.preventDefault();
+
+           $(this).find('.form-control').each(function () {
+               if ($(this).val().length < 1){
+                   $(this).closest('.form-group').addClass('has-error');
+               }
+            });
+
+            let form = $('form').serialize();
+            $.ajax({
+                type: 'GET',
+                url: 'components/SendMail.php',
+                data: form,
+                success: function (data) {
+                    $('#results').html(data);
+                },
+                error: function (xhr, str) {
+                    alert('Возникла ошибка: ' + xhr.responseCode);
+                }
+            });
+
+        });
+
+    });
+
+</script>
+
+</body>
+</html>

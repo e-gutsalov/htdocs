@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>CSS - Переключатель с использованием JavaScript</title>
+    <style>
+        .switch-btn {
+            display: inline-block;
+            width: 52px; /* ширина */
+            height: 28px; /* высота */
+            border-radius: 19px; /* радиус скругления */
+            background: #bfbfbf; /* цвет фона */
+            z-index: 0;
+            margin: 0;
+            padding: 0;
+            border: none;
+            cursor: pointer;
+            position: relative;
+            transition-duration: 300ms; /* анимация */
+        }
+        .switch-btn::after {
+            content: "";
+            height: 22px; /* высота кнопки */
+            width: 22px; /* ширина кнопки */
+            border-radius: 17px;
+            background: #fff; /* цвет кнопки */
+            top: 3px; /* положение кнопки по вертикали относительно основы */
+            left: 3px; /* положение кнопки по горизонтали относительно основы */
+            transition-duration: 300ms; /* анимация */
+            position: absolute;
+            z-index: 1;
+        }
+        .switch-on {
+            background: #118c4e;
+        }
+        .switch-on::after {
+            left: 27px;
+        }
+    </style>
+
+</head>
+<body>
+
+<div style="text-align: center;">
+
+    <div class="switch-btn"></div>
+
+    <br><br><br>
+
+    <div class="switch-btn switch-on"></div>
+
+</div>
+
+
+<!-- jQuery -->
+<script type="text/javascript" src="../../js/jquery-3.3.1.js"></script>
+
+<script>
+    $('.switch-btn').click(function(){
+        $(this).toggleClass('switch-on');
+    });
+</script>
+
+</body>
+</html>
