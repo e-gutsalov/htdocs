@@ -27,9 +27,10 @@ class Render
         foreach ($this->param as $key => $value)
         {
             if (is_string($value) or is_int($value)){
-                $this->output = str_replace('{'.$key.'}', $value, $this->page);
+                $this->page = str_replace('{'.$key.'}', $value, $this->page);
             }
         }
+        $this->output = $this->page;
     }
 
     public function clear()

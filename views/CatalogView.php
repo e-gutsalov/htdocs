@@ -2,8 +2,8 @@
 /**
  * Created by PhpStorm.
  * User: egutsalov
- * Date: 11-Mar-19
- * Time: 20:01
+ * Date: 18-Nov-19
+ * Time: 20:20
  */
 
 namespace views;
@@ -11,7 +11,7 @@ namespace views;
 use components\Buffer;
 use components\Render;
 
-class ChartView
+class CatalogView
 {
     public static function getView($filename, $param)
     {

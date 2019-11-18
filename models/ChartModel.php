@@ -8,7 +8,6 @@
 
 namespace models;
 
-
 class ChartModel
 {
     public static $title = 'График';

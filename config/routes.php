@@ -16,5 +16,6 @@ return
     'screens' => 'about/about',
     'news/([0-9]+)' => 'news/view/$1',
     'news' => 'news/index',
+    'catalog' => 'catalog/catalog',
     'products' => 'product/list'
 ];
