@@ -8,20 +8,20 @@
 
 namespace controllers;
 
-use models\News;
+use models\NewsModel;
 
 spl_autoload_register();
 
 class NewsController
 {
     public
-        $menuItem = 'News';
+        $menuItem = 'NewsModel';
 
     public function actionIndex()
     {
         echo '<br> Список новостей NewsController';
-        News::getNewsList();
-        News::view($this->menuItem);
+        NewsModel::getNewsList();
+        NewsModel::view($this->menuItem);
 
     }
 

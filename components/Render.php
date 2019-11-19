@@ -8,8 +8,6 @@
 
 namespace components;
 
-//use views\MainView;
-
 class Render
 {
     private $page;

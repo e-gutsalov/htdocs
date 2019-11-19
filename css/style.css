@@ -33,3 +33,7 @@
 .switch-on::after {
     left: 27px;
 }
+
+body {
+    padding-top: 70px;
+}
