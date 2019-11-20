@@ -17,6 +17,7 @@ class CatalogController
     {
         $filename = CatalogModel::getCatalog();
         $param = CatalogModel::getParam();
-        CatalogView::getView($filename, $param);
+        $out = CatalogModel::getCategory();
+        CatalogView::getView($filename, $param, $out);
     }
 }
