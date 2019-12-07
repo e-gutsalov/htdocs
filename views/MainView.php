@@ -8,17 +8,17 @@
 
 namespace views;
 
-
 use components\Buffer;
 use components\Render;
 
 class MainView
 {
-    public static function getView($filename, $param)
+    public static function getView( $filename, $param )
     {
-        $buffer = new Buffer($filename);
-        $page = $buffer->view();
-        $render = new Render($page, $param);
+        $buffer = new Buffer( $filename );
+        $pages = $buffer->view();
+        $render = new Render( $pages, $param );
+        $render->parseMenu();
         $render->show();
     }
 }

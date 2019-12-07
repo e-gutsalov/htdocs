@@ -8,7 +8,6 @@
 
 namespace controllers;
 
-
 use models\MainModel;
 use views\MainView;
 
@@ -16,8 +15,8 @@ class MainController
 {
     public function actionMain()
     {
-        $filename = MainModel::getMain();
+        $filename = MainModel::getCatalog();
         $param = MainModel::getParam();
-        MainView::getView($filename, $param);
+        MainView::getView( $filename, $param );
     }
 }

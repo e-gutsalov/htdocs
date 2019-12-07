@@ -12,35 +12,49 @@ use components\Db;
 
 class CatalogModel
 {
-    public static $title = 'Каталог';
-    public static $cat = 'catalog';
-    public static $result;
-    public static $status = 1;
+    private static string $title = 'Каталог';
+    private static string $cat = 'catalog';
+    private static array $filename;
+    private static array $param;
+    private static array $categoriesList;
+    private static int $status = 1;
 
     public static function getCatalog()
     {
-        return $filename = ['head', 'nav', 'catalog', 'footer'];
+        return self::$filename = ['head', 'nav', 'catalog', 'catalog_menu', 'product', 'footer'];
     }
 
     public static function getParam()
     {
-        return $param = ['catalog' => 'active', 'script' => 'wb-chart'];
+        self::getCategoriesList();
+
+        return self::$param =
+            [
+                'categoriesList' => self::$categoriesList,
+                'catalog_menu' => ['page' => 'catalog_menu', 'strButton' => 6],
+                'catalog' => 'active',
+                'script' => 'wb'
+            ];
     }
 
-    public static function getCategory()
+    /**
+     * @return mixed
+     */
+
+    public static function getCategoriesList()
     {
         $db = Db::getConnection();
-        $query = 'SELECT * FROM category WHERE status = :status';
+        $query = 'SELECT id, name FROM category WHERE status = :status ORDER BY category ASC';
         $stmt = $db->prepare( $query );
-        $stmt->bindParam(':status', self::$status );
+        $stmt->bindParam( ':status', self::$status );
         $stmt->execute();
-        if ( $stmt->rowCount() > 1)
+        if ( $stmt->rowCount() > 1 )
         {
             while ( $row = $stmt->fetch() )
             {
-                self::$result[] = $row;
+                self::$categoriesList[] = $row;
             }
-            return self::$result;
+            return self::$categoriesList;
         }
         return false;
     }

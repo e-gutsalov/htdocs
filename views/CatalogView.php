@@ -13,12 +13,12 @@ use components\Render;
 
 class CatalogView
 {
-    public static function getView($filename, $param, $out)
+    public static function getView( $filename, $param )
     {
-        $buffer = new Buffer($filename);
-        $page = $buffer->view();
-        $render = new Render($page, $param);
+        $buffer = new Buffer( $filename );
+        $pages = $buffer->view();
+        $render = new Render( $pages, $param );
+        $render->parseMenu();
         $render->show();
-        print_r($out);
     }
 }
