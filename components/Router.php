@@ -12,8 +12,8 @@ use Exception;
 
 class Router
 {
-    private $routes,
-            $uri;
+    private array $routes;
+    private string $uri;
 
     public function __construct()
     {
@@ -27,8 +27,8 @@ class Router
      */
     private function getURI ()
     {
-        if (!empty($_SERVER['REQUEST_URI'])) {
-            $this->uri = trim($_SERVER['REQUEST_URI'], '/');
+        if ( !empty( $_SERVER['REQUEST_URI'] ) ) {
+            $this->uri = trim( $_SERVER['REQUEST_URI'], '/' );
         }
         return $this->uri;
     }
@@ -37,22 +37,22 @@ class Router
     {
         $uri = $this->getURI();
 
-        foreach ($this->routes as $uriPattern => $path) {
-            if (preg_match("#^$uriPattern$#", $uri)) {
-                $internalRoute = preg_replace("#$uriPattern#", $path, $uri);
-                $segments = explode('/', $internalRoute);
-                $controllerName = 'controllers\\' . ucfirst(array_shift($segments) . 'Controller');
-                $actionName = 'action' . ucfirst(array_shift($segments));
+        foreach ( $this->routes as $uriPattern => $path ) {
+            if ( preg_match( "#^$uriPattern$#", $uri ) ) {
+                $internalRoute = preg_replace( "#$uriPattern#", $path, $uri );
+                $segments = explode( '/', $internalRoute );
+                $controllerName = 'controllers\\' . ucfirst( array_shift($segments) . 'Controller' );
+                $actionName = 'action' . ucfirst( array_shift( $segments ) );
 
                 try {
                     $controllerObject = new $controllerName;
-                } catch (Exception $e) {
+                } catch ( Exception $e ) {
                     echo $e->getMessage(), '\n';
                 }
 
-                $result = call_user_func_array(array($controllerObject, $actionName), $segments);
+                $result = call_user_func_array( array( $controllerObject, $actionName ), $segments );
 
-                if ($result) {
+                if ( $result ) {
                     break;
                 }
             }

@@ -17,5 +17,7 @@ return
     'news/([0-9]+)' => 'news/view/$1',
     'news' => 'news/index',
     'catalog' => 'catalog/catalog',
-    'products' => 'product/list'
+    'category/([0-9]+)' => 'catalog/category/$1',
+    'product' => 'product/product',
+    'product/([0-9]+)' => 'product/product/$1'
 ];

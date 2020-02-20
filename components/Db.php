@@ -26,7 +26,7 @@ class Db
     }
 */
 
-    private static $db;
+    private static object $db;
 
     public function __construct() {}
     public function __clone() {}

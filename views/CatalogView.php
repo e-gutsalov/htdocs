@@ -19,6 +19,7 @@ class CatalogView
         $pages = $buffer->view();
         $render = new Render( $pages, $param );
         $render->parseMenu();
+        $render->parseProduct();
         $render->show();
     }
 }

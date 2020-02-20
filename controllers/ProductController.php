@@ -8,10 +8,18 @@
 
 namespace controllers;
 
+use models\ProductModel;
+use views\ProductView;
+
 class ProductController
 {
-    public function actionList()
+
+    public function actionProduct( $id = NULL )
     {
-        echo 'ProductController';
+        $filename = ProductModel::getProductPage();
+        ProductModel::getProductDetails( $id );
+        $param = ProductModel::getParam();
+        ProductView::getView( $filename, $param );
     }
+
 }

@@ -15,7 +15,9 @@ class MainController
 {
     public function actionMain()
     {
-        $filename = MainModel::getCatalog();
+        $filename = MainModel::getMainPage();
+        MainModel::getCategoriesList();
+        MainModel::getLatestProducts();
         $param = MainModel::getParam();
         MainView::getView( $filename, $param );
     }

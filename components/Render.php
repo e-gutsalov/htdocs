@@ -15,7 +15,8 @@ class Render
     private array $param;
     private string $output = '';
     private string $item;
-    private string $items = '';
+    private string $itemsMenu = '';
+    private string $itemsProducts = '';
 
     public function __construct( array $pages, array $param )
     {
@@ -25,34 +26,83 @@ class Render
 
     public function parseMenu()
     {
-        $this->page = $this->pages[$this->param['catalog_menu']['page']];
+        $this->page = $this->pages[$this->param['page']['catalog_menu']];
         $button = explode(PHP_EOL, $this->page );
 
-        if ( is_array( $this->param['categoriesList'] ) )
+        if ( $this->param['categoriesList'][0] )
         {
             foreach ( $this->param['categoriesList'] as $key => $value )
             {
                 if ( is_object( $value ) )
                 {
-                    $this->item = $button[$this->param['catalog_menu']['strButton']];
+                    $this->item = $button[$this->param['page']['strButton']];
                     foreach ( $value as $objKey => $objValue )
                     {
                         $this->item = str_replace('{' . $objKey . '}', $objValue, $this->item );
                     }
                 }
-                $this->items .= $this->item;
+                $this->itemsMenu .= $this->item;
             }
-
-            $button[$this->param['catalog_menu']['strButton']] = $this->items;
-            $this->page = implode( $button );
-            $this->pages[$this->param['catalog_menu']['page']] = $this->page;
-
         }
         else
         {
-            $this->pages[$this->param['catalog_menu']['page']] = 'Каталог сейчас недоступен!';
+            $this->itemsMenu = $button[$this->param['page']['strButton']];
         }
+        $button[$this->param['page']['strButton']] = $this->itemsMenu;
+        $this->page = implode( $button );
+        $this->pages[$this->param['page']['catalog_menu']] = $this->page;
+    }
 
+    public function parseProduct()
+    {
+        $this->page = $this->pages[$this->param['page']['product']];
+
+        if ( $this->param['latestProducts'][0] )
+        {
+            foreach ( $this->param['latestProducts'] as $key => $value )
+            {
+                if ( is_object( $value ) )
+                {
+                    $this->item = $this->page;
+                    foreach ( $value as $objKey => $objValue )
+                    {
+                        $this->item = str_replace('{' . $objKey . '}', $objValue, $this->item );
+                    }
+                }
+                $this->itemsProducts .= $this->item;
+            }
+        }
+        /*else
+        {
+            //$this->items = $button[$this->param['catalog_menu']['strButton']];
+        }*/
+        $this->pages[$this->param['page']['product']] = $this->itemsProducts;
+    }
+
+    public function parseProductDetails()
+    {
+        $this->page = $this->pages[$this->param['product_details']['page']];
+
+        if ( $this->param['productDetails'][0] )
+        {
+            foreach ( $this->param['productDetails'] as $key => $value )
+            {
+                if ( is_object( $value ) )
+                {
+                    $this->item = $this->page;
+                    foreach ( $value as $objKey => $objValue )
+                    {
+                        $this->item = str_replace('{' . $objKey . '}', $objValue, $this->item );
+                    }
+                }
+                $this->itemsProducts .= $this->item;
+            }
+        }
+        /*else
+        {
+            //$this->items = $button[$this->param['catalog_menu']['strButton']];
+        }*/
+        $this->pages[$this->param['product_details']['page']] = $this->itemsProducts;
     }
 
     public function parse()

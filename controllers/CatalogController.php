@@ -15,7 +15,18 @@ class CatalogController
 {
     public function actionCatalog()
     {
-        $filename = CatalogModel::getCatalog();
+        $filename = CatalogModel::getCatalogPage();
+        CatalogModel::getCategoriesList();
+        CatalogModel::getLatestProducts();
+        $param = CatalogModel::getParam();
+        CatalogView::getView( $filename, $param );
+    }
+
+    public function actionCategory( $category = NULL )
+    {
+        $filename = CatalogModel::getCatalogPage();
+        CatalogModel::getCategoriesList();
+        CatalogModel::getProductsByCategory( $category );
         $param = CatalogModel::getParam();
         CatalogView::getView( $filename, $param );
     }
