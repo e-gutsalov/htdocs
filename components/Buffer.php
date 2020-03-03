@@ -11,24 +11,42 @@ namespace components;
 
 class Buffer {
 
-	private array $buffer;
+	private string $buffer = '';
     private array $filename;
+    private array $param;
 
-	public function __construct( $filename )
+	public function __construct( array $filename, array $param )
     {
 		$this->filename = $filename;
+		$this->param = $param;
 	}
 
-	public function sendFile()
+    public function sendFile()
     {
+        ob_start();
         foreach ( $this->filename as $key => $value )
         {
             if ( file_exists("templates/$value.html" ) )
             {
-                $this->buffer[ $value ] = file_get_contents("templates/$value.html" );
+                require "templates/$value.html";
+            }
+        }
+        $this->buffer = ob_get_contents();
+        ob_end_clean();
+    }
+
+	/*
+	public function sendFile()
+    {
+        foreach ( $this->filename as $key => $value )
+        {
+            if ( file_exists( "templates/$value.html" ) )
+            {
+                $this->buffer[$value] = file_get_contents( "templates/$value.html" );
             }
         }
 	}
+	*/
 
 	public function view()
     {

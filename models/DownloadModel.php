@@ -11,8 +11,8 @@ namespace models;
 
 class DownloadModel
 {
-    public static $title = 'Загрузка';
-    public static $down = 'download';
+    public static string $title = 'Загрузка';
+    public static string $down = 'download';
 
     public static function getDownload()
     {

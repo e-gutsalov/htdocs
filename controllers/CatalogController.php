@@ -13,20 +13,22 @@ use views\CatalogView;
 
 class CatalogController
 {
-    public function actionCatalog()
+    public function actionCatalog( int $page = 1 )
     {
         $filename = CatalogModel::getCatalogPage();
         CatalogModel::getCategoriesList();
-        CatalogModel::getLatestProducts();
+        CatalogModel::getLatestProducts( $page );
+        CatalogModel::getTotalProductsInProducts();
         $param = CatalogModel::getParam();
         CatalogView::getView( $filename, $param );
     }
 
-    public function actionCategory( $category = NULL )
+    public function actionCategory( int $category = NULL, int $page = 1 )
     {
         $filename = CatalogModel::getCatalogPage();
         CatalogModel::getCategoriesList();
-        CatalogModel::getProductsByCategory( $category );
+        CatalogModel::getProductsByCategory( $category, $page );
+        CatalogModel::getTotalProductsInCategory();
         $param = CatalogModel::getParam();
         CatalogView::getView( $filename, $param );
     }

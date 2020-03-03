@@ -2,8 +2,8 @@
 /**
  * Created by PhpStorm.
  * User: egutsalov
- * Date: 26-Feb-19
- * Time: 21:11
+ * Date: 03-Mar-19
+ * Time: 23:18
  */
 
 namespace views;
@@ -11,14 +11,15 @@ namespace views;
 //use components\Buffer;
 use components\Render;
 
-
-class CallbackView
+class CartView
 {
     public static function getView( array $filename, array $param )
     {
         //$buffer = new Buffer( $filename );
-        //$page = $buffer->view();
+        //$pages = $buffer->view();
         $render = new Render( $filename, $param );
+        //$render->parseMenu();
+        //$render->parseProduct();
         $render->show();
     }
 }

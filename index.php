@@ -9,6 +9,8 @@
 
 use components\Router;
 
+session_start();
+
 define('ROOT', __DIR__);
 require 'config/autoload.php';
 

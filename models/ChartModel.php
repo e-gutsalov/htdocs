@@ -10,8 +10,8 @@ namespace models;
 
 class ChartModel
 {
-    public static $title = 'График';
-    public static $main = 'chart';
+    public static string $title = 'График';
+    public static string $main = 'chart';
 
     public static function getChart()
     {

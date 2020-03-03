@@ -11,7 +11,6 @@ namespace controllers;
 use models\CallbackModel;
 use views\CallbackView;
 
-//spl_autoload_register();
 
 class CallbackController
 {
@@ -19,6 +18,6 @@ class CallbackController
     {
         $filename = CallbackModel::getCallback();
         $param = CallbackModel::getParam();
-        CallbackView::getView($filename, $param);
+        CallbackView::getView( $filename, $param );
     }
 }

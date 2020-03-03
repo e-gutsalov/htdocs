@@ -10,8 +10,8 @@ namespace models;
 
 class CallbackModel
 {
-    public static $title = 'Обратная связь';
-    public static $about = 'callback';
+    public static string $title = 'Обратная связь';
+    public static string $about = 'callback';
 
     public static function getCallback()
     {

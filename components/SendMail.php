@@ -6,7 +6,7 @@
  * Time: 20:52
  */
 
-if ((!empty($_GET['InputEmail']) and !empty($_GET['InputText'])))
+if ( ( !empty( $_GET['InputEmail'] ) and !empty( $_GET['InputText'] ) ) )
 {
     $email = $_GET['InputText'];
     $text = $_GET['InputEmail'];
@@ -16,16 +16,16 @@ if ((!empty($_GET['InputEmail']) and !empty($_GET['InputText'])))
     $text    = $_GET['InputText'];
     $to      = 'egutsalov@yandex.ru';
     $subject = 'Поступил заказ от клиента!';
-    $message = 'Поступил заказ от клиента!' . "\r\n" . 'Почта клиента: ' . "<$email>" . "\r\n" . 	"$text" . "\r\n";
+    $message = 'Поступил заказ от клиента!' . "\r\n" . 'Почта клиента: ' . "<$email>" . "\r\n" . "$text" . "\r\n";
     $headers = 'From: <e-gutsalov@mail.ru>';
     mail($to, $subject, $message, $headers);
 
 
-    echo $name . ', спасибо за обращение! Мы рассмотрим его в ближайшее время', '<br>';
+    echo '<br>' . $name . ', спасибо за обращение! Мы рассмотрим его в ближайшее время', '<br>';
     echo $email, '<br>';
     echo $text,  '<br>';
 }
 else
 {
-    echo('<br>Необходимо заполнить все поля формы обратной связи!');
+    echo '<br>Необходимо заполнить все поля формы обратной связи!';
 }

@@ -10,7 +10,7 @@ return
 
 [
     'host' => 'localhost',
-    'dbname' => 'wanna_buy',
+    'dbname' => 'handicrafts',
     'user' => 'root',
     'password' => 'metallica'
 ];

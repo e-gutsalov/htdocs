@@ -24,9 +24,6 @@ class ProductModel
         return self::$param =
             [
                 'productDetails' => self::$ProductDetails,
-                'product_details' => [
-                                        'page' => 'product_details'
-                                    ],
                 'id' => 0,
                 'title' => 'Описание товара',
                 'name' => 'Каталог сейчас недоступен!',
@@ -41,8 +38,8 @@ class ProductModel
 
         /*$query = 'SELECT id, name, code, price, image, new, description FROM product WHERE id = :id';*/
         $query = 'SELECT product.id, product.name, product.code, price, new, description, image1, image2, image3, image4, image5
-                    FROM wanna_buy.product
-                        JOIN wanna_buy.images ON images.code = product.code
+                    FROM handicrafts.product
+                        JOIN handicrafts.images ON images.code = product.code
                     WHERE product.id = :id';
         $stmt = $db->prepare( $query );
         $stmt->bindParam( ':id', $id, PDO::PARAM_INT );

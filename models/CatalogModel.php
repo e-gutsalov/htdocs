@@ -9,24 +9,27 @@
 namespace models;
 
 use components\Db;
+use components\Pagination;
 use PDO;
 
 class CatalogModel
 {
 
-    private static string $title = 'Каталог';
-    private static string $cat = 'catalog';
     private static array $filename;
     private static array $param;
     private static array $categoriesList;
     private static array $latestProducts;
     private static int $status = 1;
     private static int $category_id = 0;
-    const SHOW_BY_PRODUCTS = 12;
+    private static int $page;
+    private static string $html;
+    const SHOW_BY_PRODUCTS = 6;
+    private static object $db;
 
     public static function getCatalogPage()
     {
-        return self::$filename = ['head', 'nav', 'catalog', 'catalog_menu', 'product', 'prefooter', 'footer'];
+        self::$db = Db::getConnection();
+        return self::$filename = ['head', 'nav', 'catalog', 'catalog_menu', 'product', 'pagination', 'footer'];
     }
 
     public static function getParam()
@@ -35,15 +38,11 @@ class CatalogModel
             [
                 'categoriesList' => self::$categoriesList,
                 'latestProducts' => self::$latestProducts,
-                'page' => [
-                            'catalog_menu' => 'catalog_menu',
-                            'product' => 'product',
-                            'strButton' => 6
-                ],
                 'id' => 0,
+                'pagination' => self::$html,
                 'title' => 'Каталог',
                 'name' => 'Каталог сейчас недоступен!',
-                'category_' . self::$category_id => 'list-group-item-danger',
+                'category' => self::$category_id,
                 'catalog' => 'active',
                 'script' => 'wb'
             ];
@@ -55,10 +54,10 @@ class CatalogModel
 
     public static function getCategoriesList()
     {
-        $db = Db::getConnection();
+        //$db = Db::getConnection();
 
         $query = 'SELECT id, name, category FROM category WHERE status = :status ORDER BY category ASC';
-        $stmt = $db->prepare( $query );
+        $stmt = self::$db->prepare( $query );
         $stmt->bindParam( ':status', self::$status );
         $stmt->execute();
         if ( $stmt->rowCount() > 0 )
@@ -72,14 +71,18 @@ class CatalogModel
         return self::$categoriesList[] = FALSE;
     }
 
-    public static function getLatestProducts( $count = self::SHOW_BY_PRODUCTS )
+    public static function getLatestProducts( $page )
     {
-        $db = Db::getConnection();
+        self::$page = $page;
+        $offset = ( self::$page - 1 ) * self::SHOW_BY_PRODUCTS;
+        $count = self::SHOW_BY_PRODUCTS;
+        //$db = Db::getConnection();
 
-        $query = 'SELECT id, name, price, image, new, short_description FROM product WHERE status = :status ORDER BY id DESC LIMIT :count';
-        $stmt = $db->prepare( $query );
+        $query = 'SELECT id, name, price, image, new, short_description FROM product WHERE status = :status ORDER BY id DESC LIMIT :count OFFSET :offset';
+        $stmt = self::$db->prepare( $query );
         $stmt->bindParam( ':status', self::$status );
         $stmt->bindParam( ':count', $count, PDO::PARAM_INT );
+        $stmt->bindParam( ':offset', $offset, PDO::PARAM_INT );
         $stmt->execute();
         if ( $stmt->rowCount() > 0 )
         {
@@ -92,17 +95,21 @@ class CatalogModel
         return self::$latestProducts[] = FALSE;
     }
 
-    public static function getProductsByCategory( $category )
+    public static function getProductsByCategory( $category, $page )
     {
         self::$category_id = $category;
+        self::$page = $page;
+        $offset = ( self::$page - 1 ) * self::SHOW_BY_PRODUCTS;
+        $count = self::SHOW_BY_PRODUCTS;
 
-        $db = Db::getConnection();
+        //$db = Db::getConnection();
 
-        $query = 'SELECT id, name, category_id, price, image, new, short_description FROM product WHERE status = :status AND category_id = :category_id ORDER BY id DESC';
-        $stmt = $db->prepare( $query );
+        $query = 'SELECT id, name, category_id, price, image, new, short_description FROM product WHERE status = :status AND category_id = :category_id ORDER BY id DESC LIMIT :count OFFSET :offset';
+        $stmt = self::$db->prepare( $query );
         $stmt->bindParam( ':status', self::$status );
         $stmt->bindParam( ':category_id', self::$category_id );
-        //$stmt->bindParam( ':count', $count, PDO::PARAM_INT );
+        $stmt->bindParam( ':count', $count, PDO::PARAM_INT );
+        $stmt->bindParam( ':offset', $offset, PDO::PARAM_INT );
         $stmt->execute();
         if ( $stmt->rowCount() > 0 )
         {
@@ -113,5 +120,34 @@ class CatalogModel
             return self::$latestProducts;
         }
         return self::$latestProducts[] = FALSE;
+    }
+
+    public static function getTotalProductsInProducts()
+    {
+        //$db = Db::getConnection();
+
+        $query = 'SELECT id FROM product WHERE status = :status';
+        $stmt = self::$db->prepare( $query );
+        $stmt->bindParam( ':status', self::$status );
+        $stmt->execute();
+        $total = $stmt->rowCount();
+
+        $pagination = new Pagination( $total, self::$page, self::SHOW_BY_PRODUCTS, 'p' );
+        self::$html = $pagination->get();
+    }
+
+    public static function getTotalProductsInCategory()
+    {
+        //$db = Db::getConnection();
+
+        $query = 'SELECT id FROM product WHERE status = :status AND category_id = :category_id';
+        $stmt = self::$db->prepare( $query );
+        $stmt->bindParam( ':status', self::$status );
+        $stmt->bindParam( ':category_id', self::$category_id );
+        $stmt->execute();
+        $total = $stmt->rowCount();
+
+        $pagination = new Pagination( $total, self::$page, self::SHOW_BY_PRODUCTS, 'p' );
+        self::$html = $pagination->get();
     }
 }

@@ -8,22 +8,23 @@
 
 namespace components;
 
+
 class Render
 {
-    private string $page;
-    private array $pages;
+    //private string $page;
+    private array $filename;
     private array $param;
     private string $output = '';
-    private string $item;
-    private string $itemsMenu = '';
-    private string $itemsProducts = '';
+    //private string $item = '';
+    //private string $itemsMenu = '';
+    //private string $itemsProducts = '';
 
-    public function __construct( array $pages, array $param )
+    public function __construct( array $filename, array $param )
     {
-        $this->pages = $pages;
+        $this->filename = $filename;
         $this->param = $param;
     }
-
+/*
     public function parseMenu()
     {
         $this->page = $this->pages[$this->param['page']['catalog_menu']];
@@ -72,10 +73,10 @@ class Render
                 $this->itemsProducts .= $this->item;
             }
         }
-        /*else
+        else
         {
-            //$this->items = $button[$this->param['catalog_menu']['strButton']];
-        }*/
+            $this->items = $button[$this->param['catalog_menu']['strButton']];
+        }
         $this->pages[$this->param['page']['product']] = $this->itemsProducts;
     }
 
@@ -98,10 +99,10 @@ class Render
                 $this->itemsProducts .= $this->item;
             }
         }
-        /*else
+        else
         {
-            //$this->items = $button[$this->param['catalog_menu']['strButton']];
-        }*/
+            $this->items = $button[$this->param['catalog_menu']['strButton']];
+        }
         $this->pages[$this->param['product_details']['page']] = $this->itemsProducts;
     }
 
@@ -118,6 +119,12 @@ class Render
             }
             $this->output .= $vPage;
         }
+    }
+*/
+    public function parse()
+    {
+        $buffer = new Buffer( $this->filename, $this->param );
+        $this->output = $buffer->view();
     }
 
     public function clear()

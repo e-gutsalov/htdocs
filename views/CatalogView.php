@@ -8,18 +8,18 @@
 
 namespace views;
 
-use components\Buffer;
+//use components\Buffer;
 use components\Render;
 
 class CatalogView
 {
-    public static function getView( $filename, $param )
+    public static function getView( array $filename, array $param )
     {
-        $buffer = new Buffer( $filename );
-        $pages = $buffer->view();
-        $render = new Render( $pages, $param );
-        $render->parseMenu();
-        $render->parseProduct();
+        //$buffer = new Buffer( $filename );
+        //$pages = $buffer->view();
+        $render = new Render( $filename, $param );
+        //$render->parseMenu();
+        //$render->parseProduct();
         $render->show();
     }
 }

@@ -4,7 +4,13 @@
 
         <div class="col-sm-6 col-md-3">
             <div class="list-group">
-                <button class="list-group-item {category_{category}}" type="button" href="/category/{category}">{name}</button>
+                <?php if ( $this->param['categoriesList'][0] ): ?>
+                    <?php foreach ( $this->param['categoriesList'] as $value ): ?>
+                        <button class="list-group-item <?= ( $this->param['category'] == $value->category ) ? 'list-group-item-success' : ''; ?>" type="button" href="/category/<?= $value->category; ?>">
+                            <?= $value->name; ?>
+                        </button>
+                    <?php endforeach; ?>
+                <?php endif; ?>
             </div>
         </div>
 
