@@ -2,7 +2,7 @@
 
 <?php if ( $this->param['latestProducts'][0] ): ?>
     <?php foreach ( $this->param['latestProducts'] as $value ): ?>
-        <div class="col-sm-4">
+        <div class="col-xs-8 col-sm-4 col-md-4 col-lg-4">
             <div class="thumbnail">
                 <a href="/product/<?= $value->id; ?>" class="thumbnail">
                     <img style="width: auto; height: 150px" src="<?= $value->image; ?>" alt="<?= $value->name; ?>" title="<?= $value->name; ?>">
@@ -12,6 +12,7 @@
                     <h3><?= $value->name; ?> <br> <?= $value->price; ?> ₽
                         <span id="<?= $value->id; ?>" class="label label-warning hidden" data-new="<?= $value->new; ?>">New</span>
                     </h3>
+                    <span>Код товара: <?= $value->code; ?></span>
                     <p style="width: auto; height: 50px">
                         <?= $value->short_description; ?>
                     </p>

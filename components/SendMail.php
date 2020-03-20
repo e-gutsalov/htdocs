@@ -18,12 +18,10 @@ if ( ( !empty( $_GET['InputEmail'] ) and !empty( $_GET['InputText'] ) ) )
     $subject = 'Поступил заказ от клиента!';
     $message = 'Поступил заказ от клиента!' . "\r\n" . 'Почта клиента: ' . "<$email>" . "\r\n" . "$text" . "\r\n";
     $headers = 'From: <e-gutsalov@mail.ru>';
-    mail($to, $subject, $message, $headers);
+    mail( $to, $subject, $message, $headers );
 
 
-    echo '<br>' . $name . ', спасибо за обращение! Мы рассмотрим его в ближайшее время', '<br>';
-    echo $email, '<br>';
-    echo $text,  '<br>';
+    echo '<br>' . $name . ', спасибо за обращение! Мы рассмотрим его в ближайшее время <br>',  $email, '<br>', $text,  '<br>';
 }
 else
 {

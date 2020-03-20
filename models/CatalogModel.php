@@ -28,6 +28,7 @@ class CatalogModel
 
     public static function getCatalogPage()
     {
+        $_SESSION['cart']['amount'] = 3;
         self::$db = Db::getConnection();
         return self::$filename = ['head', 'nav', 'catalog', 'catalog_menu', 'product', 'pagination', 'footer'];
     }
@@ -44,7 +45,8 @@ class CatalogModel
                 'name' => 'Каталог сейчас недоступен!',
                 'category' => self::$category_id,
                 'catalog' => 'active',
-                'script' => 'wb'
+                'script' => 'wb'/*,
+                'sess' => $_SESSION*/
             ];
     }
 
@@ -54,8 +56,6 @@ class CatalogModel
 
     public static function getCategoriesList()
     {
-        //$db = Db::getConnection();
-
         $query = 'SELECT id, name, category FROM category WHERE status = :status ORDER BY category ASC';
         $stmt = self::$db->prepare( $query );
         $stmt->bindParam( ':status', self::$status );
@@ -76,9 +76,8 @@ class CatalogModel
         self::$page = $page;
         $offset = ( self::$page - 1 ) * self::SHOW_BY_PRODUCTS;
         $count = self::SHOW_BY_PRODUCTS;
-        //$db = Db::getConnection();
 
-        $query = 'SELECT id, name, price, image, new, short_description FROM product WHERE status = :status ORDER BY id DESC LIMIT :count OFFSET :offset';
+        $query = 'SELECT id, name, code, price, image, new, short_description FROM product WHERE status = :status ORDER BY id DESC LIMIT :count OFFSET :offset';
         $stmt = self::$db->prepare( $query );
         $stmt->bindParam( ':status', self::$status );
         $stmt->bindParam( ':count', $count, PDO::PARAM_INT );
@@ -102,9 +101,7 @@ class CatalogModel
         $offset = ( self::$page - 1 ) * self::SHOW_BY_PRODUCTS;
         $count = self::SHOW_BY_PRODUCTS;
 
-        //$db = Db::getConnection();
-
-        $query = 'SELECT id, name, category_id, price, image, new, short_description FROM product WHERE status = :status AND category_id = :category_id ORDER BY id DESC LIMIT :count OFFSET :offset';
+        $query = 'SELECT id, name, category_id, code, price, image, new, short_description FROM product WHERE status = :status AND category_id = :category_id ORDER BY id DESC LIMIT :count OFFSET :offset';
         $stmt = self::$db->prepare( $query );
         $stmt->bindParam( ':status', self::$status );
         $stmt->bindParam( ':category_id', self::$category_id );
@@ -124,8 +121,6 @@ class CatalogModel
 
     public static function getTotalProductsInProducts()
     {
-        //$db = Db::getConnection();
-
         $query = 'SELECT id FROM product WHERE status = :status';
         $stmt = self::$db->prepare( $query );
         $stmt->bindParam( ':status', self::$status );
@@ -138,8 +133,6 @@ class CatalogModel
 
     public static function getTotalProductsInCategory()
     {
-        //$db = Db::getConnection();
-
         $query = 'SELECT id FROM product WHERE status = :status AND category_id = :category_id';
         $stmt = self::$db->prepare( $query );
         $stmt->bindParam( ':status', self::$status );

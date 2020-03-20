@@ -22,5 +22,9 @@ return
     'category/([0-9]+)/p([0-9]+)' => 'catalog/category/$1/$2',
     //'product' => 'product/product',
     'product/([0-9]+)' => 'product/product/$1',
+    'user/register' => 'user/register',
+    'user/login' => 'user/login',
+    'user/logout' => 'user/logout',
+    'user' => 'user/user',
     'cart' => 'cart/cart'
 ];

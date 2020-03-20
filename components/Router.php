@@ -8,6 +8,7 @@
 
 namespace components;
 
+use controllers\MainController;
 use Exception;
 
 class Router
@@ -50,12 +51,19 @@ class Router
                     echo $e->getMessage(), '\n';
                 }
 
-                $result = call_user_func_array( array( $controllerObject, $actionName ), $segments );
-
-                if ( $result ) {
-                    break;
-                }
+                call_user_func_array( array( $controllerObject, $actionName ), $segments );
+                exit();
             }
         }
+
+        //header("Location: /");
+
+        try {
+            $controllerObject = new MainController();
+        } catch ( Exception $e ) {
+            echo $e->getMessage(), '\n';
+        }
+
+        call_user_func( array( $controllerObject, 'actionMain' ) );
     }
 }

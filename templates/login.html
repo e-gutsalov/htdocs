@@ -1,0 +1,37 @@
+<section>
+    <div class="container">
+        <div class="row">
+
+            <div class="col-sm-4 col-sm-offset-4 padding-right">
+
+                <?php if ( isset( $this->param['process']->errors ) && is_array( $this->param['process']->errors ) ): ?>
+                <div class="alert alert-danger" role="alert">
+                    <ul>
+                        <?php foreach ( $this->param['process']->errors as $error ): ?>
+                        <li> - <?php echo $error; ?></li>
+                        <?php endforeach; ?>
+                    </ul>
+                </div>
+                <?php endif; ?>
+
+                <div class="signup-form"><!--sign up form-->
+                    <h2>Вход на сайт</h2>
+                    <form action="#" method="post">
+                        <div class="form-group">
+                            <label for="InputEmail">Введите имя</label>
+                            <input class="form-control" type="email" name="email" id="InputEmail" placeholder="E-mail" value="<?= $this->param['process']->email; ?>"/>
+                        </div>
+                        <div class="form-group">
+                            <label for="InputPassword">Введите имя</label>
+                            <input class="form-control" type="password" name="password" id="InputPassword" placeholder="Пароль" value="<?= $this->param['process']->password; ?>"/>
+                        </div>
+                        <input type="submit" name="submit" class="btn btn-default" value="Вход" />
+                    </form>
+                </div><!--/sign up form-->
+
+                <br/>
+                <br/>
+            </div>
+        </div>
+    </div>
+</section>
