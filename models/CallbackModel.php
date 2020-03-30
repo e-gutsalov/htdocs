@@ -20,10 +20,12 @@ class CallbackModel
 
     public static function getParam()
     {
-        return $param = [
-                            'callback' => 'active',
-                            'script' => 'wb-valid',
-                            'title' => 'Обратная связь',
-                        ];
+        return $param =
+            [
+                'callback' => 'active',
+                'script' => 'wb-valid',
+                'title' => 'Обратная связь',
+                'sess' => $_SESSION
+            ];
     }
 }

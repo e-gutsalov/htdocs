@@ -14,6 +14,7 @@ class UserProcess
     public string $password = '';
     public bool $result = false;
     public array $errors;
+    public bool $isGuest = false;
 
     /**
      * Регистрация
@@ -71,17 +72,59 @@ class UserProcess
             }
 
             // Проверяем существует ли пользователь
-            $userId = $this->checkUserData( $this->email, $this->password );
+            $user = $this->checkUserData( $this->email, $this->password );
 
-            if ( $userId == false ) {
+            if ( $user == false ) {
                 // Если данные неправильные - показываем ошибку
                 $this->errors[] = 'Неправильные данные для входа на сайт';
             } else {
                 // Если данные правильные, запоминаем пользователя (сессия)
-                $this->auth( $userId );
+                $this->auth( $user );
 
                 // Перенаправляем пользователя в закрытую часть - кабинет
                 header( "Location: /user" );
+            }
+        }
+    }
+
+    /**
+     * Action для страницы "Редактирование данных пользователя"
+     */
+    public function userEditProcess()
+    {
+        // Обработка формы
+        if ( isset( $_POST['submit'] ) ) {
+            // Если форма отправлена
+            // Получаем данные из формы редактирования
+            $this->name = filter_input(INPUT_POST, 'name', FILTER_SANITIZE_STRING);
+            $this->email = filter_input(INPUT_POST, 'email', FILTER_SANITIZE_EMAIL);
+            $this->password = filter_input(INPUT_POST, 'password', FILTER_SANITIZE_STRING);
+
+            // Валидация полей
+            if ( !$this->checkName( $this->name ) ) {
+                $this->errors[] = 'Имя не должно быть короче 2-х символов';
+            }
+            if ( !$this->checkEmail( $this->email ) ) {
+                $this->errors[] = 'Неправильный email';
+            }
+            if ( !$this->checkPassword( $this->password ) ) {
+                $this->errors[] = 'Пароль не должен быть короче 6-ти символов';
+            }
+
+            if ( empty( $this->errors ) ) {
+                // Если ошибок нет, сохраняет изменения профиля
+                $this->result = $this->edit( $_SESSION['user']->id, $this->name, $this->email, $this->password );
+            }
+
+            // Проверяем существует ли пользователь
+            $user = $this->checkUserData( $this->email, $this->password );
+
+            if ( $user == false ) {
+                // Если данные неправильные - показываем ошибку
+                $this->errors[] = 'Неправильные данные для входа на сайт';
+            } else {
+                // Если данные правильные, запоминаем пользователя (сессия)
+                $this->auth( $user );
             }
         }
     }
@@ -153,30 +196,29 @@ class UserProcess
      * Проверяем существует ли пользователь с заданными $email и $password
      * @param string $email <p>E-mail</p>
      * @param string $password <p>Пароль</p>
-     * @return mixed : integer user id or false
+     * @return mixed : object user id or false
      */
-    public static function checkUserData( string $email, string $password )
+    public function checkUserData( string $email, string $password )
     {
         // Соединение с БД
         $db = Db::getConnection();
 
-        $password = password_hash( $password, PASSWORD_BCRYPT);
-
         // Текст запроса к БД
-        $sql = 'SELECT * FROM users WHERE email = :email AND password = :password';
+        $sql = 'SELECT * FROM users WHERE email = :email';
 
         // Получение результатов. Используется подготовленный запрос
-        $result = $db->prepare( $sql );
-        $result->bindParam( ':email', $email, PDO::PARAM_INT );
-        $result->bindParam( ':password', $password, PDO::PARAM_INT );
-        $result->execute();
+        $stmt = $db->prepare( $sql );
+        $stmt->bindParam( ':email', $email, PDO::PARAM_STR );
+        $stmt->execute();
 
         // Обращаемся к записи
-        $user = $result->fetch();
-
+        $user = $stmt->fetch();
         if ( is_object( $user ) ) {
-            // Если запись существует, возвращаем id пользователя
-            return $user->id;
+            if ( password_verify( $password, $user->password ) ) {
+                $user->password = $password;
+                // Если запись существует, возвращаем id пользователя
+                return $user;
+            }
         }
         return false;
     }
@@ -208,12 +250,12 @@ class UserProcess
 
     /**
      * Запоминаем пользователя
-     * @param integer $userId <p>id пользователя</p>
+     * @param object $user <p>id пользователя</p>
      */
-    public static function auth( int $userId )
+    public function auth( object $user )
     {
         // Записываем идентификатор пользователя в сессию
-        $_SESSION['user'] = $userId;
+        $_SESSION['user'] = $user;
     }
 
     /**
@@ -221,13 +263,76 @@ class UserProcess
      * Иначе перенаправляет на страницу входа
      * <p>Идентификатор пользователя</p>
      */
-    public static function checkLogged()
+    public function checkLogged()
     {
         // Если сессия есть, вернем идентификатор пользователя
-        if ( isset( $_SESSION['user'] ) ) {
-          $_SESSION['ok'] = 'ok';
-        } else {
+        if ( !is_object( $_SESSION['user'] ) ) {
             header( 'Location: /user/login' );
         }
+    }
+
+    /**
+     * Проверяет является ли пользователь гостем
+     * <p>Результат выполнения метода</p>
+     */
+    public function isGuest()
+    {
+        if ( isset( $_SESSION['user'] ) ) {
+            $this->isGuest = false;
+        } else {
+            $this->isGuest = true;
+        }
+    }
+
+    /**
+     * Возвращает пользователя с указанным id
+     * @param integer $id <p>id пользователя</p>
+     * @return object <p>Объект с информацией о пользователе</p>
+     */
+    public function getUserById( $id )
+    {
+        // Соединение с БД
+        $db = Db::getConnection();
+
+        // Текст запроса к БД
+        $sql = 'SELECT * FROM users WHERE id = :id';
+
+        // Получение и возврат результатов. Используется подготовленный запрос
+        $result = $db->prepare( $sql );
+        $result->bindParam( ':id', $id, PDO::PARAM_INT );
+
+        // Указываем, что хотим получить данные в виде массива
+        //$result->setFetchMode( PDO::FETCH_ASSOC );
+        $result->execute();
+
+        return $result->fetch();
+    }
+
+    /**
+     * Редактирование данных пользователя
+     * @param integer $id <p>id пользователя</p>
+     * @param string $name <p>Имя</p>
+     * @param string $email <p>Почта</p>
+     * @param string $password <p>Пароль</p>
+     * @return boolean <p>Результат выполнения метода</p>
+     */
+    public static function edit( $id, $name, $email, $password )
+    {
+        // Соединение с БД
+        $db = Db::getConnection();
+
+        $password = password_hash( $password, PASSWORD_BCRYPT );
+
+        // Текст запроса к БД
+        $sql = 'UPDATE users SET name = :name, email = :email, password = :password WHERE id = :id';
+
+        // Получение и возврат результатов. Используется подготовленный запрос
+        $result = $db->prepare( $sql );
+        $result->bindParam( ':id', $id, PDO::PARAM_INT );
+        $result->bindParam( ':name', $name, PDO::PARAM_STR );
+        $result->bindParam( ':email', $email, PDO::PARAM_STR );
+        $result->bindParam( ':password', $password, PDO::PARAM_STR );
+
+        return $result->execute();
     }
 }

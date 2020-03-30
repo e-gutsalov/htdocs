@@ -16,8 +16,8 @@
                     <p style="width: auto; height: 50px">
                         <?= $value->short_description; ?>
                     </p>
-                    <p><a href="/product/<?= $value->id; ?>" class="btn btn-primary" role="button" target="_blank">Просмотр</a>
-                        <a href="/cart/<?= $value->id; ?>" class="btn btn-danger" role="button">В корзину</a>
+                    <p><a href="/product/<?= $value->id; ?>" class="btn btn-primary" role="button" target="_blank"><span class="glyphicon glyphicon-eye-open" aria-hidden="true"> </span> Просмотр</a>
+                        <a href="/cart/add/" class="btn btn-danger add-to-cart" role="button" data-id="<?= $value->code; ?>"><span class="glyphicon glyphicon-shopping-cart" aria-hidden="true"> </span> В корзину</a>
                     </p>
                 </div>
             </div>

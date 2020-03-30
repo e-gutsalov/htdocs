@@ -12,13 +12,13 @@ class UserModel
     private static array $filename;
     private static array $param;
     private static object $db;
-    private static object $process;
-    private static string $Page = '';
+    private static object $userProcess;
+    private static string $page = '';
 
     public static function getUserPage()
     {
         self::$db = Db::getConnection();
-        return self::$filename = ['head', 'nav', self::$Page, 'footer'];
+        return self::$filename = ['head', 'nav', self::$page, 'footer'];
     }
 
     public static function getParam()
@@ -26,31 +26,40 @@ class UserModel
         return self::$param =
             [
                 'id' => 0,
-                'title' => 'Регистрация пользователя',
+                'title' => 'Пользователь',
                 'reg' => 'active',
                 'script' => 'wb',
-                'process' => self::$process
+                'userProcess' => self::$userProcess,
+                'sess' => $_SESSION
             ];
     }
 
     public static function userRegister()
     {
-        self::$Page = 'register';
-        self::$process = new UserProcess();
-        self::$process->userRegisterProcess();
+        self::$page = 'register';
+        self::$userProcess = new UserProcess();
+        self::$userProcess->userRegisterProcess();
     }
 
     public static function userLogin()
     {
-        self::$Page = 'login';
-        self::$process = new UserProcess();
-        self::$process->userLoginProcess();
+        self::$page = 'login';
+        self::$userProcess = new UserProcess();
+        self::$userProcess->userLoginProcess();
     }
 
     public static function userProfile()
     {
-        self::$Page = 'profile';
-        self::$process = new UserProcess();
-        self::$process->checkLogged();
+        self::$page = 'profile';
+        self::$userProcess = new UserProcess();
+        self::$userProcess->checkLogged();
+    }
+
+    public static function userEdit()
+    {
+        self::$page = 'edit';
+        self::$userProcess = new UserProcess();
+        self::$userProcess->checkLogged();
+        self::$userProcess->userEditProcess();
     }
 }

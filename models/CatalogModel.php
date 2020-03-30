@@ -28,7 +28,6 @@ class CatalogModel
 
     public static function getCatalogPage()
     {
-        $_SESSION['cart']['amount'] = 3;
         self::$db = Db::getConnection();
         return self::$filename = ['head', 'nav', 'catalog', 'catalog_menu', 'product', 'pagination', 'footer'];
     }
@@ -45,8 +44,8 @@ class CatalogModel
                 'name' => 'Каталог сейчас недоступен!',
                 'category' => self::$category_id,
                 'catalog' => 'active',
-                'script' => 'wb'/*,
-                'sess' => $_SESSION*/
+                'script' => 'wb',
+                'sess' => $_SESSION
             ];
     }
 

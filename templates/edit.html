@@ -1,0 +1,46 @@
+<section>
+    <div class="container">
+        <div class="row">
+
+            <div class="col-sm-6 col-sm-offset-3 padding-right">
+
+                <?php if ( $this->param['userProcess']->result ): ?>
+                <div class="alert alert-success text-center" role="alert">
+                    <h3>Учетные данные изменены!</h3>
+                </div>
+                <?php else: ?>
+                <?php if ( isset( $this->param['userProcess']->errors ) and is_array( $this->param['userProcess']->errors ) ): ?>
+                <div class="alert alert-danger" role="alert">
+                    <ul>
+                        <?php foreach ( $this->param['userProcess']->errors as $error ): ?>
+                        <li> - <?= $error; ?></li>
+                        <?php endforeach; ?>
+                    </ul>
+                </div>
+                <?php endif; ?>
+
+                <h2>Редактирование данных пользователя</h2>
+                <form action="#" method="post">
+                    <div class="form-group">
+                        <label for="InputName">Введите новое имя</label>
+                        <input class="form-control" type="text" name="name" id="InputName" placeholder="Имя" value="<?= $this->param['sess']['user']->name; ?>"/>
+                    </div>
+                    <div class="form-group">
+                        <label for="InputEmail">Введите новый E-mail</label>
+                        <input class="form-control" type="email" name="email" id="InputEmail" placeholder="E-mail" value="<?= $this->param['sess']['user']->email; ?>"/>
+                    </div>
+                    <div class="form-group">
+                        <label for="InputPassword">Введите новый пароль</label>
+                        <input class="form-control" type="password" name="password" id="InputPassword" placeholder="Пароль" value="<?= $this->param['sess']['user']->password; ?>"/>
+                    </div>
+                    <label for="InputSubmit"> </label>
+                    <input class="btn btn-default" type="submit" name="submit" id="InputSubmit" value="Изменить" />
+                </form>
+
+                <?php endif; ?>
+                <br/>
+                <br/>
+            </div>
+        </div>
+    </div>
+</section>

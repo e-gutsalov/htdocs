@@ -43,6 +43,17 @@ class UserController
     }
 
     /**
+     * Action для страницы "Редактирование данных пользователя"
+     */
+    public function actionEdit()
+    {
+        UserModel::userEdit();
+        $param = UserModel::getParam();
+        $filename = UserModel::getUserPage();
+        UserView::getView( $filename, $param );
+    }
+
+    /**
      * Удаляем данные о пользователе из сессии
      */
     public function actionLogout()

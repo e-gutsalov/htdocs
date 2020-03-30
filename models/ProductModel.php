@@ -28,7 +28,8 @@ class ProductModel
                 'title' => 'Описание товара',
                 'name' => 'Каталог сейчас недоступен!',
                 'catalog' => 'active',
-                'script' => 'wb'
+                'script' => 'wb',
+                'sess' => $_SESSION
             ];
     }
 
