@@ -13,23 +13,36 @@ use views\CartView;
 
 class CartController
 {
+    public function actionCart()
+    {
+        $filename = CartModel::getCartPage();
+        CartModel::showCart();
+        $param = CartModel::getParam();
+        CartView::getView( $filename, $param );
+        //var_dump($_SESSION);
+    }
 
     /**
      * Action для добавления товара в корзину при помощи асинхронного запроса (ajax)
      * @param integer $id <p>id товара</p>
      */
-    public function actionAdd( $id )
+    public function actionAdd( int $id )
     {
         // Добавляем товар в корзину и выводим результат: количество товаров в корзине
         echo CartModel::addProduct( $id );
         //return true;
     }
 
-    public function actionCart()
+    /**
+     * Удаляет товар с указанным id из корзины
+     * @param integer $id <p>id товара</p>
+     */
+    public function actionDelete( $id )
     {
-        $filename = CartModel::getCartPage();
-        $param = CartModel::getParam();
-        CartView::getView( $filename, $param );
-    }
+        // Удаляем заданный товар из корзины
+        echo CartModel::deleteProduct( $id );
 
+        // Возвращаем пользователя в корзину
+        //header("Location: /cart");
+    }
 }

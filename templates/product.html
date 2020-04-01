@@ -4,7 +4,7 @@
     <?php foreach ( $this->param['latestProducts'] as $value ): ?>
         <div class="col-xs-8 col-sm-4 col-md-4 col-lg-4">
             <div class="thumbnail">
-                <a href="/product/<?= $value->id; ?>" class="thumbnail">
+                <a href="/product/<?= $value->id; ?>" class="thumbnail" target="_blank">
                     <img style="width: auto; height: 150px" src="<?= $value->image; ?>" alt="<?= $value->name; ?>" title="<?= $value->name; ?>">
                 </a>
 

@@ -27,7 +27,7 @@ class MainModel
     public static function getMainPage()
     {
         self::$db = Db::getConnection();
-        return self::$filename = ['head', 'nav', 'main', 'catalog_menu', 'carousel', 'product', 'footer'];
+        return self::$filename = ['head', 'nav', 'catalog', 'catalog_menu', 'carousel', 'product', 'footer'];
     }
 
     public static function getParam()

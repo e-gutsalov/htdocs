@@ -33,5 +33,6 @@ return
     'user' => 'user/user',
 
     'cart' => 'cart/cart',
-    'cart/add/([0-9]+)' => 'cart/add/$1'
+    'cart/add/([0-9]+)' => 'cart/add/$1',
+    'cart/delete/([0-9]+)' => 'cart/delete/$1'
 ];
