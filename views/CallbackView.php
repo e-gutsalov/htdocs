@@ -16,8 +16,6 @@ class CallbackView
 {
     public static function getView( array $filename, array $param )
     {
-        //$buffer = new Buffer( $filename );
-        //$page = $buffer->view();
         $render = new Render( $filename, $param );
         $render->show();
     }

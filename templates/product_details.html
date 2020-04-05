@@ -39,7 +39,7 @@
                 <?= $value->description; ?>
            </p>
            <p>
-               <a href="/cart/<?= $value->id; ?>" class="btn btn-danger" role="button">В корзину</a>
+               <a href="/cart/add/" class="btn btn-danger add-to-cart" role="button" data-id="<?= $value->code; ?>"><span class="glyphicon glyphicon-shopping-cart" aria-hidden="true"> </span> В корзину</a>
            </p>
         </div>
 
@@ -47,7 +47,5 @@
     <?php endif; ?>
 
     </div>
-
-    <div class="well well-lg">...</div>
 
 </div>

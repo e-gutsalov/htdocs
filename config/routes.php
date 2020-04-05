@@ -34,5 +34,6 @@ return
 
     'cart' => 'cart/cart',
     'cart/add/([0-9]+)' => 'cart/add/$1',
-    'cart/delete/([0-9]+)' => 'cart/delete/$1'
+    'cart/delete/([0-9]+)' => 'cart/delete/$1',
+    'cart/checkout' => 'cart/checkout'
 ];

@@ -15,9 +15,13 @@
             </div>
         </div-->
 
-    <?php if ( !empty( $this->param['sess']['cart']['inCart'] ) ): ?>
+        <a class="btn btn-primary checkout" href="/catalog" role="button"><i class="fa fa-shopping-cart"> </i> Вернуться к покупкам</a>
 
-        <h3><p>Вы выбрали такие товары:</p></h3>
+    <?php if ( !empty( $this->param['sess']['cart']['productsInCart'] ) ): ?>
+
+        <a class="btn btn-danger checkout" href="/cart/checkout"><i class="fa fa-shopping-cart"></i> Оформить заказ</a>
+
+        <h3>Вы выбрали такие товары:</h3>
 
         <table class="table table-hover table-bordered">
 
@@ -29,17 +33,17 @@
                 <th>Удалить</th>
             </tr>
 
-            <?php foreach ( $this->param['sess']['cart']['inCart'] as $product ): ?>
+            <?php foreach ( $this->param['sess']['cart']['productsInCart'] as $product ): ?>
 
             <tr class="cart-del">
                 <td><?= $product->code ?></td>
                 <td>
-                    <a href="/product/<?= $product->code ?>">
+                    <a href="/product/<?= $product->code ?>" target="_blank">
                         <?= $product->name ?>
                     </a>
                 </td>
                 <td><?= $product->price ?></td>
-                <td><?= $this->param['sess']['cart']['products'][$product->code] ?></td>
+                <td><?= $this->param['sess']['cart']['productsCode'][$product->code] ?></td>
                 <td>
                     <a class="del-to-cart" href="/cart/delete/" data-id="<?= $product->code ?>">
                         <span class="glyphicon glyphicon-remove" aria-hidden="true"> </span>
@@ -57,11 +61,9 @@
         </table>
 
         <?php else: ?>
-            <h3><p>Корзина пуста</p></h3>
+            <h3>Корзина пуста</h3>
 
     <?php endif; ?>
-
-        <a class="btn btn-primary checkout" href="/catalog" role="button"><i class="fa fa-shopping-cart"> </i> Вернуться к покупкам</a>
 
     </div>
 

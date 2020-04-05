@@ -23,7 +23,7 @@ class CallbackModel
         return $param =
             [
                 'callback' => 'active',
-                'script' => 'wb-valid',
+                'script' => 'handi-valid',
                 'title' => 'Обратная связь',
                 'sess' => $_SESSION
             ];

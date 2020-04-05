@@ -41,7 +41,7 @@ class MainModel
                 'name' => 'Каталог сейчас недоступен!',
                 'category' => self::$category_id,
                 'main' => 'active',
-                'script' => 'wb',
+                'script' => 'handi',
                 'sess' => $_SESSION
             ];
     }

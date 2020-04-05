@@ -1,0 +1,58 @@
+<section>
+    <div class="container">
+        <div class="row">
+
+            <div class="col-sm-9 padding-right">
+                <div class="features_items">
+                    <h2 class="title text-center">Оформление заказа</h2>
+
+
+                    <?php if ( $this->param['cartProcess']->result ): ?>
+                    <p>Заказ оформлен. Мы Вам перезвоним.</p>
+                    <?php else: ?>
+
+                    <p>Выбрано товаров: <?= $this->param['sess']['cart']['count']; ?> , на сумму: <?= $this->param['sess']['cart']['totalPrice'] ?> ₽</p><br/>
+
+                    <?php if ( !$this->param['cartProcess']->result ): ?>
+
+                    <div class="col-sm-9">
+                        <?php if ( isset( $this->param['cartProcess']->errors ) && is_array( $this->param['cartProcess']->errors ) ): ?>
+                        <ul>
+                            <?php foreach ( $this->param['cartProcess']->errors as $error ): ?>
+                            <li> - <?= $error; ?></li>
+                            <?php endforeach; ?>
+                        </ul>
+                        <?php endif; ?>
+
+                        <p>Для оформления заказа заполните форму. Наш менеджер свяжется с Вами.</p>
+
+                        <div class="login-form">
+                            <form action="#" method="post">
+
+                                <div class="form-group">
+                                <label for="userName">Ваше имя</label>
+                                <input class="form-control" id="userName" type="text" name="userName" placeholder="Ваше имя" value="<?= empty( $this->param['sess']['user'] ) ? '' : $this->param['sess']['user']->name; ?>" />
+                                </div>
+                                <div class="form-group">
+                                <label for="userPhone">Номер телефона</label>
+                                <input class="form-control" id="userPhone" type="text" name="userPhone" placeholder="Номер телефона" value="<?= empty( $this->param['sess']['user'] ) ? '' : ''; ?>" />
+                                </div>
+                                <div class="form-group">
+                                <label for="userComment">Комментарий к заказу</label>
+                                <textarea class="form-control" id="userComment" type="text" name="userComment" placeholder="Комментарий к заказу"><?= empty( $this->param['sess']['user'] ) ? '' : ''; ?></textarea>
+                                </div>
+                                <input type="submit" name="submit" class="btn btn-danger" value="Оформить" />
+                            </form>
+                        </div>
+                    </div>
+
+                    <?php endif; ?>
+
+                    <?php endif; ?>
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+</section>

@@ -44,7 +44,7 @@ class CatalogModel
                 'name' => 'Каталог сейчас недоступен!',
                 'category' => self::$category_id,
                 'catalog' => 'active',
-                'script' => 'wb',
+                'script' => 'handi',
                 'sess' => $_SESSION
             ];
     }

@@ -8,13 +8,19 @@ use PDO;
 
 class UserProcess
 {
+    private object $db;
     // Переменные для формы
     public string $name = '';
     public string $email = '';
     public string $password = '';
     public bool $result = false;
     public array $errors;
-    public bool $isGuest = false;
+
+    public function __construct()
+    {
+        // Соединение с БД
+        $this->db = Db::getConnection();
+    }
 
     /**
      * Регистрация
@@ -169,20 +175,31 @@ class UserProcess
     }
 
     /**
+     * Проверяет телефон: не меньше, чем 10 символов
+     * @param string $phone <p>Телефон</p>
+     * @return boolean <p>Результат выполнения метода</p>
+     */
+    public function checkPhone( string $phone )
+    {
+        if ( strlen( $phone ) >= 10 ) {
+            return true;
+        }
+        return false;
+    }
+
+    /**
      * Проверяет не занят ли email другим пользователем
      * @param string $email <p>E-mail</p>
      * @return boolean <p>Результат выполнения метода</p>
      */
     public function checkEmailExists( string $email )
     {
-        // Соединение с БД
-        $db = Db::getConnection();
 
         // Текст запроса к БД
         $sql = 'SELECT COUNT( * ) FROM users WHERE email = :email';
 
         // Получение результатов. Используется подготовленный запрос
-        $result = $db->prepare( $sql );
+        $result = $this->db->prepare( $sql );
         $result->bindParam(':email', $email, PDO::PARAM_STR );
         $result->execute();
 
@@ -200,14 +217,11 @@ class UserProcess
      */
     public function checkUserData( string $email, string $password )
     {
-        // Соединение с БД
-        $db = Db::getConnection();
-
         // Текст запроса к БД
         $sql = 'SELECT * FROM users WHERE email = :email';
 
         // Получение результатов. Используется подготовленный запрос
-        $stmt = $db->prepare( $sql );
+        $stmt = $this->db->prepare( $sql );
         $stmt->bindParam( ':email', $email, PDO::PARAM_STR );
         $stmt->execute();
 
@@ -232,16 +246,13 @@ class UserProcess
      */
     public function register( string $name, string $email, string $password )
     {
-        // Соединение с БД
-        $db = Db::getConnection();
-
         $password = password_hash( $password, PASSWORD_BCRYPT);
 
         // Текст запроса к БД
         $sql = 'INSERT INTO users ( name, email, password ) VALUES ( :name, :email, :password )';
 
         // Получение и возврат результатов. Используется подготовленный запрос
-        $result = $db->prepare($sql);
+        $result = $this->db->prepare($sql);
         $result->bindParam( ':name', $name, PDO::PARAM_STR );
         $result->bindParam( ':email', $email, PDO::PARAM_STR );
         $result->bindParam( ':password', $password, PDO::PARAM_STR );
@@ -278,9 +289,9 @@ class UserProcess
     public function isGuest()
     {
         if ( isset( $_SESSION['user'] ) ) {
-            $this->isGuest = false;
+            return false;
         } else {
-            $this->isGuest = true;
+            return true;
         }
     }
 
@@ -289,20 +300,14 @@ class UserProcess
      * @param integer $id <p>id пользователя</p>
      * @return object <p>Объект с информацией о пользователе</p>
      */
-    public function getUserById( $id )
+    public function getUserById( int $id )
     {
-        // Соединение с БД
-        $db = Db::getConnection();
-
         // Текст запроса к БД
         $sql = 'SELECT * FROM users WHERE id = :id';
 
         // Получение и возврат результатов. Используется подготовленный запрос
-        $result = $db->prepare( $sql );
+        $result = $this->db->prepare( $sql );
         $result->bindParam( ':id', $id, PDO::PARAM_INT );
-
-        // Указываем, что хотим получить данные в виде массива
-        //$result->setFetchMode( PDO::FETCH_ASSOC );
         $result->execute();
 
         return $result->fetch();
@@ -316,18 +321,15 @@ class UserProcess
      * @param string $password <p>Пароль</p>
      * @return boolean <p>Результат выполнения метода</p>
      */
-    public static function edit( $id, $name, $email, $password )
+    public function edit( int $id, string $name, string $email, string $password )
     {
-        // Соединение с БД
-        $db = Db::getConnection();
-
         $password = password_hash( $password, PASSWORD_BCRYPT );
 
         // Текст запроса к БД
         $sql = 'UPDATE users SET name = :name, email = :email, password = :password WHERE id = :id';
 
         // Получение и возврат результатов. Используется подготовленный запрос
-        $result = $db->prepare( $sql );
+        $result = $this->db->prepare( $sql );
         $result->bindParam( ':id', $id, PDO::PARAM_INT );
         $result->bindParam( ':name', $name, PDO::PARAM_STR );
         $result->bindParam( ':email', $email, PDO::PARAM_STR );

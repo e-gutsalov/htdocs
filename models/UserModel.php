@@ -28,7 +28,7 @@ class UserModel
                 'id' => 0,
                 'title' => 'Пользователь',
                 'reg' => 'active',
-                'script' => 'wb',
+                'script' => 'handi',
                 'userProcess' => self::$userProcess,
                 'sess' => $_SESSION
             ];

@@ -15,11 +15,11 @@ class CartController
 {
     public function actionCart()
     {
-        $filename = CartModel::getCartPage();
         CartModel::showCart();
+        $filename = CartModel::getCartPage();
         $param = CartModel::getParam();
         CartView::getView( $filename, $param );
-        //var_dump($_SESSION);
+        var_dump($_SESSION);
     }
 
     /**
@@ -30,7 +30,6 @@ class CartController
     {
         // Добавляем товар в корзину и выводим результат: количество товаров в корзине
         echo CartModel::addProduct( $id );
-        //return true;
     }
 
     /**
@@ -41,8 +40,17 @@ class CartController
     {
         // Удаляем заданный товар из корзины
         echo CartModel::deleteProduct( $id );
+    }
 
-        // Возвращаем пользователя в корзину
-        //header("Location: /cart");
+    /**
+     * Action для страницы "Оформление покупки"
+     */
+    public function actionCheckout()
+    {
+        CartModel::checkoutProducts();
+        $filename = CartModel::getCartPage();
+        $param = CartModel::getParam();
+        CartView::getView( $filename, $param );
+        var_dump($_SESSION);
     }
 }
