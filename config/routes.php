@@ -11,7 +11,10 @@ return
 [
     '' => 'main/main',
     //'download' => 'download/download',
+
     'callback' => 'callback/callback',
+    'callback/send' => 'callback/send',
+
     //'chart' => 'chart/chart',
     //'screens' => 'about/about',
     'news/([0-9]+)' => 'news/view/$1',

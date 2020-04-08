@@ -24,22 +24,22 @@ class CartController
 
     /**
      * Action для добавления товара в корзину при помощи асинхронного запроса (ajax)
-     * @param integer $id <p>id товара</p>
+     * @param integer $code <p>id товара</p>
      */
-    public function actionAdd( int $id )
+    public function actionAdd( int $code )
     {
         // Добавляем товар в корзину и выводим результат: количество товаров в корзине
-        echo CartModel::addProduct( $id );
+        echo CartModel::addProduct( $code );
     }
 
     /**
      * Удаляет товар с указанным id из корзины
-     * @param integer $id <p>id товара</p>
+     * @param integer $code <p>id товара</p>
      */
-    public function actionDelete( $id )
+    public function actionDelete( $code )
     {
         // Удаляем заданный товар из корзины
-        echo CartModel::deleteProduct( $id );
+        echo CartModel::deleteProduct( $code );
     }
 
     /**

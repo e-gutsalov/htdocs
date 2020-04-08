@@ -127,7 +127,7 @@ class Cart
             // Если пользователь не гость
             // Получаем информацию о пользователе из БД
             $userId = $_SESSION['user']->id;
-            //$user = User::getUserById($userId);
+            //$user = User::getUserById( $userId );
             $userName = $_SESSION['user']->name;
         } else {
             // Если гость, поля формы останутся пустыми

@@ -20,4 +20,9 @@ class CallbackController
         $param = CallbackModel::getParam();
         CallbackView::getView( $filename, $param );
     }
+
+    public function actionSend()
+    {
+        echo CallbackModel::sendMail();
+    }
 }

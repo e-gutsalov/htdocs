@@ -149,6 +149,7 @@ class ComposerStaticInit4da123059fc0c8787c5dfc5b4c3a38fa
             'Psr\\Container\\' => 14,
             'PhpParser\\' => 10,
             'PhpOffice\\PhpSpreadsheet\\' => 25,
+            'PHPMailer\\PHPMailer\\' => 20,
         ),
         'O' => 
         array (
@@ -359,6 +360,10 @@ class ComposerStaticInit4da123059fc0c8787c5dfc5b4c3a38fa
         'PhpOffice\\PhpSpreadsheet\\' => 
         array (
             0 => __DIR__ . '/..' . '/phpoffice/phpspreadsheet/src/PhpSpreadsheet',
+        ),
+        'PHPMailer\\PHPMailer\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/phpmailer/phpmailer/src',
         ),
         'Opis\\Closure\\' => 
         array (
