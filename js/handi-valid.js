@@ -19,9 +19,11 @@ $( document ).ready( function() {
             success: function ( data ) {
                 data = $.parseJSON( data );
                 if ( data.success ){
-                    $( '#results' ).removeClass( 'alert-danger' ).addClass( 'alert-success' ).html( data.text );
+                    $( '#results' ).removeClass( 'alert-danger' ).addClass( 'alert-success' ).html( data.message );
+                    $( '#myModalLabel' ).html( data.title );
                 } else {
-                    $( '#results' ).removeClass( 'alert-success' ).addClass( 'alert-danger' ).html( data.text );
+                    $( '#results' ).removeClass( 'alert-success' ).addClass( 'alert-danger' ).html( data.message );
+                    $( '#myModalLabel' ).html( data.title );
                 }
             },
             error: function ( xhr, str ) {
