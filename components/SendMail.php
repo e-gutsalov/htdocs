@@ -14,7 +14,6 @@ use includes\PHPMailer\PHPMailer\Exception;
 class SendMail
 {
     private object $mail;
-    private array $inputs;
 
     public function __construct()
     {
@@ -62,25 +61,11 @@ class SendMail
     // отправляем письмо
         try {
             $this->mail->send();
-            return true; //echo $paramsMail->json;
+            return true;
         } catch ( Exception $e ) {
             echo $e->getMessage();
             return false;
         }
-    }
-
-    public function checkInputs()
-    {
-        // Если форма отправлена
-        // Получаем данные из формы
-        $definition = [
-            'InputName' => FILTER_SANITIZE_STRING,
-            'InputEmail' => FILTER_VALIDATE_EMAIL,
-            'InputPhone' => FILTER_SANITIZE_STRING,
-            'InputText' => FILTER_SANITIZE_STRING
-        ];
-
-        return $this->inputs = filter_input_array( INPUT_POST, $definition );
     }
 }
 

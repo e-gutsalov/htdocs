@@ -4,24 +4,34 @@
 namespace components;
 
 
+use models\OrderModel;
+
 class Cart
 {
     private object $db;
     public array $errors = [];
     public object $userProcess;
-    // Поля для формы
+//    Поля для формы
     public string $userName;
     public string $userPhone;
     public string $userComment;
-    // Статус успешного оформления заказа
+//    Статус успешного оформления заказа
     public bool $result = false;
+//    Отправка почты
+    private object $sendMail;
+    private object $paramsMail;
+
+
 
     public function __construct()
     {
-        // Соединение с БД
+//        Соединение с БД
         $this->db = Db::getConnection();
-
+//        Работа с пользователем
         $this->userProcess = new UserProcess();
+//        Настройка почты
+        $this->sendMail = new SendMail();
+        $this->paramsMail = new \stdClass();
     }
 
     /**
@@ -127,7 +137,7 @@ class Cart
             // Если пользователь не гость
             // Получаем информацию о пользователе из БД
             $userId = $_SESSION['user']->id;
-            //$user = User::getUserById( $userId );
+//            $user = $this->userProcess->getUserById( $userId );
             $userName = $_SESSION['user']->name;
         } else {
             // Если гость, поля формы останутся пустыми
@@ -138,36 +148,36 @@ class Cart
         if ( isset( $_POST['submit'] ) ) {
             // Если форма отправлена
             // Получаем данные из формы
-            $userName = $_POST['userName'];
-            $userPhone = $_POST['userPhone'];
-            $userComment = $_POST['userComment'];
 
             // Валидация полей
-            if ( !$this->userProcess->checkName( $userName ) ) {
+            if ( !$this->userProcess->checkName() ) {
                 $this->errors[] = 'Неправильное имя';
             }
-            if ( !$this->userProcess->checkPhone( $userPhone ) ) {
+            if ( !$this->userProcess->checkPhone() ) {
                 $this->errors[] = 'Неправильный телефон';
             }
+            if ( !$this->userProcess->checkAddress() ) {
+                $this->errors[] = 'Неправильный адрес';
+            }
+            if ( !$this->userProcess->checkComment() ) {
+                $this->errors[] = 'Слишком длинный комментарий';
+            }
 
-            /*
-                        if ( self::$errors == false ) {
-                            // Если ошибок нет
-                            // Сохраняем заказ в базе данных
-                            $result = Order::save($userName, $userPhone, $userComment, $userId, $productsInCart);
-
-                            if ($result) {
-                                // Если заказ успешно сохранен
-                                // Оповещаем администратора о новом заказе по почте
-                                $adminEmail = 'php.start@mail.ru';
-                                $message = '<a href="http://digital-mafia.net/admin/orders">Список заказов</a>';
-                                $subject = 'Новый заказ!';
-                                mail($adminEmail, $subject, $message);
-
-                                // Очищаем корзину
-                                Cart::clear();
-                            }
-                        }*/
+            if ( empty( $this->errors ) ) {
+                // Если ошибок нет
+                // Сохраняем заказ в базе данных
+               $this->result = OrderModel::save( $userId, $this->userProcess->name, $this->userProcess->address, $this->userProcess->phone, $this->userProcess->comment, $productsInCart );
+                if ( $this->result ) {
+                   // Если заказ успешно сохранен
+                   // Оповещаем администратора о новом заказе по почте
+                   $this->paramsMail->subject = 'Новый заказ! C сайта gutsalov.h1n.ru';
+                   $this->paramsMail->email = 'egutsalov@yandex.ru';
+                   $this->paramsMail->body = '<a href="https://www.gutsalov.h1n.ru/admin/orders">Список заказов</a>';
+                   $this->sendMail->send( $this->paramsMail );
+                    // Очищаем корзину
+                       Cart::clear();
+                   }
+               }
         }
     }
 
@@ -236,7 +246,7 @@ class Cart
 
         // Подсчитываем общую стоимость
         $total = 0;
-        if ( $productsInCart ) {
+        if ( is_array( $productsInCart ) ) {
             // Если в корзине не пусто
             // Проходим по переданному в метод массиву товаров
             foreach ( $products as $item ) {

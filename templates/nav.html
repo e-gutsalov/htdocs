@@ -67,9 +67,9 @@
                             <span class="caret"> </span>
                         </a>
                         <ul class="dropdown-menu">
+                            <?= empty( $this->param['sess']['user'] ) ? '<li><a href="/user/login">Вход</a></li>' : ''; ?>
                             <?= empty( $this->param['sess']['user'] ) ? '<li><a href="/user/register">Регистрация</a></li>' : ''; ?>
                             <?= empty( $this->param['sess']['user'] ) ? '' : '<li><a href="/user">Профиль</a></li>'; ?>
-                            <?= empty( $this->param['sess']['user'] ) ? '<li><a href="/user/login">Вход</a></li>' : ''; ?>
                             <?= empty( $this->param['sess']['user'] ) ? '' : '<li role="separator" class="divider"> </li>'; ?>
                             <?= empty( $this->param['sess']['user'] ) ? '' : '<li><a href="/user/logout">Выход</a></li>'; ?>
                         </ul>

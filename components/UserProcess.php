@@ -13,6 +13,9 @@ class UserProcess
     public string $name = '';
     public string $email = '';
     public string $password = '';
+    public string $phone = '';
+    public string $comment = '';
+    public string $address = '';
     public bool $result = false;
     public array $errors;
 
@@ -29,20 +32,15 @@ class UserProcess
     {
         // Обработка формы
         if ( isset( $_POST['submit'] ) ) {
-            // Если форма отправлена
-            // Получаем данные из формы
-            $this->name = filter_input(INPUT_POST, 'name', FILTER_SANITIZE_STRING);
-            $this->email = filter_input(INPUT_POST, 'email', FILTER_SANITIZE_EMAIL);
-            $this->password = filter_input(INPUT_POST, 'password', FILTER_SANITIZE_STRING);
 
             // Валидация полей
-            if ( !$this->checkName( $this->name ) ) {
+            if ( !$this->checkName() ) {
                 $this->errors[] = 'Имя не должно быть короче 2-х символов';
             }
-            if ( !$this->checkEmail( $this->email ) ) {
+            if ( !$this->checkEmail() ) {
                 $this->errors[] = 'Неправильный email';
             }
-            if ( !$this->checkPassword( $this->password ) ) {
+            if ( !$this->checkPassword() ) {
                 $this->errors[] = 'Пароль не должен быть короче 6-ти символов';
             }
             if ( $this->checkEmailExists( $this->email ) ) {
@@ -64,16 +62,12 @@ class UserProcess
     {
         // Обработка формы
         if ( isset( $_POST['submit'] ) ) {
-            // Если форма отправлена
-            // Получаем данные из формы
-            $this->email = filter_input(INPUT_POST, 'email', FILTER_SANITIZE_EMAIL);
-            $this->password = filter_input(INPUT_POST, 'password', FILTER_SANITIZE_STRING);
 
             // Валидация полей
-            if ( !$this->checkEmail( $this->email ) ) {
+            if ( !$this->checkEmail() ) {
                 $this->errors[] = 'Неправильный email';
             }
-            if ( !$this->checkPassword( $this->password ) ) {
+            if ( !$this->checkPassword() ) {
                 $this->errors[] = 'Пароль не должен быть короче 6-ти символов';
             }
 
@@ -100,20 +94,15 @@ class UserProcess
     {
         // Обработка формы
         if ( isset( $_POST['submit'] ) ) {
-            // Если форма отправлена
-            // Получаем данные из формы редактирования
-            $this->name = filter_input(INPUT_POST, 'name', FILTER_SANITIZE_STRING);
-            $this->email = filter_input(INPUT_POST, 'email', FILTER_SANITIZE_EMAIL);
-            $this->password = filter_input(INPUT_POST, 'password', FILTER_SANITIZE_STRING);
 
             // Валидация полей
-            if ( !$this->checkName( $this->name ) ) {
+            if ( !$this->checkName() ) {
                 $this->errors[] = 'Имя не должно быть короче 2-х символов';
             }
-            if ( !$this->checkEmail( $this->email ) ) {
+            if ( !$this->checkEmail() ) {
                 $this->errors[] = 'Неправильный email';
             }
-            if ( !$this->checkPassword( $this->password ) ) {
+            if ( !$this->checkPassword() ) {
                 $this->errors[] = 'Пароль не должен быть короче 6-ти символов';
             }
 
@@ -137,12 +126,14 @@ class UserProcess
 
     /**
      * Проверяет имя: не меньше, чем 2 символа
-     * @param string $name <p>Имя</p>
      * @return boolean <p>Результат выполнения метода</p>
      */
-    public function checkName( string $name )
+    public function checkName()
     {
-        if ( strlen( $name ) >= 2 ) {
+        // Если форма отправлена
+        // Получаем данные из формы
+        $this->name = filter_input( INPUT_POST, 'InputName', FILTER_SANITIZE_STRING );
+        if ( strlen( $this->name ) >= 2 ) {
             return true;
         }
         return false;
@@ -150,12 +141,14 @@ class UserProcess
 
     /**
      * Проверяет имя: не меньше, чем 6 символов
-     * @param string $password <p>Пароль</p>
      * @return boolean <p>Результат выполнения метода</p>
      */
-    public function checkPassword( string $password )
+    public function checkPassword()
     {
-        if ( strlen( $password ) >= 6 ) {
+        // Если форма отправлена
+        // Получаем данные из формы
+        $this->password = filter_input( INPUT_POST, 'InputPassword', FILTER_SANITIZE_STRING );
+        if ( strlen( $this->password ) >= 6 ) {
             return true;
         }
         return false;
@@ -163,28 +156,75 @@ class UserProcess
 
     /**
      * Проверяет email
-     * @param string $email <p>E-mail</p>
      * @return boolean <p>Результат выполнения метода</p>
      */
-    public function checkEmail( string $email )
+    public function checkEmail()
     {
-        if ( filter_var( $email, FILTER_VALIDATE_EMAIL ) ) {
+        // Если форма отправлена
+        // Получаем данные из формы
+        $this->email = filter_input( INPUT_POST, 'InputEmail', FILTER_SANITIZE_EMAIL );
+        if ( filter_var( $this->email, FILTER_VALIDATE_EMAIL ) ) {
             return true;
         }
         return false;
     }
 
     /**
-     * Проверяет телефон: не меньше, чем 10 символов
-     * @param string $phone <p>Телефон</p>
+     * Проверяет телефон: не меньше, чем 20 символов
      * @return boolean <p>Результат выполнения метода</p>
      */
-    public function checkPhone( string $phone )
+    public function checkPhone()
     {
-        if ( strlen( $phone ) >= 10 ) {
+        // Если форма отправлена
+        // Получаем данные из формы
+        $this->phone = filter_input( INPUT_POST, 'InputPhone', FILTER_SANITIZE_NUMBER_INT );
+        if ( strlen( $this->phone ) <= 20 ) {
             return true;
         }
         return false;
+    }
+
+    /**
+     * Проверяет адрес доставки пользователя
+     * @return boolean <p>Результат выполнения метода</p>
+     */
+    public function checkAddress()
+    {
+        // Если форма отправлена
+        // Получаем данные из формы
+        $this->address = filter_input( INPUT_POST, 'InputAddress', FILTER_SANITIZE_STRING );
+        if ( strlen( $this->address ) <= 555 ) {
+            return true;
+        }
+        return false;
+    }
+
+    /**
+     * Проверяет комментарий пользователя
+     * @return boolean <p>Результат выполнения метода</p>
+     */
+    public function checkComment()
+    {
+        // Если форма отправлена
+        // Получаем данные из формы
+        $this->comment = filter_input( INPUT_POST, 'InputComment', FILTER_SANITIZE_STRING );
+        if ( strlen( $this->comment ) <= 555 ) {
+            return true;
+        }
+        return false;
+    }
+
+    /**
+     * Возвращает идентификатор пользователя, если он авторизирован.<br/>
+     * Иначе перенаправляет на страницу входа
+     * <p>Идентификатор пользователя</p>
+     */
+    public function checkLogged()
+    {
+        // Если сессия есть, вернем идентификатор пользователя
+        if ( !is_object( $_SESSION['user'] ) ) {
+            header( 'Location: /user/login' );
+        }
     }
 
     /**
@@ -267,19 +307,6 @@ class UserProcess
     {
         // Записываем идентификатор пользователя в сессию
         $_SESSION['user'] = $user;
-    }
-
-    /**
-     * Возвращает идентификатор пользователя, если он авторизирован.<br/>
-     * Иначе перенаправляет на страницу входа
-     * <p>Идентификатор пользователя</p>
-     */
-    public function checkLogged()
-    {
-        // Если сессия есть, вернем идентификатор пользователя
-        if ( !is_object( $_SESSION['user'] ) ) {
-            header( 'Location: /user/login' );
-        }
     }
 
     /**

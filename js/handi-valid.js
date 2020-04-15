@@ -12,24 +12,24 @@ $( document ).ready( function() {
         } );
 
         let form = $( 'form' ).serialize();
-        $.ajax( {
+        $.ajax({
             type: 'POST',
             url: '/callback/send',
-            data: form,
-            success: function ( data ) {
+            data: form
+        } )
+            .done( function ( data ) {
                 data = $.parseJSON( data );
                 if ( data.success ){
+                    $( '#myModalLabel' ).html( data.title );
                     $( '#results' ).removeClass( 'alert-danger' ).addClass( 'alert-success' ).html( data.message );
-                    $( '#myModalLabel' ).html( data.title );
                 } else {
-                    $( '#results' ).removeClass( 'alert-success' ).addClass( 'alert-danger' ).html( data.message );
                     $( '#myModalLabel' ).html( data.title );
+                    $( '#results' ).removeClass( 'alert-success' ).addClass( 'alert-danger' ).html( data.message );
                 }
-            },
-            error: function ( xhr, str ) {
+            } )
+            .fail( function ( xhr, str ) {
                 alert( 'Возникла ошибка: ' + xhr.responseCode );
-            }
-        } );
+            } );
 
     } );
 
