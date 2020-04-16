@@ -40,6 +40,6 @@ class OrderModel
         $result->bindParam( ':user_comment', $userComment, PDO::PARAM_STR );
         $result->bindParam( ':products', $products, PDO::PARAM_STR );
 
-        return  $result->execute();
+        return $result->execute();
     }
 }

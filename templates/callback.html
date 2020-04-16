@@ -10,12 +10,12 @@
         <form action="#" method="post">
             <div class="form-group">
                 <label class="control-label" for="InputName">Введите имя</label>
-                <input type="text" class="form-control" id="InputName" name="InputName" aria-describedby="helpBlock1" placeholder="Имя" value="<?= empty( $this->param['sess']['user'] ) ? '' : $this->param['sess']['user']->name; ?>">
+                <input type="text" class="form-control" id="InputName" name="InputName" aria-describedby="helpBlock1" placeholder="Имя" value="<?= empty( $sess['user'] ) ? '' : $sess['user']->name; ?>">
                 <span id="helpBlock1" class="help-block">Введите Имя или Фамилию (Отчество), или все вместе.</span>
             </div>
             <div class="form-group">
                 <label class="control-label" for="InputEmail">Электронная почта</label>
-                <input type="email" class="form-control" id="InputEmail" name="InputEmail" aria-describedby="helpBlock2" placeholder="Электронная почта" value="<?= empty( $this->param['sess']['user'] ) ? '' : $this->param['sess']['user']->email; ?>">
+                <input type="email" class="form-control" id="InputEmail" name="InputEmail" aria-describedby="helpBlock2" placeholder="Электронная почта" value="<?= empty( $sess['user'] ) ? '' : $sess['user']->email; ?>">
                 <span id="helpBlock2" class="help-block">Укажите вашу почту для обратной связи.</span>
             </div>
             <div class="form-group">

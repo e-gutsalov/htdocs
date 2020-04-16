@@ -23,42 +23,42 @@ class SendMail
     public function send( object $paramsMail )
     {
         $this->mail->isSMTP();
-    // IP или хостнейм сервера, на котором находится Ваш почтовый аккаунт. Этот адрес Вы можете найти в письме с данными от хостинг-аккаунта.
+        // IP или хостнейм сервера, на котором находится Ваш почтовый аккаунт. Этот адрес Вы можете найти в письме с данными от хостинг-аккаунта.
         $this->mail->Host = 'smtp.yandex.ru';
         $this->mail->SMTPAuth = true;
-    // наименование почтового ящика, или логин на почтовом сервере. Как правило, Вы указываете его, когда создаете почтовый ящик.
+        // наименование почтового ящика, или логин на почтовом сервере. Как правило, Вы указываете его, когда создаете почтовый ящик.
         $this->mail->Username = 'handicraft@gutsalov.h1n.ru';
-    // пароль от почтового ящика.
+        // пароль от почтового ящика.
         $this->mail->Password = '!123qweasd';
         $this->mail->SMTPSecure = 'ssl';
         $this->mail->Port = '465';
-        $this->mail->SMTPOptions = ['ssl' => ['verify_peer' => false, 'verify_peer_name' => false, 'allow_self_signed' => true,]];
+        $this->mail->SMTPOptions = [ 'ssl' => [ 'verify_peer' => false, 'verify_peer_name' => false, 'allow_self_signed' => true, ] ];
         $this->mail->setLanguage( 'ru', '../language/' );
         // укажите 4, если почта не отправляется, чтобы узнать, почему
         $this->mail->SMTPDebug = 0;
 
-    // далее следует код, который отвечает за отправку письма
-    // укажите почтовый ящик отправителя. Рекомендуем указывать такой же, который указываем в авторизационных данных - LOGIN@DOMAIN.RU
+        // далее следует код, который отвечает за отправку письма
+        // укажите почтовый ящик отправителя. Рекомендуем указывать такой же, который указываем в авторизационных данных - LOGIN@DOMAIN.RU
         $this->mail->From = 'handicraft@gutsalov.h1n.ru';
-    // укажите имя отправителя, например "Сайт DOMAIN.RU"
+        // укажите имя отправителя, например "Сайт DOMAIN.RU"
         $this->mail->FromName = 'gutsalov.h1n.ru';
-    // укажите тему сообщения здесь
+        // укажите тему сообщения здесь
         $this->mail->Subject = $paramsMail->subject;
-    // текст сообщения
+        // текст сообщения
         $this->mail->Body = $paramsMail->body;
-    // кодировка, можете изменить на необходимую, но чаще всего используется UTF-8
+        // кодировка, можете изменить на необходимую, но чаще всего используется UTF-8
         $this->mail->CharSet = 'UTF-8';
-    //  укажите true вместо false, если хотите, чтобы сообщение обрабатывалось как HTML
+        //  укажите true вместо false, если хотите, чтобы сообщение обрабатывалось как HTML
         $this->mail->isHTML( true );
 
-    // укажите почтовый адрес получателя
+        // укажите почтовый адрес получателя
         try {
             $this->mail->addAddress( $paramsMail->email );
         } catch ( Exception $e ) {
             echo $e->errorMessage();
         }
 
-    // отправляем письмо
+        // отправляем письмо
         try {
             $this->mail->send();
             return true;

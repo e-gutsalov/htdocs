@@ -22,7 +22,6 @@ class Cart
     private object $paramsMail;
 
 
-
     public function __construct()
     {
 //        Соединение с БД
@@ -51,7 +50,7 @@ class Cart
             $products = $this->getProdustsByIds( $productsIds );
 
             // Получаем общую стоимость товаров
-            $_SESSION['cart']['totalPrice']  = $this->getTotalPrice( $products );
+            $_SESSION[ 'cart' ][ 'totalPrice' ] = $this->getTotalPrice( $products );
         }
     }
 
@@ -69,23 +68,23 @@ class Cart
         $productsInCart = [];
 
         // Если в корзине уже есть товары (они хранятся в сессии)
-        if ( isset( $_SESSION['cart']['productsCode'] ) ) {
+        if ( isset( $_SESSION[ 'cart' ][ 'productsCode' ] ) ) {
             // То заполним наш массив товарами
-            $productsInCart = $_SESSION['cart']['productsCode'];
+            $productsInCart = $_SESSION[ 'cart' ][ 'productsCode' ];
         }
 
         // Проверяем есть ли уже такой товар в корзине
         if ( array_key_exists( $code, $productsInCart ) ) {
             // Если такой товар есть в корзине, но был добавлен еще раз, увеличим количество на 1
-            $productsInCart[$code]++;
+            $productsInCart[ $code ]++;
         } else {
             // Если нет, добавляем id нового товара в корзину с количеством 1
-            $productsInCart[$code] = 1;
+            $productsInCart[ $code ] = 1;
         }
 
         // Записываем массив с товарами в сессию
-        $_SESSION['cart']['productsCode'] = $productsInCart;
-        $_SESSION['cart']['count'] = $this->countItems();
+        $_SESSION[ 'cart' ][ 'productsCode' ] = $productsInCart;
+        $_SESSION[ 'cart' ][ 'count' ] = $this->countItems();
 
         // Возвращаем количество товаров в корзине
         return $this->countItems();
@@ -102,21 +101,21 @@ class Cart
         $productsCodeInCart = $this->getProducts();
 
         // Удаляем из массива элемент с указанным code
-        unset( $productsCodeInCart[$code] );
+        unset( $productsCodeInCart[ $code ] );
 
         // Записываем массив товаров с удаленным элементом в сессию
-        $_SESSION['cart']['productsCode'] = $productsCodeInCart;
+        $_SESSION[ 'cart' ][ 'productsCode' ] = $productsCodeInCart;
 
         // Пересчет количества товаров в корзине (в сессии)
-        $_SESSION['cart']['count'] = $this->countItems();
+        $_SESSION[ 'cart' ][ 'count' ] = $this->countItems();
 
         // Удаляем из массива элемент с указанным code
-        unset( $_SESSION['cart']['productsInCart'][$code] );
+        unset( $_SESSION[ 'cart' ][ 'productsInCart' ][ $code ] );
 
         // Пересчет общей стоимости товаров
-        $_SESSION['cart']['totalPrice'] = $this->getTotalPrice( $_SESSION['cart']['productsInCart'] );
+        $_SESSION[ 'cart' ][ 'totalPrice' ] = $this->getTotalPrice( $_SESSION[ 'cart' ][ 'productsInCart' ] );
 
-        return json_encode( ['count' => $_SESSION['cart']['count'], 'totalPrice' => $_SESSION['cart']['totalPrice']] );
+        return json_encode( [ 'count' => $_SESSION[ 'cart' ][ 'count' ], 'totalPrice' => $_SESSION[ 'cart' ][ 'totalPrice' ] ] );
     }
 
     /**
@@ -136,16 +135,16 @@ class Cart
         if ( !$this->userProcess->isGuest() ) {
             // Если пользователь не гость
             // Получаем информацию о пользователе из БД
-            $userId = $_SESSION['user']->id;
+            $userId = $_SESSION[ 'user' ]->id;
 //            $user = $this->userProcess->getUserById( $userId );
-            $userName = $_SESSION['user']->name;
+            $userName = $_SESSION[ 'user' ]->name;
         } else {
             // Если гость, поля формы останутся пустыми
             $userId = false;
         }
 
         // Обработка формы
-        if ( isset( $_POST['submit'] ) ) {
+        if ( isset( $_POST[ 'submit' ] ) ) {
             // Если форма отправлена
             // Получаем данные из формы
 
@@ -166,18 +165,18 @@ class Cart
             if ( empty( $this->errors ) ) {
                 // Если ошибок нет
                 // Сохраняем заказ в базе данных
-               $this->result = OrderModel::save( $userId, $this->userProcess->name, $this->userProcess->address, $this->userProcess->phone, $this->userProcess->comment, $productsInCart );
+                $this->result = OrderModel::save( $userId, $this->userProcess->name, $this->userProcess->address, $this->userProcess->phone, $this->userProcess->comment, $productsInCart );
                 if ( $this->result ) {
-                   // Если заказ успешно сохранен
-                   // Оповещаем администратора о новом заказе по почте
-                   $this->paramsMail->subject = 'Новый заказ! C сайта gutsalov.h1n.ru';
-                   $this->paramsMail->email = 'egutsalov@yandex.ru';
-                   $this->paramsMail->body = '<a href="https://www.gutsalov.h1n.ru/admin/orders">Список заказов</a>';
-                   $this->sendMail->send( $this->paramsMail );
+                    // Если заказ успешно сохранен
+                    // Оповещаем администратора о новом заказе по почте
+                    $this->paramsMail->subject = 'Новый заказ! C сайта gutsalov.h1n.ru';
+                    $this->paramsMail->email = 'egutsalov@yandex.ru';
+                    $this->paramsMail->body = '<a href="https://www.gutsalov.h1n.ru/admin/orders">Список заказов</a>';
+                    $this->sendMail->send( $this->paramsMail );
                     // Очищаем корзину
-                       Cart::clear();
-                   }
-               }
+                    Cart::clear();
+                }
+            }
         }
     }
 
@@ -189,10 +188,10 @@ class Cart
     {
 
         // Проверка наличия товаров в корзине
-        if ( isset( $_SESSION['cart']['productsCode'] ) ) {
+        if ( isset( $_SESSION[ 'cart' ][ 'productsCode' ] ) ) {
             // Если массив с товарами есть
             // Подсчитаем и вернем их количество
-            return array_sum( $_SESSION['cart']['productsCode'] );
+            return array_sum( $_SESSION[ 'cart' ][ 'productsCode' ] );
         } else {
             // Если товаров нет, вернем 0
             return 0;
@@ -206,8 +205,8 @@ class Cart
      */
     public function getProducts()
     {
-        if ( isset( $_SESSION['cart']['productsCode'] ) ) {
-            return $_SESSION['cart']['productsCode'];
+        if ( isset( $_SESSION[ 'cart' ][ 'productsCode' ] ) ) {
+            return $_SESSION[ 'cart' ][ 'productsCode' ];
         }
         return false;
     }
@@ -220,18 +219,17 @@ class Cart
     public function getProdustsByIds( array $codesArray )
     {
         // Превращаем массив в строку для формирования условия в запросе
-        $codesString  = str_repeat('?,', count( $codesArray ) - 1) . '?';
+        $codesString = str_repeat( '?,', count( $codesArray ) - 1 ) . '?';
 
         $query = "SELECT * FROM product WHERE status = 1 AND code IN ( $codesString )";
         $stmt = $this->db->prepare( $query );
         $stmt->execute( $codesArray );
 
         // Получение и возврат результатов
-        while ( $row = $stmt->fetch() )
-        {
-            $_SESSION['cart']['productsInCart'][$row->code] = $row;
+        while ( $row = $stmt->fetch() ) {
+            $_SESSION[ 'cart' ][ 'productsInCart' ][ $row->code ] = $row;
         }
-        return $_SESSION['cart']['productsInCart'];
+        return $_SESSION[ 'cart' ][ 'productsInCart' ];
     }
 
     /**
@@ -251,7 +249,7 @@ class Cart
             // Проходим по переданному в метод массиву товаров
             foreach ( $products as $item ) {
                 // Находим общую стоимость: цена товара * количество товара
-                $total += $item->price * $productsInCart[$item->code];
+                $total += $item->price * $productsInCart[ $item->code ];
             }
         }
         return $total;
@@ -262,8 +260,8 @@ class Cart
      */
     public function clear()
     {
-        if ( isset( $_SESSION['cart'] ) ) {
-            unset( $_SESSION['cart'] );
+        if ( isset( $_SESSION[ 'cart' ] ) ) {
+            unset( $_SESSION[ 'cart' ] );
         }
     }
 }

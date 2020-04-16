@@ -19,7 +19,7 @@ class CartModel
 
     public static function getCartPage()
     {
-        return self::$filename = ['head', 'nav', self::$page, 'footer'];
+        return self::$filename = [ 'head', 'nav', self::$page, 'footer' ];
     }
 
     public static function getParam()

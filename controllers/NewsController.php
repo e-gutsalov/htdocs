@@ -19,14 +19,14 @@ class NewsController
     {
         echo '<br> Список новостей NewsController';
         NewsModel::getNewsList();
-        NewsModel::view($this->menuItem);
+        NewsModel::view( $this->menuItem );
 
     }
 
-    public function actionView($category = null, $id = null)
+    public function actionView( $category = null, $id = null )
     {
-        echo '<br>'.$category;
-        echo '<br>'.$id;
+        echo '<br>' . $category;
+        echo '<br>' . $id;
         echo '<br> NewsController';
     }
 }

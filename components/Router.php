@@ -18,18 +18,17 @@ class Router
 
     public function __construct()
     {
-        $routesPath = 'config/routes.php';
-        $this->routes = require $routesPath;
+        $this->routes = require 'config/routes.php';
     }
 
     /**
      * Получаем строку запроса
      * @return string
      */
-    private function getURI ()
+    private function getURI()
     {
-        if ( !empty( $_SERVER['REQUEST_URI'] ) ) {
-            $this->uri = trim( $_SERVER['REQUEST_URI'], '/' );
+        if ( !empty( $_SERVER[ 'REQUEST_URI' ] ) ) {
+            $this->uri = trim( $_SERVER[ 'REQUEST_URI' ], '/' );
         }
         return $this->uri;
     }
@@ -42,7 +41,7 @@ class Router
             if ( preg_match( "#^$uriPattern$#", $uri ) ) {
                 $internalRoute = preg_replace( "#$uriPattern#", $path, $uri );
                 $segments = explode( '/', $internalRoute );
-                $controllerName = 'controllers\\' . ucfirst( array_shift($segments) . 'Controller' );
+                $controllerName = 'controllers\\' . ucfirst( array_shift( $segments ) . 'Controller' );
                 $actionName = 'action' . ucfirst( array_shift( $segments ) );
 
                 try {
@@ -65,5 +64,6 @@ class Router
         }
 
         call_user_func( array( $controllerObject, 'actionMain' ) );
+        exit();
     }
 }

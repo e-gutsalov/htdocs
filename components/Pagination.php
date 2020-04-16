@@ -78,41 +78,33 @@ class Pagination
 
         $html = '<ul class="pagination">';
         # Генерируем ссылки
-        for ( $page = $limits[0]; $page <= $limits[1]; $page++ )
-        {
+        for ( $page = $limits[ 0 ]; $page <= $limits[ 1 ]; $page++ ) {
             # Если страница - это текущая страница, ссылки нет и добавляется класс active
-            if ( $page == $this->current_page )
-            {
+            if ( $page == $this->current_page ) {
                 $links .= '<li class="active"><a href="#">' . $page . '</a></li>';
-            } else
-                {
+            } else {
                 # Иначе генерируем ссылку
                 $links .= $this->generateHtml( $page );
-                }
+            }
         }
 
         # Если ссылки создались
-        if ( !is_null( $links ) )
-        {
+        if ( !is_null( $links ) ) {
             # Если текущая страница не первая
-            if ( $this->current_page > 1 )
-            {
+            if ( $this->current_page > 1 ) {
                 # Создаём ссылку "На первую"
-                $links = $this->generateHtml(1, '&laquo;') . $links;
-            } else
-                {
+                $links = $this->generateHtml( 1, '&laquo;' ) . $links;
+            } else {
                 $links = '<li class="disabled"><a href="#">&laquo;</a></li>' . $links;
-                }
+            }
 
             # Если текущая страница не последняя
-            if ( $this->current_page < $this->amount )
-            {
+            if ( $this->current_page < $this->amount ) {
                 # Создаём ссылку "На последнюю"
-                $links .= $this->generateHtml($this->amount, '&raquo;');
-            } else
-                {
+                $links .= $this->generateHtml( $this->amount, '&raquo;' );
+            } else {
                 $links = $links . '<li class="disabled"><a href="#">&raquo;</a></li>';
-                }
+            }
         }
 
         $html .= $links . '</ul>';
@@ -135,7 +127,7 @@ class Pagination
             # Указываем, что текст - цифра страницы
             $text = $page;
 
-        $currentURI = rtrim( $_SERVER['REQUEST_URI'], '/' ) . '/';
+        $currentURI = rtrim( $_SERVER[ 'REQUEST_URI' ], '/' ) . '/';
         $currentURI = preg_replace( '#/p[0-9]+#', '', $currentURI );
         # Формируем HTML код ссылки и возвращаем
         return '<li><a href="' . $currentURI . $this->index . $page . '">' . $text . '</a></li>';
@@ -155,18 +147,16 @@ class Pagination
         $start = $left > 0 ? $left : 1;
 
         # Если впереди есть как минимум $this->max страниц
-        if ( $start + $this->max <= $this->amount )
-        {
+        if ( $start + $this->max <= $this->amount ) {
             # Назначаем конец цикла вперёд на $this->max страниц или просто на минимум
             $end = $start > 1 ? $start + $this->max : $this->max;
-        } else
-            {
+        } else {
             # Конец - общее количество страниц
             $end = $this->amount;
 
             # Начало - минус $this->max от конца
             $start = $this->amount - $this->max > 0 ? $this->amount - $this->max : 1;
-            }
+        }
 
         # Возвращаем
         return array( $start, $end );
@@ -183,17 +173,15 @@ class Pagination
         $this->current_page = $currentPage;
 
         # Если текущая страница больше нуля
-        if ( $this->current_page > 0 )
-        {
+        if ( $this->current_page > 0 ) {
             # Если текущая страница меньше общего количества страниц
             if ( $this->current_page > $this->amount )
                 # Устанавливаем страницу на последнюю
                 $this->current_page = $this->amount;
-        } else
-            {
+        } else {
             # Устанавливаем страницу на первую
             $this->current_page = 1;
-            }
+        }
     }
 
     /**

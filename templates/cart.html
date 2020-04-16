@@ -17,7 +17,7 @@
 
         <a class="btn btn-primary checkout" href="/catalog" role="button"><i class="fa fa-shopping-cart"> </i> Вернуться к покупкам</a>
 
-    <?php if ( !empty( $this->param['sess']['cart']['productsInCart'] ) ): ?>
+    <?php if ( !empty( $sess['cart']['productsInCart'] ) ): ?>
 
         <a class="btn btn-danger checkout" href="/cart/checkout"><i class="fa fa-shopping-cart"></i> Оформить заказ</a>
 
@@ -33,7 +33,7 @@
                 <th>Удалить</th>
             </tr>
 
-            <?php foreach ( $this->param['sess']['cart']['productsInCart'] as $product ): ?>
+            <?php foreach ( $sess['cart']['productsInCart'] as $product ): ?>
 
             <tr class="cart-del">
                 <td><?= $product->code ?></td>
@@ -43,7 +43,7 @@
                     </a>
                 </td>
                 <td><?= $product->price ?></td>
-                <td><?= $this->param['sess']['cart']['productsCode'][$product->code] ?></td>
+                <td><?= $sess['cart']['productsCode'][$product->code] ?></td>
                 <td>
                     <a class="del-to-cart" href="/cart/delete/" data-id="<?= $product->code ?>">
                         <span class="glyphicon glyphicon-remove" aria-hidden="true"> </span>
@@ -55,7 +55,7 @@
 
             <tr>
                 <td colspan="4">Общая стоимость, ₽:</td>
-                <td id="totalPrice"><?= $this->param['sess']['cart']['totalPrice'] ?></td>
+                <td id="totalPrice"><?= $sess['cart']['totalPrice'] ?></td>
             </tr>
 
         </table>
@@ -66,9 +66,5 @@
     <?php endif; ?>
 
     </div>
-
-    <br>
-
-    <!--div class="well well-lg">Handicraft 2019 - 2020</div-->
 
 </div>

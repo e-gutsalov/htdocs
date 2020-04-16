@@ -21,8 +21,8 @@ class UserController
     }
 
     /**
-    * Action для страницы "Вход на сайт"
-    */
+     * Action для страницы "Вход на сайт"
+     */
     public function actionLogin()
     {
         UserModel::userLogin();
@@ -59,7 +59,7 @@ class UserController
     public function actionLogout()
     {
         // Удаляем информацию о пользователе из сессии
-        unset( $_SESSION['user'] );
+        unset( $_SESSION[ 'user' ] );
 
         // Перенаправляем пользователя на главную страницу
         header( 'Location: /' );

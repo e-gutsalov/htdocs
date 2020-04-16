@@ -18,6 +18,6 @@ class AboutController
     {
         $filename = AboutModel::getMain();
         $param = AboutModel::getParam();
-        AboutView::getView($filename, $param);
+        AboutView::getView( $filename, $param );
     }
 }

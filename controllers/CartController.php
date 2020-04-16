@@ -50,6 +50,5 @@ class CartController
         $filename = CartModel::getCartPage();
         $param = CartModel::getParam();
         CartView::getView( $filename, $param );
-        var_dump($_SESSION);
     }
 }

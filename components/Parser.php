@@ -37,8 +37,7 @@ class Parser
         //var_dump( $elementsDom->item(0)->attributes->item(3) );
 
         $elements = '';
-        for ( $i = 0; $i < $elementsDom->length; $i++ )
-        {
+        for ( $i = 0; $i < $elementsDom->length; $i++ ) {
             $elements .= $elementsDom->item( $i )->nodeValue . '<br>';
         }
         echo $elements;

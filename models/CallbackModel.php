@@ -20,7 +20,7 @@ class CallbackModel
 
     public static function getCallback()
     {
-        return $filename = ['head', 'nav', 'callback', 'footer'];
+        return $filename = [ 'head', 'nav', 'callback', 'footer' ];
     }
 
     public static function getParam()
@@ -38,7 +38,7 @@ class CallbackModel
     {
         self::checkInputs();
         self::$json = self::messageSite();
-        if ( self::$statusSend ){
+        if ( self::$statusSend ) {
             self::$sendMail = new SendMail();
             self::$sendMail->send( self::$paramsMail );
             return self::$json;
@@ -53,8 +53,8 @@ class CallbackModel
             self::$statusSend = true;
             self::$paramsMail = new \stdClass();
             self::$paramsMail->subject = 'Обращение на сайте gutsalov.h1n.ru';
-            self::$paramsMail->email = self::$inputs['InputEmail'];
-            self::$paramsMail->body = self::$inputs['InputName'] . ', спасибо за ваше обращение! Мы рассмотрим его в ближайшее время! <br>' . self::$inputs['InputEmail'] . '<br>' . self::$inputs['InputPhone'] . '<br>' . 'Текст обращения:'. '<br>' . self::$inputs['InputText'];
+            self::$paramsMail->email = self::$inputs[ 'InputEmail' ];
+            self::$paramsMail->body = self::$inputs[ 'InputName' ] . ', спасибо за ваше обращение! Мы рассмотрим его в ближайшее время! <br>' . self::$inputs[ 'InputEmail' ] . '<br>' . self::$inputs[ 'InputPhone' ] . '<br>' . 'Текст обращения:' . '<br>' . self::$inputs[ 'InputText' ];
             return json_encode( [
                 'success' => true,
                 'title' => 'Ваше обращение принято!',

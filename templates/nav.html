@@ -48,30 +48,30 @@
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
 
                 <ul class="nav navbar-nav">
-                    <li class="<?= isset( $this->param['main'] ) ? 'active' : ''; ?>"><a href="/"><span class="glyphicon glyphicon-home" aria-hidden="true"> </span> Главная</a></li>
-                    <li class="<?= isset( $this->param['catalog'] ) ? 'active' : ''; ?>"><a href="/catalog"><span class="glyphicon glyphicon-list-alt" aria-hidden="true"> </span> Каталог</a></li>
+                    <li class="<?= isset( $main ) ? 'active' : ''; ?>"><a href="/"><span class="glyphicon glyphicon-home" aria-hidden="true"> </span> Главная</a></li>
+                    <li class="<?= isset( $catalog ) ? 'active' : ''; ?>"><a href="/catalog"><span class="glyphicon glyphicon-list-alt" aria-hidden="true"> </span> Каталог</a></li>
                     <li class="{news}"><a href="/news"><span class="glyphicon glyphicon-bell" aria-hidden="true"> </span> Новости</a></li>
-                    <li class="<?= isset( $this->param['callback'] ) ? 'active' : ''; ?>"><a href="/callback"><span class="glyphicon glyphicon-envelope" aria-hidden="true"> </span> Обратная связь</a></li>
+                    <li class="<?= isset( $callback ) ? 'active' : ''; ?>"><a href="/callback"><span class="glyphicon glyphicon-envelope" aria-hidden="true"> </span> Обратная связь</a></li>
                 </ul>
 
                 <ul class="nav navbar-nav navbar-right">
-                    <li class="<?= isset( $this->param['cart'] ) ? 'active' : ''; ?>">
+                    <li class="<?= isset( $cart ) ? 'active' : ''; ?>">
                         <a href="/cart">
                             <span class="glyphicon glyphicon-shopping-cart" aria-hidden="true"> </span> Корзина
-                            <span class="badge" id="cart-count"><?= isset( $this->param['sess']['cart']['count'] ) ? $this->param['sess']['cart']['count'] : '0'; ?></span>
+                            <span class="badge" id="cart-count"><?= isset( $sess['cart']['count'] ) ? $sess['cart']['count'] : '0'; ?></span>
                         </a>
                     </li>
                     <li class="dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
-                            <?= empty( $this->param['sess']['user'] ) ? '<span class="glyphicon glyphicon-lock" aria-hidden="true"> </span> Войти/Регистрация' : '<span class="glyphicon glyphicon-user" aria-hidden="true"> </span> Профиль'; ?>
+                            <?= empty( $sess['user'] ) ? '<span class="glyphicon glyphicon-lock" aria-hidden="true"> </span> Войти/Регистрация' : '<span class="glyphicon glyphicon-user" aria-hidden="true"> </span> Профиль'; ?>
                             <span class="caret"> </span>
                         </a>
                         <ul class="dropdown-menu">
-                            <?= empty( $this->param['sess']['user'] ) ? '<li><a href="/user/login">Вход</a></li>' : ''; ?>
-                            <?= empty( $this->param['sess']['user'] ) ? '<li><a href="/user/register">Регистрация</a></li>' : ''; ?>
-                            <?= empty( $this->param['sess']['user'] ) ? '' : '<li><a href="/user">Профиль</a></li>'; ?>
-                            <?= empty( $this->param['sess']['user'] ) ? '' : '<li role="separator" class="divider"> </li>'; ?>
-                            <?= empty( $this->param['sess']['user'] ) ? '' : '<li><a href="/user/logout">Выход</a></li>'; ?>
+                            <?= empty( $sess['user'] ) ? '<li><a href="/user/login">Вход</a></li>' : ''; ?>
+                            <?= empty( $sess['user'] ) ? '<li><a href="/user/register">Регистрация</a></li>' : ''; ?>
+                            <?= empty( $sess['user'] ) ? '' : '<li><a href="/user">Профиль</a></li>'; ?>
+                            <?= empty( $sess['user'] ) ? '' : '<li role="separator" class="divider"> </li>'; ?>
+                            <?= empty( $sess['user'] ) ? '' : '<li><a href="/user/logout">Выход</a></li>'; ?>
                         </ul>
                     </li>
                     <li><p class="navbar-text">Заказ товара <a href="tel: +79219999999">+7-999-999-99-99</a></p></li>

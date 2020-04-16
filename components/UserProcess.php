@@ -31,7 +31,7 @@ class UserProcess
     public function userRegisterProcess()
     {
         // Обработка формы
-        if ( isset( $_POST['submit'] ) ) {
+        if ( isset( $_POST[ 'submit' ] ) ) {
 
             // Валидация полей
             if ( !$this->checkName() ) {
@@ -61,7 +61,7 @@ class UserProcess
     public function userLoginProcess()
     {
         // Обработка формы
-        if ( isset( $_POST['submit'] ) ) {
+        if ( isset( $_POST[ 'submit' ] ) ) {
 
             // Валидация полей
             if ( !$this->checkEmail() ) {
@@ -93,7 +93,7 @@ class UserProcess
     public function userEditProcess()
     {
         // Обработка формы
-        if ( isset( $_POST['submit'] ) ) {
+        if ( isset( $_POST[ 'submit' ] ) ) {
 
             // Валидация полей
             if ( !$this->checkName() ) {
@@ -108,7 +108,7 @@ class UserProcess
 
             if ( empty( $this->errors ) ) {
                 // Если ошибок нет, сохраняет изменения профиля
-                $this->result = $this->edit( $_SESSION['user']->id, $this->name, $this->email, $this->password );
+                $this->result = $this->edit( $_SESSION[ 'user' ]->id, $this->name, $this->email, $this->password );
             }
 
             // Проверяем существует ли пользователь
@@ -222,7 +222,7 @@ class UserProcess
     public function checkLogged()
     {
         // Если сессия есть, вернем идентификатор пользователя
-        if ( !is_object( $_SESSION['user'] ) ) {
+        if ( !is_object( $_SESSION[ 'user' ] ) ) {
             header( 'Location: /user/login' );
         }
     }
@@ -240,10 +240,10 @@ class UserProcess
 
         // Получение результатов. Используется подготовленный запрос
         $result = $this->db->prepare( $sql );
-        $result->bindParam(':email', $email, PDO::PARAM_STR );
+        $result->bindParam( ':email', $email, PDO::PARAM_STR );
         $result->execute();
 
-        if ( $result->fetchColumn() ){
+        if ( $result->fetchColumn() ) {
             return true;
         }
         return false;
@@ -286,16 +286,17 @@ class UserProcess
      */
     public function register( string $name, string $email, string $password )
     {
-        $password = password_hash( $password, PASSWORD_BCRYPT);
+        $password = password_hash( $password, PASSWORD_BCRYPT );
 
         // Текст запроса к БД
         $sql = 'INSERT INTO users ( name, email, password ) VALUES ( :name, :email, :password )';
 
         // Получение и возврат результатов. Используется подготовленный запрос
-        $result = $this->db->prepare($sql);
+        $result = $this->db->prepare( $sql );
         $result->bindParam( ':name', $name, PDO::PARAM_STR );
         $result->bindParam( ':email', $email, PDO::PARAM_STR );
         $result->bindParam( ':password', $password, PDO::PARAM_STR );
+
         return $result->execute();
     }
 
@@ -306,7 +307,7 @@ class UserProcess
     public function auth( object $user )
     {
         // Записываем идентификатор пользователя в сессию
-        $_SESSION['user'] = $user;
+        $_SESSION[ 'user' ] = $user;
     }
 
     /**
@@ -315,7 +316,7 @@ class UserProcess
      */
     public function isGuest()
     {
-        if ( isset( $_SESSION['user'] ) ) {
+        if ( isset( $_SESSION[ 'user' ] ) ) {
             return false;
         } else {
             return true;

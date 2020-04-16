@@ -24,6 +24,7 @@ class Buffer {
     public function sendFile()
     {
         ob_start();
+        extract( $this->param );
         foreach ( $this->filename as $key => $value )
         {
             if ( file_exists("templates/$value.html" ) )
@@ -34,19 +35,6 @@ class Buffer {
         $this->buffer = ob_get_contents();
         ob_end_clean();
     }
-
-	/*
-	public function sendFile()
-    {
-        foreach ( $this->filename as $key => $value )
-        {
-            if ( file_exists( "templates/$value.html" ) )
-            {
-                $this->buffer[$value] = file_get_contents( "templates/$value.html" );
-            }
-        }
-	}
-	*/
 
 	public function view()
     {

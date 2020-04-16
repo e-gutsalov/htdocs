@@ -17,6 +17,6 @@ class ChartController
     {
         $filename = ChartModel::getChart();
         $param = ChartModel::getParam();
-        ChartView::getView($filename, $param);
+        ChartView::getView( $filename, $param );
     }
 }

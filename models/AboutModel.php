@@ -16,11 +16,11 @@ class AboutModel
 
     public static function getMain()
     {
-        return $filename = ['head', 'nav', 'screenshots', 'footer'];
+        return $filename = [ 'head', 'nav', 'screenshots', 'footer' ];
     }
 
     public static function getParam()
     {
-        return $param = ['screens' => 'active'];
+        return $param = [ 'screens' => 'active' ];
     }
 }

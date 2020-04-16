@@ -7,18 +7,18 @@
                     <h2 class="title text-center">Оформление заказа</h2>
 
 
-                    <?php if ( $this->param['cartProcess']->result ): ?>
+                    <?php if ( $cartProcess->result ): ?>
                     <p>Заказ оформлен. Мы Вам перезвоним.</p>
                     <?php else: ?>
 
-                    <p>Выбрано товаров: <?= $this->param['sess']['cart']['count']; ?> , на сумму: <?= $this->param['sess']['cart']['totalPrice'] ?> ₽</p><br/>
+                    <p>Выбрано товаров: <?= $sess['cart']['count']; ?> , на сумму: <?= $sess['cart']['totalPrice'] ?> ₽</p><br/>
 
-                    <?php if ( !$this->param['cartProcess']->result ): ?>
+                    <?php if ( !$cartProcess->result ): ?>
 
                     <div class="col-sm-9">
-                        <?php if ( isset( $this->param['cartProcess']->errors ) && is_array( $this->param['cartProcess']->errors ) ): ?>
+                        <?php if ( isset( $cartProcess->errors ) && is_array( $cartProcess->errors ) ): ?>
                         <ul>
-                            <?php foreach ( $this->param['cartProcess']->errors as $error ): ?>
+                            <?php foreach ( $cartProcess->errors as $error ): ?>
                             <li> - <?= $error; ?></li>
                             <?php endforeach; ?>
                         </ul>
@@ -31,19 +31,19 @@
 
                                 <div class="form-group">
                                     <label for="userName">Ваше имя</label>
-                                    <input class="form-control" id="userName" type="text" name="InputName" placeholder="Ваше имя" value="<?= empty( $this->param['sess']['user'] ) ? '' : $this->param['sess']['user']->name; ?>">
+                                    <input class="form-control" id="userName" type="text" name="InputName" placeholder="Ваше имя" value="<?= empty( $sess['user'] ) ? '' : $sess['user']->name; ?>">
                                 </div>
                                 <div class="form-group">
                                     <label for="userPhone">Номер телефона</label>
-                                    <input class="form-control" id="userPhone" type="text" name="InputPhone" placeholder="Номер телефона" value="<?= empty( $this->param['sess']['user'] ) ? '' : ''; ?>">
+                                    <input class="form-control" id="userPhone" type="text" name="InputPhone" placeholder="Номер телефона" value="<?= empty( $sess['user'] ) ? '' : ''; ?>">
                                 </div>
                                 <div class="form-group">
                                     <label for="userAddress">Адрес доставки</label>
-                                    <input class="form-control" id="userAddress" type="text" name="InputAddress" placeholder="Адрес доставки" value="<?= empty( $this->param['sess']['user'] ) ? '' : ''; ?>">
+                                    <input class="form-control" id="userAddress" type="text" name="InputAddress" placeholder="Адрес доставки" value="<?= empty( $sess['user'] ) ? '' : ''; ?>">
                                 </div>
                                 <div class="form-group">
                                     <label for="userComment">Комментарий к заказу</label>
-                                    <textarea class="form-control" id="userComment" type="text" name="InputComment" placeholder="Комментарий к заказу"><?= empty( $this->param['sess']['user'] ) ? '' : ''; ?></textarea>
+                                    <textarea class="form-control" id="userComment" type="text" name="InputComment" placeholder="Комментарий к заказу"><?= empty( $sess['user'] ) ? '' : ''; ?></textarea>
                                 </div>
                                     <input class="btn btn-danger" type="submit" name="submit" value="Оформить">
 

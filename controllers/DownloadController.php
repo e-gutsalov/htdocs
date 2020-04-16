@@ -18,6 +18,6 @@ class DownloadController
     {
         $filename = DownloadModel::getDownload();
         $param = DownloadModel::getParam();
-        DownloadView::getView($filename, $param);
+        DownloadView::getView( $filename, $param );
     }
 }

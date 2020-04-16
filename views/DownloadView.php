@@ -14,11 +14,9 @@ use components\Render;
 
 class DownloadView
 {
-    public static function getView($filename, $param)
+    public static function getView( $filename, $param )
     {
-        $buffer = new Buffer($filename);
-        $page = $buffer->view();
-        $render = new Render($page, $param);
+        $render = new Render( $filename, $param );
         $render->show();
     }
 }
