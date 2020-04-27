@@ -14,3 +14,16 @@
 Route::get('/', function () {
     return view('welcome');
 });
+
+Route::get('test/show', 'TestController@show');
+
+Route::match(['get', 'post'], 'test/form', 'TestController@form');
+
+//Route::get('test/form', 'TestController@form');
+//Route::post('test/form', 'TestController@form');
+
+//Route::post('test/result', 'TestController@result');
+
+Route::get('test/show1', 'TestController@show1');
+
+Route::get('test/show2/{param}', 'TestController@show2');

@@ -27,9 +27,9 @@ class Buffer {
         extract( $this->param );
         foreach ( $this->filename as $key => $value )
         {
-            if ( file_exists("templates/$value.html" ) )
+            if ( file_exists("templates/$value.tpl.php" ) )
             {
-                require "templates/$value.html";
+                require "templates/$value.tpl.php";
             }
         }
         $this->buffer = ob_get_contents();

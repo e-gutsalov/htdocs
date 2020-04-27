@@ -16,7 +16,7 @@ class OrderModel
      * @param integer $userId <p>id пользователя</p>
      * @param string $userName <p>Имя</p>
      * @param string $userPhone <p>Телефон</p>
-     * @param $userAddress <p>Адрес</p>
+     * @param string $userAddress <p>Адрес</p>
      * @param string $userComment <p>Комментарий</p>
      * @param array $products <p>Массив с товарами</p>
      * @return boolean <p>Результат выполнения метода</p>

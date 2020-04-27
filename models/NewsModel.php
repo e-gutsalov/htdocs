@@ -10,7 +10,7 @@ namespace models;
 
 class NewsModel
 {
-    public static function getNewsItemById($id)
+    public static function getNewsItemById( $id )
     {
     }
 
@@ -19,7 +19,7 @@ class NewsModel
         echo '<br> Список новостей NewsModel';
     }
 
-    public static function view($menuItem)
+    public static function view( $menuItem )
     {
         ob_start();
         include 'templates/head.html';

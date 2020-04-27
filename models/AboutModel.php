@@ -11,8 +11,8 @@ namespace models;
 
 class AboutModel
 {
-    public static $title = 'О нас';
-    public static $main = 'about';
+    public static string $title = 'О нас';
+    public static string $main = 'about';
 
     public static function getMain()
     {

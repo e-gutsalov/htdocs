@@ -9,12 +9,11 @@
 namespace views;
 
 
-use components\Buffer;
 use components\Render;
 
 class DownloadView
 {
-    public static function getView( $filename, $param )
+    public static function getView( array $filename, array $param )
     {
         $render = new Render( $filename, $param );
         $render->show();

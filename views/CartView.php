@@ -8,7 +8,6 @@
 
 namespace views;
 
-//use components\Buffer;
 use components\Render;
 
 class CartView
