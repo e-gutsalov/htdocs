@@ -9,7 +9,7 @@
     <link type="text/css" href="/css/bootstrap-social.css" rel="stylesheet">
     <link type="text/css" href="/css/font-awesome.css" rel="stylesheet">
     <link type="text/css" href="/css/style.css" rel="stylesheet">
-    <script type="text/javascript" src="/js/jquery-3.5.0.js"></script>
+    <script type="text/javascript" src="/js/jquery-3.5.1.js"></script>
     <script type="text/javascript" src="/js/bootstrap.js"></script>
     <script type="text/javascript" src="/js/<?= $script; ?>.js"></script>
     <title>Handicraft - <?= $title ;?></title>
