@@ -22,10 +22,10 @@ class NewsModel
     public static function view( $menuItem )
     {
         ob_start();
-        include 'templates/head.html';
-        include 'templates/nav.html';
-        include 'templates/main.html';
-        include 'templates/footer.html';
+        include 'templates/head.tpl.php';
+        include 'templates/nav.tpl.php';
+        include 'templates/main.tpl.php';
+        include 'templates/footer.tpl.php';
         $content = ob_get_contents();
         ob_end_clean();
         echo $content;

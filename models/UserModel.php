@@ -11,13 +11,11 @@ class UserModel
 {
     private static array $filename;
     private static array $param;
-    private static object $db;
     private static object $userProcess;
     private static string $page = '';
 
     public static function getUserPage()
     {
-        self::$db = Db::getConnection();
         return self::$filename = ['head', 'nav', self::$page, 'footer'];
     }
 

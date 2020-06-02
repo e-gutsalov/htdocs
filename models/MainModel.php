@@ -22,11 +22,9 @@ class MainModel
     private static int $status = 1;
     private static int $category_id = 0;
     const SHOW_BY_PRODUCTS = 6;
-    private static object $db;
 
     public static function getMainPage()
     {
-        self::$db = Db::getConnection();
         return self::$filename = ['head', 'nav', 'catalog', 'catalog_menu', 'carousel', 'product', 'footer'];
     }
 
@@ -52,10 +50,11 @@ class MainModel
 
     public static function getCategoriesList()
     {
-        //$db = Db::getConnection();
+        // Соединение с БД
+        $db = Db::getConnection();
 
         $query = 'SELECT id, name, category FROM category WHERE status = :status ORDER BY category ASC';
-        $stmt = self::$db->prepare( $query );
+        $stmt = $db->prepare( $query );
         $stmt->bindParam( ':status', self::$status );
         $stmt->execute();
         if ( $stmt->rowCount() > 0 )
@@ -71,10 +70,11 @@ class MainModel
 
     public static function getLatestProducts( $count = self::SHOW_BY_PRODUCTS )
     {
-        //$db = Db::getConnection();
+        // Соединение с БД
+        $db = Db::getConnection();
 
         $query = 'SELECT id, name, code, price, image, new, short_description FROM product WHERE status = :status ORDER BY id DESC LIMIT :count';
-        $stmt = self::$db->prepare( $query );
+        $stmt = $db->prepare( $query );
         $stmt->bindParam( ':status', self::$status );
         $stmt->bindParam( ':count', $count, PDO::PARAM_INT );
         $stmt->execute();
@@ -91,16 +91,15 @@ class MainModel
 
     public static function getImagesCarousel()
     {
-        //$db = Db::getConnection();
+        // Соединение с БД
+        $db = Db::getConnection();
 
-        //$query = 'SELECT id, name, price, image, new, short_description FROM product WHERE status = :status ORDER BY id DESC';
         $query = "SELECT product.id, product.name, product.code, product.new, product.description, product.price, images.image1, images.image2, images.image3, images.image4, images.image5
                     FROM handicrafts.product
                     JOIN handicrafts.images ON images.code = product.code
                     WHERE status = :status AND product.new = 'new' ORDER BY id DESC";
-        $stmt = self::$db->prepare( $query );
+        $stmt = $db->prepare( $query );
         $stmt->bindParam( ':status', self::$status );
-        //$stmt->bindParam( ':count', $count, PDO::PARAM_INT );
         $stmt->execute();
         if ( $stmt->rowCount() > 0 )
         {
