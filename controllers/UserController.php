@@ -54,6 +54,17 @@ class UserController
     }
 
     /**
+     * Action для страницы "Список покупок"
+     */
+    public function actionHistory()
+    {
+        UserModel::userHistory();
+        $param = UserModel::getParam();
+        $filename = UserModel::getUserPage();
+        UserView::getView( $filename, $param );
+    }
+
+    /**
      * Удаляем данные о пользователе из сессии
      */
     public function actionLogout()

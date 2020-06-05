@@ -4,6 +4,7 @@
 namespace components;
 
 
+use models\OrderModel;
 use PDO;
 
 class UserProcess
@@ -18,6 +19,7 @@ class UserProcess
     public string $address = '';
     public bool $result = false;
     public array $errors;
+    public array $ordersList = [];
 
     public function __construct()
     {
@@ -364,5 +366,27 @@ class UserProcess
         $result->bindParam( ':password', $password, PDO::PARAM_STR );
 
         return $result->execute();
+    }
+
+    /**
+     * Возвращает список заказов
+     * @return void <p>Список заказов</p>
+     */
+    public function getOrdersListByUser()
+    {
+        // Получение и возврат результатов
+        // Текст запроса к БД
+        $sql = 'SELECT * FROM customers JOIN orders ON customers.id = orders.customers_id WHERE user_id = :user_id ORDER BY customers.id DESC';
+        $stmt = $this->db->prepare( $sql );
+        $stmt->bindParam( ':user_id', $_SESSION[ 'user' ]->id, PDO::PARAM_INT );
+        $stmt->execute();
+
+        if ( $stmt->rowCount() > 0 )
+        {
+            while ( $row = $stmt->fetch() )
+            {
+                $this->ordersList[] = $row;
+            }
+        }
     }
 }

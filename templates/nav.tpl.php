@@ -29,7 +29,7 @@
 
     </div>
 
-    <nav class="navbar navbar-default" data-spy="affix" data-offset-top="60" data-offset-bottom="200" role="navigation">
+    <nav class="navbar navbar-default" data-spy="affix" data-offset-top="30" data-offset-bottom="200" role="navigation">
 
         <div class="container-fluid">
 

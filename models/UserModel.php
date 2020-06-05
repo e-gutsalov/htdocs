@@ -4,7 +4,6 @@
 namespace models;
 
 
-use components\Db;
 use components\UserProcess;
 
 class UserModel
@@ -59,5 +58,13 @@ class UserModel
         self::$userProcess = new UserProcess();
         self::$userProcess->checkLogged();
         self::$userProcess->userEditProcess();
+    }
+
+    public static function userHistory()
+    {
+        self::$page = 'history';
+        self::$userProcess = new UserProcess();
+        self::$userProcess->checkLogged();
+        self::$userProcess->getOrdersListByUser();
     }
 }

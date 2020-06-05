@@ -1,6 +1,6 @@
 <!--div class="container"-->
 
-<?php if ( $this->param['latestProducts'][0] ): ?>
+<?php if ( $carousel[0] ): ?>
 
     <div class="row">
 
@@ -11,38 +11,30 @@
                 <div id="carousel-example-generic" class="carousel slide" data-ride="carousel">
                     <!-- Показатели -->
                     <ol class="carousel-indicators">
-                        <li data-target="#carousel-example-generic" data-slide-to="0" class="active"> </li>
-                        <li data-target="#carousel-example-generic" data-slide-to="1"> </li>
-                        <li data-target="#carousel-example-generic" data-slide-to="2"> </li>
+
+                        <?php for ( $i = 0; $i < count($carousel); $i++ ): if ( $i == 0 ) { $active = 'active'; } else { $active = ''; } ?>
+
+                        <li data-target="#carousel-example-generic" data-slide-to="<?= $i; ?>" class="<?= $active; ?>"> </li>
+
+                        <?php endfor; ?>
+
                     </ol>
 
                     <!-- Обертка для слайдов -->
 
                     <div class="carousel-inner" role="listbox">
 
-                        <div class="item active">
-                            <img style="width: 1000px; height: 300px" src="<?= $latestProducts[0]->image; ?>" alt="Handicraft">
-                            <div class="carousel-caption">
-                                <h3>Шкатулка Венеция</h3>
-                                <p>Скидка 10%</p>
-                            </div>
-                        </div>
+                        <?php foreach ( $carousel as $key => $item ): if ( $key == 0 ) { $active = 'active'; } else { $active = ''; } ?>
 
-                        <div class="item">
-                            <img style="width: 1000px; height: 300px" src="<?= $latestProducts[1]->image; ?>" alt="Handicraft">
-                            <div class="carousel-caption">
-                                <h3>Шкатулка Флеш</h3>
-                                <p>Скидка 20%</p>
+                            <div class="item <?= $active; ?>">
+                                <img style="width: 1000px; height: 300px" src="<?= $item->image1; ?>" alt="Handicraft">
+                                <div class="carousel-caption">
+                                    <h3><?= $item->name; ?></h3>
+                                    <p>Код товара <?= $item->code; ?></p>
+                                </div>
                             </div>
-                        </div>
 
-                        <div class="item">
-                            <img style="width: 1000px; height: 300px" src="<?= $latestProducts[2]->image; ?>" alt="Handicraft">
-                            <div class="carousel-caption">
-                                <h3>Шкатулка Венеция</h3>
-                                <p>Скидка 30%</p>
-                            </div>
-                        </div>
+                        <?php endforeach; ?>
 
                     </div>
 

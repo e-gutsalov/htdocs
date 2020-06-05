@@ -19,7 +19,7 @@
 
     <?php if ( !empty( $sess['cart']['productsInCart'] ) ): ?>
 
-        <a class="btn btn-danger checkout" href="/cart/checkout"><i class="fa fa-shopping-cart"></i> Оформить заказ</a>
+        <a class="btn btn-danger checkout" href="/cart/checkout"><i class="fa fa-shopping-cart"> </i> Оформить заказ</a>
 
         <h3>Вы выбрали такие товары:</h3>
 

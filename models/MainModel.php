@@ -34,6 +34,7 @@ class MainModel
             [
                 'categoriesList' => self::$categoriesList,
                 'latestProducts' => self::$latestProducts,
+                'carousel' => self::$ImagesCarousel,
                 'id' => 0,
                 'title' => 'Главная',
                 'name' => 'Каталог сейчас недоступен!',
@@ -73,7 +74,7 @@ class MainModel
         // Соединение с БД
         $db = Db::getConnection();
 
-        $query = 'SELECT id, name, code, price, image, new, short_description FROM product WHERE status = :status ORDER BY id DESC LIMIT :count';
+        $query = "SELECT id, name, code, price, image, new, short_description FROM product WHERE status = :status AND new = 'new' ORDER BY id DESC LIMIT :count";
         $stmt = $db->prepare( $query );
         $stmt->bindParam( ':status', self::$status );
         $stmt->bindParam( ':count', $count, PDO::PARAM_INT );
@@ -89,7 +90,7 @@ class MainModel
         return self::$latestProducts[] = FALSE;
     }
 
-    public static function getImagesCarousel()
+    public static function getRecommendedProducts()
     {
         // Соединение с БД
         $db = Db::getConnection();
@@ -97,7 +98,7 @@ class MainModel
         $query = "SELECT product.id, product.name, product.code, product.new, product.description, product.price, images.image1, images.image2, images.image3, images.image4, images.image5
                     FROM handicrafts.product
                     JOIN handicrafts.images ON images.code = product.code
-                    WHERE status = :status AND product.new = 'new' ORDER BY id DESC";
+                    WHERE status = :status AND product.recommended = 1 ORDER BY id DESC";
         $stmt = $db->prepare( $query );
         $stmt->bindParam( ':status', self::$status );
         $stmt->execute();

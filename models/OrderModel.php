@@ -11,6 +11,8 @@ use PDO;
 
 class OrderModel
 {
+    private static array $ordersList;
+
     /**
      * Сохранение заказа
      * @param integer $userId <p>id пользователя</p>
@@ -41,5 +43,33 @@ class OrderModel
         $result->bindParam( ':products', $products, PDO::PARAM_STR );
 
         return $result->execute();
+    }
+
+    /**
+     * Возвращает список заказов
+     * @param int $user_id
+     * @return array|bool <p>Список заказов</p>
+     */
+    public static function getOrdersList( int $user_id )
+    {
+        // Соединение с БД
+        $db = Db::getConnection();
+
+        // Получение и возврат результатов
+        // Текст запроса к БД
+        $sql = 'SELECT id, customers_id, date, products, status FROM orders WHERE customers_id = :customers_id ORDER BY id DESC';
+        $stmt = $db->prepare( $sql );
+        $stmt->bindParam( ':user_id', $user_id, PDO::PARAM_INT );
+        $stmt->execute();
+
+        if ( $stmt->rowCount() > 0 )
+        {
+            while ( $row = $stmt->fetch() )
+            {
+                self::$ordersList[] = $row;
+            }
+            return self::$ordersList;
+        }
+        return self::$ordersList[] = FALSE;
     }
 }

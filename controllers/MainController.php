@@ -18,7 +18,7 @@ class MainController
         $filename = MainModel::getMainPage();
         MainModel::getCategoriesList();
         MainModel::getLatestProducts();
-        MainModel::getImagesCarousel();
+        MainModel::getRecommendedProducts();
         $param = MainModel::getParam();
         MainView::getView( $filename, $param );
     }
