@@ -30,7 +30,7 @@ class UserProcess
     /**
      * Регистрация
      */
-    public function userRegisterProcess()
+    public function userRegisterProcess() : void
     {
         // Обработка формы
         if ( isset( $_POST[ 'submit' ] ) ) {
@@ -60,7 +60,7 @@ class UserProcess
     /**
      * "Вход на сайт"
      */
-    public function userLoginProcess()
+    public function userLoginProcess() : void
     {
         // Обработка формы
         if ( isset( $_POST[ 'submit' ] ) ) {
@@ -92,7 +92,7 @@ class UserProcess
     /**
      * Action для страницы "Редактирование данных пользователя"
      */
-    public function userEditProcess()
+    public function userEditProcess() : void
     {
         // Обработка формы
         if ( isset( $_POST[ 'submit' ] ) ) {
@@ -130,7 +130,7 @@ class UserProcess
      * Проверяет имя: не меньше, чем 2 символа
      * @return boolean <p>Результат выполнения метода</p>
      */
-    public function checkName()
+    public function checkName() :bool
     {
         // Если форма отправлена
         // Получаем данные из формы
@@ -145,7 +145,7 @@ class UserProcess
      * Проверяет имя: не меньше, чем 6 символов
      * @return boolean <p>Результат выполнения метода</p>
      */
-    public function checkPassword()
+    public function checkPassword() : bool
     {
         // Если форма отправлена
         // Получаем данные из формы
@@ -160,7 +160,7 @@ class UserProcess
      * Проверяет email
      * @return boolean <p>Результат выполнения метода</p>
      */
-    public function checkEmail()
+    public function checkEmail() : bool
     {
         // Если форма отправлена
         // Получаем данные из формы
@@ -175,12 +175,12 @@ class UserProcess
      * Проверяет телефон: не меньше, чем 20 символов
      * @return boolean <p>Результат выполнения метода</p>
      */
-    public function checkPhone()
+    public function checkPhone() : bool
     {
         // Если форма отправлена
         // Получаем данные из формы
         $this->phone = filter_input( INPUT_POST, 'InputPhone', FILTER_SANITIZE_NUMBER_INT );
-        if ( strlen( $this->phone ) <= 20 ) {
+        if ( strlen( $this->phone ) >= 7 and strlen( $this->phone ) <= 20 ) {
             return true;
         }
         return false;
@@ -190,12 +190,12 @@ class UserProcess
      * Проверяет адрес доставки пользователя
      * @return boolean <p>Результат выполнения метода</p>
      */
-    public function checkAddress()
+    public function checkAddress() : bool
     {
         // Если форма отправлена
         // Получаем данные из формы
         $this->address = filter_input( INPUT_POST, 'InputAddress', FILTER_SANITIZE_STRING );
-        if ( strlen( $this->address ) <= 555 ) {
+        if ( strlen( $this->address ) > 0 and strlen( $this->address ) <= 555 ) {
             return true;
         }
         return false;
@@ -205,7 +205,7 @@ class UserProcess
      * Проверяет комментарий пользователя
      * @return boolean <p>Результат выполнения метода</p>
      */
-    public function checkComment()
+    public function checkComment() : bool
     {
         // Если форма отправлена
         // Получаем данные из формы
@@ -221,9 +221,9 @@ class UserProcess
      * Иначе перенаправляет на страницу входа
      * <p>Идентификатор пользователя</p>
      */
-    public function checkLogged()
+    public function checkLogged() : void
     {
-        // Если сессия есть, вернем идентификатор пользователя
+        // Если сессия есть, вернем объект пользователя
         if ( !is_object( $_SESSION[ 'user' ] ) ) {
             header( 'Location: /user/login' );
         }
@@ -234,7 +234,7 @@ class UserProcess
      * @param string $email <p>E-mail</p>
      * @return boolean <p>Результат выполнения метода</p>
      */
-    public function checkEmailExists( string $email )
+    public function checkEmailExists( string $email ) :bool
     {
 
         // Текст запроса к БД
@@ -272,7 +272,7 @@ class UserProcess
         if ( is_object( $user ) ) {
             if ( password_verify( $password, $user->password ) ) {
                 $user->password = $password;
-                // Если запись существует, возвращаем id пользователя
+                // Если запись существует, возвращаем объект пользователя
                 return $user;
             }
         }
@@ -286,7 +286,7 @@ class UserProcess
      * @param string $password <p>Пароль</p>
      * @return boolean <p>Результат выполнения метода</p>
      */
-    public function register( string $name, string $email, string $password )
+    public function register( string $name, string $email, string $password ) : bool
     {
         $password = password_hash( $password, PASSWORD_BCRYPT );
 
@@ -306,7 +306,7 @@ class UserProcess
      * Запоминаем пользователя
      * @param object $user <p>id пользователя</p>
      */
-    public function auth( object $user )
+    public function auth( object $user ) :void
     {
         // Записываем идентификатор пользователя в сессию
         $_SESSION[ 'user' ] = $user;
@@ -316,7 +316,7 @@ class UserProcess
      * Проверяет является ли пользователь гостем
      * <p>Результат выполнения метода</p>
      */
-    public function isGuest()
+    public function isGuest() : bool
     {
         if ( isset( $_SESSION[ 'user' ] ) ) {
             return false;
@@ -330,7 +330,7 @@ class UserProcess
      * @param integer $id <p>id пользователя</p>
      * @return object <p>Объект с информацией о пользователе</p>
      */
-    public function getUserById( int $id )
+    public function getUserById( int $id ) : object
     {
         // Текст запроса к БД
         $sql = 'SELECT * FROM users WHERE id = :id';
@@ -351,7 +351,7 @@ class UserProcess
      * @param string $password <p>Пароль</p>
      * @return boolean <p>Результат выполнения метода</p>
      */
-    public function edit( int $id, string $name, string $email, string $password )
+    public function edit( int $id, string $name, string $email, string $password ) : bool
     {
         $password = password_hash( $password, PASSWORD_BCRYPT );
 
@@ -372,7 +372,7 @@ class UserProcess
      * Возвращает список заказов
      * @return void <p>Список заказов</p>
      */
-    public function getOrdersListByUser()
+    public function getOrdersListByUser() : void
     {
         // Получение и возврат результатов
         // Текст запроса к БД

@@ -11,6 +11,7 @@
                     <ul>
                         <li><a href="/user/edit">Редактировать данные</a></li>
                         <li><a href="/user/history">Список покупок</a></li>
+                        <?= ( $sess['user']->role == 'admin' ) ? '<li><a href="/admin">Админпанель</a></li>' : ''; ?>
                     </ul>
 
                 </div><!--/sign up form-->
