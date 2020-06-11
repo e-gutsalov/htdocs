@@ -8,9 +8,11 @@ use components\Render;
 
 class AdminProductView
 {
-    public static function getView( array $filename, array $param )
+    private static array $filename = [ 'head', 'admin.tpl/header_admin', 'admin.tpl/product_admin', 'admin.tpl/footer_admin', 'footer' ];
+
+    public static function getView( array $param )
     {
-        $render = new Render( $filename, $param );
+        $render = new Render( self::$filename, $param );
         $render->show();
     }
 }

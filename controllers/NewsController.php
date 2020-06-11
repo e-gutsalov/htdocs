@@ -12,12 +12,10 @@ use models\NewsModel;
 
 class NewsController
 {
-    public
-        $menuItem = 'NewsModel';
+    public string $menuItem = 'NewsModel';
 
     public function actionIndex()
     {
-        echo '<br> Список новостей NewsController';
         NewsModel::getNewsList();
         NewsModel::view( $this->menuItem );
 

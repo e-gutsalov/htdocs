@@ -16,8 +16,7 @@ class UserController
     {
         UserModel::userRegister();
         $param = UserModel::getParam();
-        $filename = UserModel::getUserPage();
-        UserView::getView( $filename, $param );
+        UserView::getView( $param );
     }
 
     /**
@@ -27,8 +26,7 @@ class UserController
     {
         UserModel::userLogin();
         $param = UserModel::getParam();
-        $filename = UserModel::getUserPage();
-        UserView::getView( $filename, $param );
+        UserView::getView( $param );
     }
 
     /**
@@ -38,8 +36,7 @@ class UserController
     {
         UserModel::userProfile();
         $param = UserModel::getParam();
-        $filename = UserModel::getUserPage();
-        UserView::getView( $filename, $param );
+        UserView::getView( $param );
     }
 
     /**
@@ -49,8 +46,7 @@ class UserController
     {
         UserModel::userEdit();
         $param = UserModel::getParam();
-        $filename = UserModel::getUserPage();
-        UserView::getView( $filename, $param );
+        UserView::getView( $param );
     }
 
     /**
@@ -60,8 +56,7 @@ class UserController
     {
         UserModel::userHistory();
         $param = UserModel::getParam();
-        $filename = UserModel::getUserPage();
-        UserView::getView( $filename, $param );
+        UserView::getView( $param );
     }
 
     /**

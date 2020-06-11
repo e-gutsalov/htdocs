@@ -12,20 +12,15 @@ use components\Cart;
 
 class CartModel
 {
-    private static array $filename;
     private static array $param;
     private static string $page = '';
     public static object $cartProcess;
-
-    public static function getCartPage()
-    {
-        return self::$filename = [ 'head', 'nav', self::$page, 'footer' ];
-    }
 
     public static function getParam()
     {
         return self::$param =
             [
+                'page' => [ 'head', 'nav', 'cart.tpl/' . self::$page, 'footer' ],
                 'title' => 'Корзина',
                 'cart' => 'active',
                 'script' => 'handi',

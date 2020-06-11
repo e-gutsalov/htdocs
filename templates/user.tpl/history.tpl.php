@@ -15,6 +15,9 @@
             </div>
         </div-->
 
+        <button class="btn btn-primary" onclick="window.history.back()">
+            <span class="glyphicon glyphicon-arrow-left" aria-hidden="true"> </span> Назад
+        </button>
         <a class="btn btn-primary checkout" href="/catalog" role="button"><i class="fa fa-shopping-cart"> </i> Вернуться к покупкам</a>
 
         <h3>История ваших заказов:</h3>
@@ -23,7 +26,7 @@
 
             <tr>
                 <th>Номер заказа</th>
-                <th>Номер клиента</th>
+                <th>Адрес доставки</th>
                 <th>Дата покупки</th>
                 <th>Товары, шт</th>
                 <th>Статус заказа</th>
@@ -33,7 +36,7 @@
 
             <tr class="cart-del">
                 <td><?= $order->id ?></td>
-                <td><?= $order->customers_id ?></td>
+                <td><?= $order->address ?></td>
                 <td><?= $order->date ?></td>
                 <td><?= $order->products ?></td>
                 <td><?= $order->status ?></td>

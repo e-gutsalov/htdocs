@@ -14,8 +14,6 @@ use PDO;
 
 class CatalogModel
 {
-
-    private static array $filename;
     private static array $param;
     private static array $categoriesList;
     private static array $latestProducts;
@@ -24,11 +22,6 @@ class CatalogModel
     private static int $page;
     private static string $html;
     const SHOW_BY_PRODUCTS = 6;
-
-    public static function getCatalogPage()
-    {
-        return self::$filename = ['head', 'nav', 'catalog', 'catalog_menu', 'product', 'pagination', 'footer'];
-    }
 
     public static function getParam()
     {

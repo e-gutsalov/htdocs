@@ -8,15 +8,16 @@
 
 namespace views;
 
-//use components\Buffer;
 use components\Render;
 
 
 class CallbackView
 {
-    public static function getView( array $filename, array $param )
+    public static array $filename = [ 'head', 'nav', 'callback', 'footer' ];
+
+    public static function getView( array $param )
     {
-        $render = new Render( $filename, $param );
+        $render = new Render( self::$filename, $param );
         $render->show();
     }
 }

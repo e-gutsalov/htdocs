@@ -62,10 +62,8 @@ class OrderModel
         $stmt->bindParam( ':user_id', $user_id, PDO::PARAM_INT );
         $stmt->execute();
 
-        if ( $stmt->rowCount() > 0 )
-        {
-            while ( $row = $stmt->fetch() )
-            {
+        if ( $stmt->rowCount() > 0 ) {
+            while ( $row = $stmt->fetch() ) {
                 self::$ordersList[] = $row;
             }
             return self::$ordersList;

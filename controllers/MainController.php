@@ -15,11 +15,10 @@ class MainController
 {
     public function actionMain()
     {
-        $filename = MainModel::getMainPage();
         MainModel::getCategoriesList();
         MainModel::getLatestProducts();
         MainModel::getRecommendedProducts();
         $param = MainModel::getParam();
-        MainView::getView( $filename, $param );
+        MainView::getView( $param );
     }
 }

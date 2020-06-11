@@ -19,6 +19,10 @@
                 </div>
                 <?php endif; ?>
 
+                <button class="btn btn-primary" onclick="window.history.back()">
+                    <span class="glyphicon glyphicon-arrow-left" aria-hidden="true"> </span> Назад
+                </button>
+
                 <h2>Редактирование данных пользователя</h2>
                 <form action="#" method="post">
                     <div class="form-group">
@@ -33,7 +37,6 @@
                         <label for="InputPassword">Введите новый пароль</label>
                         <input class="form-control" type="password" name="InputPassword" id="InputPassword" placeholder="Пароль" value="<?= $sess['user']->password; ?>"/>
                     </div>
-                    <label for="InputSubmit"> </label>
                     <input class="btn btn-primary" type="submit" name="submit" id="InputSubmit" value="Изменить" />
                 </form>
 

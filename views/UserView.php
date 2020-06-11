@@ -8,9 +8,9 @@ use components\Render;
 
 class UserView
 {
-    public static function getView( array $filename, array $param )
+    public static function getView( array $param )
     {
-        $render = new Render( $filename, $param );
+        $render = new Render( $param['page'], $param );
         $render->show();
     }
 }

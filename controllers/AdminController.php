@@ -21,8 +21,7 @@ class AdminController extends AdminBase
         // Проверка доступа
         self::checkAdmin();
 
-        $filename = AdminModel::getAdminPage();
         $param = AdminModel::getParam();
-        AdminView::getView( $filename, $param );
+        AdminView::getView( $param );
     }
 }

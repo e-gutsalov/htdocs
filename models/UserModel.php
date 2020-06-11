@@ -8,21 +8,15 @@ use components\UserProcess;
 
 class UserModel
 {
-    private static array $filename;
     private static array $param;
     private static object $userProcess;
     private static string $page = '';
-
-    public static function getUserPage()
-    {
-        return self::$filename = ['head', 'nav', self::$page, 'footer'];
-    }
 
     public static function getParam()
     {
         return self::$param =
             [
-                'id' => 0,
+                'page' => ['head', 'nav', 'user.tpl/' . self::$page, 'footer'],
                 'title' => 'Пользователь',
                 'reg' => 'active',
                 'script' => 'handi',

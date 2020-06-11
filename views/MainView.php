@@ -12,9 +12,11 @@ use components\Render;
 
 class MainView
 {
-    public static function getView( array $filename, array $param )
+    private static array $filename = ['head', 'nav', 'main.tpl/catalog', 'main.tpl/catalog_menu', 'main.tpl/carousel', 'main.tpl/product', 'footer'];
+
+    public static function getView( array $param )
     {
-        $render = new Render( $filename, $param );
+        $render = new Render( self::$filename, $param );
         $render->show();
     }
 }

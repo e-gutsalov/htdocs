@@ -16,10 +16,9 @@ class ProductController
 
     public function actionProduct( $id = NULL )
     {
-        $filename = ProductModel::getProductPage();
         ProductModel::getProductDetails( $id );
         $param = ProductModel::getParam();
-        ProductView::getView( $filename, $param );
+        ProductView::getView( $param );
     }
 
 }

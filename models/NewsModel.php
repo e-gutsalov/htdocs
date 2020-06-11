@@ -16,7 +16,6 @@ class NewsModel
 
     public static function getNewsList()
     {
-        echo '<br> Список новостей NewsModel';
     }
 
     public static function view( $menuItem )

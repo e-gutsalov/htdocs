@@ -13,8 +13,6 @@ use PDO;
 
 class MainModel
 {
-
-    private static array $filename;
     private static array $param;
     private static array $categoriesList;
     private static array $latestProducts;
@@ -22,11 +20,6 @@ class MainModel
     private static int $status = 1;
     private static int $category_id = 0;
     const SHOW_BY_PRODUCTS = 6;
-
-    public static function getMainPage()
-    {
-        return self::$filename = ['head', 'nav', 'catalog', 'catalog_menu', 'carousel', 'product', 'footer'];
-    }
 
     public static function getParam()
     {
@@ -58,10 +51,8 @@ class MainModel
         $stmt = $db->prepare( $query );
         $stmt->bindParam( ':status', self::$status );
         $stmt->execute();
-        if ( $stmt->rowCount() > 0 )
-        {
-            while ( $row = $stmt->fetch() )
-            {
+        if ( $stmt->rowCount() > 0 ) {
+            while ( $row = $stmt->fetch() ) {
                 self::$categoriesList[] = $row;
             }
             return self::$categoriesList;
@@ -79,10 +70,8 @@ class MainModel
         $stmt->bindParam( ':status', self::$status );
         $stmt->bindParam( ':count', $count, PDO::PARAM_INT );
         $stmt->execute();
-        if ( $stmt->rowCount() > 0 )
-        {
-            while ( $row = $stmt->fetch() )
-            {
+        if ( $stmt->rowCount() > 0 ) {
+            while ( $row = $stmt->fetch() ) {
                 self::$latestProducts[] = $row;
             }
             return self::$latestProducts;
@@ -102,10 +91,8 @@ class MainModel
         $stmt = $db->prepare( $query );
         $stmt->bindParam( ':status', self::$status );
         $stmt->execute();
-        if ( $stmt->rowCount() > 0 )
-        {
-            while ( $row = $stmt->fetch() )
-            {
+        if ( $stmt->rowCount() > 0 ) {
+            while ( $row = $stmt->fetch() ) {
                 self::$ImagesCarousel[] = $row;
             }
             return self::$ImagesCarousel;

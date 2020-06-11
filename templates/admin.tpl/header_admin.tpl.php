@@ -11,7 +11,7 @@
                     <div class="col-sm-6">
                         <div class="pull-right">
                             <h5>
-                                <a href="/"><i class="fa fa-sign-out"> </i> На сайт</a>
+                                <a href="/user"><i class="fa fa-sign-out"> </i> На сайт</a>
                             </h5>
                         </div>
                     </div>

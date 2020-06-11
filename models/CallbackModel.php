@@ -18,11 +18,6 @@ class CallbackModel
     private static string $json = '';
     private static string $statusSend = '';
 
-    public static function getCallback()
-    {
-        return $filename = [ 'head', 'nav', 'callback', 'footer' ];
-    }
-
     public static function getParam()
     {
         return $param =

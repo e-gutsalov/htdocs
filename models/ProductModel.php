@@ -9,15 +9,8 @@ use PDO;
 
 class ProductModel
 {
-
-    private static array $filename;
     private static array $param;
     private static array $ProductDetails;
-
-    public static function getProductPage()
-    {
-        return self::$filename = ['head', 'nav', 'product_details', 'footer'];
-    }
 
     public static function getParam()
     {

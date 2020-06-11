@@ -15,6 +15,9 @@
             </div>
         </div-->
 
+        <button class="btn btn-primary" onclick="window.history.back()">
+            <span class="glyphicon glyphicon-arrow-left" aria-hidden="true"> </span> Назад
+        </button>
         <a class="btn btn-primary checkout" href="/catalog" role="button"><i class="fa fa-shopping-cart"> </i> Вернуться к покупкам</a>
 
     <?php if ( !empty( $sess['cart']['productsInCart'] ) ): ?>

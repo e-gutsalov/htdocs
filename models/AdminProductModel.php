@@ -5,18 +5,11 @@ namespace models;
 
 
 use components\Db;
-use PDO;
 
 class AdminProductModel
 {
-    private static array $filename;
     private static array $param;
     private static array $productsList = [];
-
-    public static function getAdminProductPage()
-    {
-        return self::$filename = ['head', 'header_admin', 'product_admin', 'footer_admin', 'footer'];
-    }
 
     public static function getParam()
     {
@@ -49,10 +42,8 @@ class AdminProductModel
         $stmt = $db->prepare( $sql );
         $stmt->execute();
 
-        if ( $stmt->rowCount() > 0 )
-        {
-            while ( $row = $stmt->fetch() )
-            {
+        if ( $stmt->rowCount() > 0 ) {
+            while ( $row = $stmt->fetch() ) {
                 self::$productsList[] = $row;
             }
         }

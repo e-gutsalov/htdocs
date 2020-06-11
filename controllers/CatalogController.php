@@ -15,21 +15,19 @@ class CatalogController
 {
     public function actionCatalog( int $page = 1 )
     {
-        $filename = CatalogModel::getCatalogPage();
         CatalogModel::getCategoriesList();
         CatalogModel::getLatestProducts( $page );
         CatalogModel::getTotalProductsInProducts();
         $param = CatalogModel::getParam();
-        CatalogView::getView( $filename, $param );
+        CatalogView::getView( $param );
     }
 
     public function actionCategory( int $category = NULL, int $page = 1 )
     {
-        $filename = CatalogModel::getCatalogPage();
         CatalogModel::getCategoriesList();
         CatalogModel::getProductsByCategory( $category, $page );
         CatalogModel::getTotalProductsInCategory();
         $param = CatalogModel::getParam();
-        CatalogView::getView( $filename, $param );
+        CatalogView::getView( $param );
     }
 }

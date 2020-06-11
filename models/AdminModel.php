@@ -6,13 +6,7 @@ namespace models;
 
 class AdminModel
 {
-    private static array $filename;
     private static array $param;
-
-    public static function getAdminPage()
-    {
-        return self::$filename = ['head', 'header_admin', 'admin', 'footer_admin', 'footer'];
-    }
 
     public static function getParam()
     {

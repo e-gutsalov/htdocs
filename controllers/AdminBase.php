@@ -4,7 +4,6 @@
 namespace controllers;
 
 
-
 use components\UserProcess;
 
 /**
@@ -13,7 +12,6 @@ use components\UserProcess;
  */
 abstract class AdminBase
 {
-
     /**
      * Метод, который проверяет пользователя на то, является ли он администратором
      * @return boolean
@@ -36,5 +34,4 @@ abstract class AdminBase
         // Иначе завершаем работу с сообщением об закрытом доступе
         exit( 'Access denied' );
     }
-
 }

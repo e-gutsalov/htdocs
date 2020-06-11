@@ -9,26 +9,24 @@
 
 namespace components;
 
-class Buffer {
-
-	private string $buffer = '';
+class Buffer
+{
+    private string $buffer = '';
     private array $filename;
     private array $param;
 
-	public function __construct( array $filename, array $param )
+    public function __construct( array $filename, array $param )
     {
-		$this->filename = $filename;
-		$this->param = $param;
-	}
+        $this->filename = $filename;
+        $this->param = $param;
+    }
 
     public function sendFile()
     {
         ob_start();
         extract( $this->param );
-        foreach ( $this->filename as $key => $value )
-        {
-            if ( file_exists("templates/$value.tpl.php" ) )
-            {
+        foreach ( $this->filename as $key => $value ) {
+            if ( file_exists( "templates/$value.tpl.php" ) ) {
                 require "templates/$value.tpl.php";
             }
         }
@@ -36,10 +34,9 @@ class Buffer {
         ob_end_clean();
     }
 
-	public function view()
+    public function view()
     {
-        if ( !empty( $this->filename ) )
-        {
+        if ( !empty( $this->filename ) ) {
             $this->sendFile();
         }
         return $this->buffer;

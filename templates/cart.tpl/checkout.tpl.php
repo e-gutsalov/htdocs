@@ -3,6 +3,11 @@
         <div class="row">
 
             <div class="col-sm-9 padding-right">
+
+                <button class="btn btn-primary" onclick="window.history.back()">
+                    <span class="glyphicon glyphicon-arrow-left" aria-hidden="true"> </span> Назад
+                </button>
+
                 <div class="features_items">
                     <h2 class="title text-center">Оформление заказа</h2>
 

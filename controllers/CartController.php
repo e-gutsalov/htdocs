@@ -16,9 +16,8 @@ class CartController
     public function actionCart()
     {
         CartModel::showCart();
-        $filename = CartModel::getCartPage();
         $param = CartModel::getParam();
-        CartView::getView( $filename, $param );
+        CartView::getView( $param );
     }
 
     /**
@@ -47,8 +46,7 @@ class CartController
     public function actionCheckout()
     {
         CartModel::checkoutProducts();
-        $filename = CartModel::getCartPage();
         $param = CartModel::getParam();
-        CartView::getView( $filename, $param );
+        CartView::getView( $param );
     }
 }
