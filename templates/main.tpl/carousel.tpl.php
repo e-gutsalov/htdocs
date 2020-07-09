@@ -12,7 +12,7 @@
                     <!-- Показатели -->
                     <ol class="carousel-indicators">
 
-                        <?php for ( $i = 0; $i < count($carousel); $i++ ): if ( $i == 0 ) { $active = 'active'; } else { $active = ''; } ?>
+                        <?php for ( $i = 0; $i < count( $carousel ); $i++ ): if ( $i == 0 ) { $active = 'active'; } else { $active = ''; } ?>
 
                         <li data-target="#carousel-example-generic" data-slide-to="<?= $i; ?>" class="<?= $active; ?>"> </li>
 

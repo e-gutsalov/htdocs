@@ -2,48 +2,53 @@
 
     <div class="row">
 
-    <?php if ( $productDetails[0] ): ?>
-        <?php foreach ( $productDetails as $product ): ?>
+    <?php if ( !empty( (array) $productDetails ) ): ?>
 
         <div class="col-xs-6 col-md-6">
-            <a href="<?= $product->image1; ?>" class="thumbnail">
-                <img src="<?= $product->image1; ?>" alt="<?= $product->name; ?>" title="<?= $product->name; ?>">
+            <a class="thumbnail image" href="<?= $productDetails->image1; ?>" target="_blank">
+                <img class="p-image" src="<?= $productDetails->image1; ?>" alt="<?= $productDetails->name; ?>" title="<?= $productDetails->name; ?>">
             </a>
 
-            <div class="col-xs-4 col-md-4">
-                <a href="<?= $product->image1; ?>" class="thumbnail">
-                    <img src="<?= $product->image1; ?>" alt="<?= $product->name; ?>" title="<?= $product->name; ?>">
-                </a>
-            </div>
+            <?php foreach ( $images as $image ) : ?>
 
-            <div class="col-xs-4 col-md-4">
-                <a href="<?= $product->image2; ?>" class="thumbnail">
-                    <img src="<?= $product->image2; ?>" alt="<?= $product->name; ?>" title="<?= $product->name; ?>">
-                </a>
-            </div>
+                <?php if ( !empty( $image ) ): ?>
 
-            <div class="col-xs-4 col-md-4">
-                <a href="<?= $product->image3; ?>" class="thumbnail">
-                    <img src="<?= $product->image3; ?>" alt="<?= $product->name; ?>" title="<?= $product->name; ?>">
-                </a>
-            </div>
+                <div class="col-xs-4 col-md-4">
+                    <a href="<?= $image; ?>" class="thumbnail">
+                        <img class="s-image" src="<?= $image; ?>" alt="<?= $productDetails->name; ?>" title="<?= $productDetails->name; ?>">
+                    </a>
+                </div>
+
+                <?php endif; ?>
+
+            <?php endforeach; ?>
 
         </div>
 
         <div class="caption">
-           <h3><?= $product->name; ?> <br> <?= $product->price; ?> ₽
-               <span id="$product->code" class="label label-warning hidden" data-new="<?= $product->new; ?>">New</span>
+           <h3><?= $productDetails->name; ?> <br> <?= $productDetails->price; ?> ₽
+               <span id="<?= $productDetails->code; ?>" class="label label-warning hidden" data-new="<?= $productDetails->new; ?>">New</span>
            </h3>
-           <span>Код товара: <?= $product->code; ?></span>
+           <span>Код товара: <?= $productDetails->code; ?></span>
            <p>
-                <?= $product->description; ?>
+                <?= $productDetails->description; ?>
            </p>
            <p>
-               <a href="/cart/add/" class="btn btn-danger add-to-cart" role="button" data-id="<?= $product->code; ?>"><span class="glyphicon glyphicon-shopping-cart" aria-hidden="true"> </span> В корзину</a>
+               <a href="/cart/add/" class="btn btn-danger add-to-cart" role="button" data-id="<?= $productDetails->code; ?>"><span class="glyphicon glyphicon-shopping-cart" aria-hidden="true"> </span> В корзину</a>
            </p>
         </div>
 
-        <?php endforeach; ?>
+    <?php else: ?>
+
+        <div class="caption">
+            <h3>
+                <?= $catalogErr; ?>
+            </h3>
+            <p>
+                <a href="#" class="btn btn-danger" role="button" onClick="window.close()"><span class="glyphicon glyphicon-remove" aria-hidden="true"> </span> Закрыть окно</a>
+            </p>
+        </div>
+
     <?php endif; ?>
 
     </div>

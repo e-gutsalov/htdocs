@@ -5,23 +5,26 @@ namespace models;
 
 
 use components\Db;
+use PDO;
 
 class AdminProductModel
 {
     private static array $param;
     private static array $productsList = [];
+    private static int $id = 0;
+    private static string $page;
 
     public static function getParam()
     {
         return self::$param =
             [
+                'filename' => [ 'head', 'admin.tpl/header_admin', self::$page, 'admin.tpl/footer_admin', 'footer' ],
                 'productsList' => self::$productsList,
-                'id' => 0,
+                'id' => self::$id,
                 'title' => 'Админпанель',
                 'name' => 'Каталог сейчас недоступен!',
                 'admin' => 'active',
-                'script' => 'handi',
-                'sess' => $_SESSION
+                'script' => 'handi'
             ];
     }
 
@@ -31,6 +34,8 @@ class AdminProductModel
      */
     public static function getProductsList() : void
     {
+        self::$page = 'admin.tpl/product_admin';
+
         // Соединение с БД
         $db = Db::getConnection();
 
@@ -46,6 +51,37 @@ class AdminProductModel
             while ( $row = $stmt->fetch() ) {
                 self::$productsList[] = $row;
             }
+        }
+    }
+
+    /**
+     * Удаляет товар с указанным id
+     * @param integer $id <p>id товара</p>
+     * @return void <p>Результат выполнения метода</p>
+     */
+    public static function deleteProductById( int $id ) : void
+    {
+        self::$id = $id;
+        self::$page = 'admin.tpl/delete';
+
+        // Обработка формы
+        if ( isset( $_POST[ 'submit' ] ) ) {
+            // Если форма отправлена
+            // Удаляем товар
+
+            // Соединение с БД
+            $db = Db::getConnection();
+
+            // Текст запроса к БД
+            $sql = 'DELETE FROM product WHERE id = :id';
+
+            // Получение и возврат результатов. Используется подготовленный запрос
+            $result = $db->prepare( $sql );
+            $result->bindParam( ':id', self::$id, PDO::PARAM_INT );
+            $result->execute();
+
+            // Перенаправляем пользователя на страницу управлениями товарами
+            header( "Location: /admin/product" );
         }
     }
 }

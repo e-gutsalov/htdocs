@@ -46,3 +46,31 @@ body {
     width: 70%;
     z-index: 9999 !important;
 }
+
+/* Обрезать изображение
+.box {
+    position: relative;
+    overflow:hidden;
+    width:300px;
+    height:300px;
+}
+
+.box img {
+    position: absolute;
+    top:50%;
+    left:50%;
+    transform:translate(-50%,-50%);
+    width:300px;
+    height:300px;
+    object-fit:cover;
+}
+
+или
+
+img {
+ max-width: 100%;
+ height: auto;
+ display: block;
+}
+
+*/

@@ -19,8 +19,8 @@
 
             <p>Вы действительно хотите удалить этот товар?</p>
 
-            <form method="post">
-                <input type="submit" name="submit" value="Удалить" />
+            <form method="POST">
+                <input class="btn btn-primary" role="button" type="submit" name="submit" value="Удалить" />
             </form>
 
         </div>

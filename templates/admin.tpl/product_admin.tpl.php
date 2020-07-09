@@ -28,7 +28,7 @@
                     <th> </th>
                 </tr>
 
-                <?php foreach ( $productsList as $product) : ?>
+                <?php foreach ( $productsList as $product ) : ?>
 
                     <tr>
                         <td><?= $product->id; ?></td>

@@ -138,27 +138,15 @@ class AdminProductController extends AdminBase
 
     /**
      * Action для страницы "Удалить товар"
+     * @param $id
      */
     public function actionDelete( $id )
     {
         // Проверка доступа
         self::checkAdmin();
 
-//        AdminProductModel::getProductsList();
-//        $param = AdminProductModel::getParam();
-//        AdminProductView::getView( $param );
-
-        // Обработка формы
-        if ( isset( $_POST[ 'submit' ] ) ) {
-            // Если форма отправлена
-            // Удаляем товар
-            //Product::deleteProductById( $id );
-
-            // Перенаправляем пользователя на страницу управлениями товарами
-            header( "Location: /admin/product" );
-        }
-
-        // Подключаем вид
-        require_once( ROOT . '/templates/admin.tpl/delete.tpl.php' );
+        AdminProductModel::deleteProductById( $id );
+        $param = AdminProductModel::getParam();
+        AdminProductView::getView( $param );
     }
 }

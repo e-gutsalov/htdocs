@@ -6,7 +6,7 @@ $( document ).ready( function()
 
     $( '[data-new="new"]' ).removeClass( 'hidden' );
 
-    $( '.add-to-cart' ).click( function () {
+    $( '.add-to-cart' ).on( 'click', function () {
         let id = $( this ).data( 'id' );
         $.post( $( this ).attr( 'href' )+id, {}, data => {
             $( '#cart-count' ).html( data );
@@ -14,7 +14,7 @@ $( document ).ready( function()
         return false;
     } );
 
-    $( '.del-to-cart' ).click( function () {
+    $( '.del-to-cart' ).on( 'click', function () {
         let id = $( this ).data( 'id' );
         $.post( $( this ).attr( 'href' )+id, {}, data => {
             data = $.parseJSON( data );
@@ -23,5 +23,12 @@ $( document ).ready( function()
             $( '#cart-count' ).html( data.count );
         } );
         return false;
+    } );
+
+    $( '.s-image' ).on( 'click', function (event) {
+        event.preventDefault();
+        let s = $( this ).attr( 'src' );
+        $( '.p-image' ).attr( 'src', s );
+        $( '.image' ).attr( 'href', s );
     } );
 } );
