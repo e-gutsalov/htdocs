@@ -36,7 +36,7 @@ class Cart
     /**
      * Action для страницы "Корзина"
      */
-    public function showCartProcess()
+    public function showCartProcess(): void
     {
         // Получим идентификаторы и количество товаров в корзине
         $productsInCart = $this->getProducts();

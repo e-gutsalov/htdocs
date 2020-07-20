@@ -17,6 +17,7 @@ class MainController
     {
         MainModel::getCategoriesList();
         MainModel::getLatestProducts();
+        MainModel::getCountProducts();
         MainModel::getRecommendedProducts();
         $param = MainModel::getParam();
         MainView::getView( $param );

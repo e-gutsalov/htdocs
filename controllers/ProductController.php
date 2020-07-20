@@ -14,9 +14,9 @@ use views\ProductView;
 class ProductController
 {
 
-    public function actionProduct( $id = NULL )
+    public function actionProduct( $code = NULL )
     {
-        ProductModel::getProductDetails( $id );
+        ProductModel::getProductDetails( $code );
         $param = ProductModel::getParam();
         ProductView::getView( $param );
     }

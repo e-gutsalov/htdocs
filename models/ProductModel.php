@@ -20,6 +20,7 @@ class ProductModel
     {
         return self::$param =
             [
+                'filename' => ['head', 'nav', 'product.tpl/product_details', 'footer'],
                 'productDetails' => self::$ProductDetails,
                 'images' => self::$images,
                 'title' => 'Описание товара',
@@ -31,9 +32,9 @@ class ProductModel
     }
 
     /**
-     * @param null $id
+     * @param null $code
      */
-    public static function getProductDetails( $id = NULL )
+    public static function getProductDetails( $code = NULL )
     {
         // Соединение с БД
         $db = Db::getConnection();
@@ -41,9 +42,9 @@ class ProductModel
         $query = 'SELECT product.id, product.name, product.code, product.price, product.new, product.description, images.image1, images.image2, images.image3, images.image4, images.image5
                   FROM handicrafts.product
                   JOIN handicrafts.images ON images.code = product.code
-                  WHERE product.id = :id';
+                  WHERE product.code = :code';
         $stmt = $db->prepare( $query );
-        $stmt->bindParam( ':id', $id, PDO::PARAM_INT );
+        $stmt->bindParam( ':code', $code, PDO::PARAM_INT );
         $stmt->execute();
         if ( $stmt->rowCount() > 0 ) {
             self::$ProductDetails = $stmt->fetch();

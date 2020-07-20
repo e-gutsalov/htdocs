@@ -13,11 +13,9 @@ use components\Render;
 
 class CallbackView
 {
-    public static array $filename = [ 'head', 'nav', 'callback', 'footer' ];
-
     public static function getView( array $param )
     {
-        $render = new Render( self::$filename, $param );
+        $render = new Render( $param[ 'filename' ], $param );
         $render->show();
     }
 }

@@ -138,14 +138,14 @@ class AdminProductController extends AdminBase
 
     /**
      * Action для страницы "Удалить товар"
-     * @param $id
+     * @param $code
      */
-    public function actionDelete( $id )
+    public function actionDelete( $code )
     {
         // Проверка доступа
         self::checkAdmin();
 
-        AdminProductModel::deleteProductById( $id );
+        AdminProductModel::deleteProductById( $code );
         $param = AdminProductModel::getParam();
         AdminProductView::getView( $param );
     }

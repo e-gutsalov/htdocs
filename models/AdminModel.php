@@ -12,7 +12,7 @@ class AdminModel
     {
         return self::$param =
             [
-                'id' => 0,
+                'filename' => ['head', 'admin.tpl/header_admin', 'admin.tpl/admin', 'admin.tpl/footer_admin', 'footer'],
                 'title' => 'Админпанель',
                 'name' => 'Каталог сейчас недоступен!',
                 'admin' => 'active',

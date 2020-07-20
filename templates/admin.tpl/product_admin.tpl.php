@@ -35,8 +35,8 @@
                         <td><?= $product->code; ?></td>
                         <td><?= $product->name; ?></td>
                         <td><?= $product->price; ?></td>
-                        <td><a href="/admin/product/update/<?= $product->id; ?>" title="Редактировать"><i class="fa fa-pencil-square-o"> </i></a></td>
-                        <td><a href="/admin/product/delete/<?= $product->id; ?>" title="Удалить"><i class="fa fa-times"> </i></a></td>
+                        <td><a href="/admin/product/update/<?= $product->code; ?>" title="Редактировать"><i class="fa fa-pencil-square-o"> </i></a></td>
+                        <td><a href="/admin/product/delete/<?= $product->code; ?>" title="Удалить"><i class="fa fa-times"> </i></a></td>
                     </tr>
 
                 <?php endforeach; ?>

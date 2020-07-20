@@ -22,6 +22,7 @@ class CallbackModel
     {
         return $param =
             [
+                'filename' => [ 'head', 'nav', 'callback', 'footer' ],
                 'callback' => 'active',
                 'script' => 'handi-valid',
                 'title' => 'Обратная связь',

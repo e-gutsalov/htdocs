@@ -330,7 +330,7 @@ class UserProcess
      * @param integer $id <p>id пользователя</p>
      * @return object <p>Объект с информацией о пользователе</p>
      */
-    public function getUserById( int $id ) : object
+    public function getUserById( int $id ): object
     {
         // Текст запроса к БД
         $sql = 'SELECT * FROM users WHERE id = :id';
@@ -351,7 +351,7 @@ class UserProcess
      * @param string $password <p>Пароль</p>
      * @return boolean <p>Результат выполнения метода</p>
      */
-    public function edit( int $id, string $name, string $email, string $password ) : bool
+    public function edit( int $id, string $name, string $email, string $password ): bool
     {
         $password = password_hash( $password, PASSWORD_BCRYPT );
 
@@ -372,11 +372,15 @@ class UserProcess
      * Возвращает список заказов
      * @return void <p>Список заказов</p>
      */
-    public function getOrdersListByUser() : void
+    public function getOrdersListByUser(): void
     {
         // Получение и возврат результатов
         // Текст запроса к БД
-        $sql = 'SELECT * FROM customers JOIN orders ON customers.id = orders.customers_id WHERE user_id = :user_id ORDER BY customers.id DESC';
+        //$sql = 'SELECT * FROM customers JOIN orders ON customers.id = orders.customers_id WHERE user_id = :user_id ORDER BY customers.id DESC';
+        $sql = 'SELECT orders.customers_id, customers.name, customers.address, customers.phone, customers.comment, orders.date, orders.products, orders.status
+                FROM customers
+                JOIN orders ON customers.id = orders.customers_id
+                WHERE customers.user_id = :user_id ORDER BY customers.id DESC';
         $stmt = $this->db->prepare( $sql );
         $stmt->bindParam( ':user_id', $_SESSION[ 'user' ]->id, PDO::PARAM_INT );
         $stmt->execute();

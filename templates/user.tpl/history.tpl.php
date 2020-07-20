@@ -1,5 +1,5 @@
 
-<div class="container">
+<div class="container-fluid">
 
     <div class="row">
 
@@ -26,7 +26,10 @@
 
             <tr>
                 <th>Номер заказа</th>
+                <th>Заказчик</th>
                 <th>Адрес доставки</th>
+                <th>Телефон</th>
+                <th>Комментарий к заказу</th>
                 <th>Дата покупки</th>
                 <th>Товары, шт</th>
                 <th>Статус заказа</th>
@@ -35,8 +38,11 @@
             <?php foreach ( $userProcess->ordersList as $order ): ?>
 
             <tr class="cart-del">
-                <td><?= $order->id ?></td>
+                <td><?= $order->customers_id ?></td>
+                <td><?= $order->name ?></td>
                 <td><?= $order->address ?></td>
+                <td><?= $order->phone ?></td>
+                <td><?= $order->comment ?></td>
                 <td><?= $order->date ?></td>
                 <td><?= $order->products ?></td>
                 <td><?= $order->status ?></td>

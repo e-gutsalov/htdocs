@@ -17,6 +17,7 @@ class CatalogController
     {
         CatalogModel::getCategoriesList();
         CatalogModel::getLatestProducts( $page );
+        CatalogModel::getCountProducts();
         CatalogModel::getTotalProductsInProducts();
         $param = CatalogModel::getParam();
         CatalogView::getView( $param );
@@ -26,6 +27,7 @@ class CatalogController
     {
         CatalogModel::getCategoriesList();
         CatalogModel::getProductsByCategory( $category, $page );
+        CatalogModel::getCountProducts();
         CatalogModel::getTotalProductsInCategory();
         $param = CatalogModel::getParam();
         CatalogView::getView( $param );

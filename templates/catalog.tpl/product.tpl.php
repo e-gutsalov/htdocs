@@ -5,7 +5,7 @@
         <div class="col-xs-8 col-sm-4 col-md-4 col-lg-4">
             <div class="thumbnail">
                 <a href="/product/<?= $product->id; ?>" class="thumbnail" target="_blank">
-                    <img style="width: auto; height: 150px" src="<?= $product->image; ?>" alt="<?= $product->name; ?>" title="<?= $product->name; ?>">
+                    <img style="width: auto; height: 150px" src="<?= $product->image1; ?>" alt="<?= $product->name; ?>" title="<?= $product->name; ?>">
                 </a>
 
                 <div class="caption">

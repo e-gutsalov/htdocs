@@ -5,9 +5,10 @@
         <div class="col-sm-6 col-md-3">
             <div class="list-group">
                 <?php if ( $categoriesList[0] ): ?>
-                    <?php foreach ( $categoriesList as $value ): ?>
-                        <button class="list-group-item <?= ( $category == $value->category ) ? 'list-group-item-success' : ''; ?>" type="button" href="/category/<?= $value->category; ?>">
-                            <?= $value->name; ?>
+                    <?php foreach ( $categoriesList as $categories ): ?>
+                        <button class="list-group-item <?= ( $category == $categories->category ) ? 'list-group-item-success' : ''; ?>" type="button" href="/category/<?= $categories->category; ?>">
+                            <?= $categories->name; ?>
+                            <span class="badge"><?= empty( $count[$categories->category] )  ? '0' : $count[$categories->category]->count; ?></span>
                         </button>
                     <?php endforeach; ?>
                 <?php endif; ?>
