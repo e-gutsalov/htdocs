@@ -60,6 +60,17 @@ class UserController
     }
 
     /**
+     * Action для страницы "Детализация списка покупок"
+     * @param $customers_id
+     */
+    public function actionDetails( $customers_id )
+    {
+        UserModel::userHistoryDetails( $customers_id );
+        $param = UserModel::getParam();
+        UserView::getView( $param );
+    }
+
+    /**
      * Удаляем данные о пользователе из сессии
      */
     public function actionLogout()

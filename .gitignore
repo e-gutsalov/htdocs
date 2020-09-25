@@ -2,7 +2,7 @@
 /.idea/*
 /.vscode/*
 /composer/*
-!/composer/vendor/
+#!/composer/vendor/
 /files/*
 /phpMyAdmin/*
 /wordpress/*

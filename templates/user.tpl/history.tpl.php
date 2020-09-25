@@ -1,5 +1,4 @@
-
-<div class="container-fluid">
+<div class="container">
 
     <div class="row">
 
@@ -18,7 +17,8 @@
         <button class="btn btn-primary" onclick="window.history.back()">
             <span class="glyphicon glyphicon-arrow-left" aria-hidden="true"> </span> Назад
         </button>
-        <a class="btn btn-primary checkout" href="/catalog" role="button"><i class="fa fa-shopping-cart"> </i> Вернуться к покупкам</a>
+        <a class="btn btn-primary checkout" href="/catalog" role="button"><i class="fa fa-shopping-cart"> </i> Вернуться
+            к покупкам</a>
 
         <h3>История ваших заказов:</h3>
 
@@ -26,27 +26,21 @@
 
             <tr>
                 <th>Номер заказа</th>
-                <th>Заказчик</th>
-                <th>Адрес доставки</th>
-                <th>Телефон</th>
-                <th>Комментарий к заказу</th>
+                <th>Детализация заказа</th>
                 <th>Дата покупки</th>
-                <th>Товары, шт</th>
                 <th>Статус заказа</th>
             </tr>
 
             <?php foreach ( $userProcess->ordersList as $order ): ?>
 
-            <tr class="cart-del">
-                <td><?= $order->customers_id ?></td>
-                <td><?= $order->name ?></td>
-                <td><?= $order->address ?></td>
-                <td><?= $order->phone ?></td>
-                <td><?= $order->comment ?></td>
-                <td><?= $order->date ?></td>
-                <td><?= $order->products ?></td>
-                <td><?= $order->status ?></td>
-            </tr>
+                <tr class="cart-del">
+                    <td><?= $order->customers_id ?></td>
+                    <td>
+                        <a href="/user/history/details/<?= $order->customers_id ?>">Просмотр заказа</a>
+                    </td>
+                    <td><?= $order->date ?></td>
+                    <td><?= $order->status ?></td>
+                </tr>
 
             <?php endforeach; ?>
 

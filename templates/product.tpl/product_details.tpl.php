@@ -35,6 +35,7 @@
            </p>
            <p>
                <a href="/cart/add/" class="btn btn-danger add-to-cart" role="button" data-id="<?= $productDetails->code; ?>"><span class="glyphicon glyphicon-shopping-cart" aria-hidden="true"> </span> В корзину</a>
+               <a href="#" class="btn btn-danger" role="button" onClick="window.close()"><span class="glyphicon glyphicon-remove" aria-hidden="true"> </span> Закрыть окно</a>
            </p>
         </div>
 

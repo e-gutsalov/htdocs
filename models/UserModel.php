@@ -61,4 +61,12 @@ class UserModel
         self::$userProcess->checkLogged();
         self::$userProcess->getOrdersListByUser();
     }
+
+    public static function userHistoryDetails( int $customers_id )
+    {
+        self::$page = 'history_details';
+        self::$userProcess = new UserProcess();
+        self::$userProcess->checkLogged();
+        self::$userProcess->getOrdersDetailsByUser( $customers_id );
+    }
 }

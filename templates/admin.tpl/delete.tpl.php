@@ -13,14 +13,17 @@
                 </ol>
             </div>
 
+            <button class="btn btn-primary" onclick="window.history.back()">
+                <span class="glyphicon glyphicon-arrow-left" aria-hidden="true"> </span> Назад
+            </button>
 
-            <h4>Удалить товар #<?php echo $id; ?></h4>
+            <h4>Удалить товар #<?= $code; ?></h4>
 
 
             <p>Вы действительно хотите удалить этот товар?</p>
 
             <form method="POST">
-                <input class="btn btn-primary" role="button" type="submit" name="submit" value="Удалить" />
+                <input class="btn btn-danger" role="button" type="submit" name="submit" value="Удалить" />
             </form>
 
         </div>

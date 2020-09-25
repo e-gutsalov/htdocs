@@ -28,7 +28,7 @@ class CatalogModel
     {
         return self::$param =
             [
-                'filename' => ['head', 'nav', 'catalog.tpl/catalog', 'catalog.tpl/catalog_menu', 'catalog.tpl/product', 'catalog.tpl/pagination', 'footer'],
+                'filename' => [ 'head', 'nav', 'catalog.tpl/catalog', 'catalog.tpl/catalog_menu', 'catalog.tpl/product', 'catalog.tpl/pagination', 'footer' ],
                 'categoriesList' => self::$categoriesList,
                 'latestProducts' => self::$latestProducts,
                 'count' => self::$CountProducts,
@@ -56,10 +56,8 @@ class CatalogModel
         $stmt = $db->prepare( $query );
         $stmt->bindParam( ':status', self::$status );
         $stmt->execute();
-        if ( $stmt->rowCount() > 0 )
-        {
-            while ( $row = $stmt->fetch() )
-            {
+        if ( $stmt->rowCount() > 0 ) {
+            while ( $row = $stmt->fetch() ) {
                 self::$categoriesList[] = $row;
             }
             return self::$categoriesList;
@@ -91,10 +89,8 @@ class CatalogModel
         $stmt->bindParam( ':count', $count, PDO::PARAM_INT );
         $stmt->bindParam( ':offset', $offset, PDO::PARAM_INT );
         $stmt->execute();
-        if ( $stmt->rowCount() > 0 )
-        {
-            while ( $row = $stmt->fetch() )
-            {
+        if ( $stmt->rowCount() > 0 ) {
+            while ( $row = $stmt->fetch() ) {
                 self::$latestProducts[] = $row;
             }
             return self::$latestProducts;
@@ -129,10 +125,8 @@ class CatalogModel
         $stmt->bindParam( ':count', $count, PDO::PARAM_INT );
         $stmt->bindParam( ':offset', $offset, PDO::PARAM_INT );
         $stmt->execute();
-        if ( $stmt->rowCount() > 0 )
-        {
-            while ( $row = $stmt->fetch() )
-            {
+        if ( $stmt->rowCount() > 0 ) {
+            while ( $row = $stmt->fetch() ) {
                 self::$latestProducts[] = $row;
             }
             return self::$latestProducts;
@@ -175,7 +169,7 @@ class CatalogModel
      * Возвращает массив с количеством товаров в категории
      * @return array|bool
      */
-    public static function getCountProducts ()
+    public static function getCountProducts()
     {
         // Соединение с БД
         $db = Db::getConnection();
@@ -188,7 +182,7 @@ class CatalogModel
         $stmt->execute();
         if ( $stmt->rowCount() > 0 ) {
             while ( $row = $stmt->fetch() ) {
-                self::$CountProducts[$row->categoryId] = $row;
+                self::$CountProducts[ $row->categoryId ] = $row;
             }
             return self::$CountProducts;
         }

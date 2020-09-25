@@ -20,6 +20,7 @@ class UserProcess
     public bool $result = false;
     public array $errors;
     public array $ordersList = [];
+    public object $ordersDetails;
 
     public function __construct()
     {
@@ -130,7 +131,7 @@ class UserProcess
      * Проверяет имя: не меньше, чем 2 символа
      * @return boolean <p>Результат выполнения метода</p>
      */
-    public function checkName() :bool
+    public function checkName() : bool
     {
         // Если форма отправлена
         // Получаем данные из формы
@@ -234,7 +235,7 @@ class UserProcess
      * @param string $email <p>E-mail</p>
      * @return boolean <p>Результат выполнения метода</p>
      */
-    public function checkEmailExists( string $email ) :bool
+    public function checkEmailExists( string $email ) : bool
     {
 
         // Текст запроса к БД
@@ -306,7 +307,7 @@ class UserProcess
      * Запоминаем пользователя
      * @param object $user <p>id пользователя</p>
      */
-    public function auth( object $user ) :void
+    public function auth( object $user ) : void
     {
         // Записываем идентификатор пользователя в сессию
         $_SESSION[ 'user' ] = $user;
@@ -330,7 +331,7 @@ class UserProcess
      * @param integer $id <p>id пользователя</p>
      * @return object <p>Объект с информацией о пользователе</p>
      */
-    public function getUserById( int $id ): object
+    public function getUserById( int $id ) : object
     {
         // Текст запроса к БД
         $sql = 'SELECT * FROM users WHERE id = :id';
@@ -351,7 +352,7 @@ class UserProcess
      * @param string $password <p>Пароль</p>
      * @return boolean <p>Результат выполнения метода</p>
      */
-    public function edit( int $id, string $name, string $email, string $password ): bool
+    public function edit( int $id, string $name, string $email, string $password ) : bool
     {
         $password = password_hash( $password, PASSWORD_BCRYPT );
 
@@ -369,15 +370,14 @@ class UserProcess
     }
 
     /**
-     * Возвращает список заказов
+     * Формирует список заказов
      * @return void <p>Список заказов</p>
      */
-    public function getOrdersListByUser(): void
+    public function getOrdersListByUser() : void
     {
         // Получение и возврат результатов
         // Текст запроса к БД
-        //$sql = 'SELECT * FROM customers JOIN orders ON customers.id = orders.customers_id WHERE user_id = :user_id ORDER BY customers.id DESC';
-        $sql = 'SELECT orders.customers_id, customers.name, customers.address, customers.phone, customers.comment, orders.date, orders.products, orders.status
+        $sql = 'SELECT orders.customers_id, customers.name, customers.address, customers.phone, customers.comment, orders.date, orders.status
                 FROM customers
                 JOIN orders ON customers.id = orders.customers_id
                 WHERE customers.user_id = :user_id ORDER BY customers.id DESC';
@@ -385,12 +385,33 @@ class UserProcess
         $stmt->bindParam( ':user_id', $_SESSION[ 'user' ]->id, PDO::PARAM_INT );
         $stmt->execute();
 
-        if ( $stmt->rowCount() > 0 )
-        {
-            while ( $row = $stmt->fetch() )
-            {
+        if ( $stmt->rowCount() > 0 ) {
+            while ( $row = $stmt->fetch() ) {
                 $this->ordersList[] = $row;
             }
+        }
+    }
+
+    /**
+     * Детализация заказа
+     * @param int $customers_id
+     * @return void <p>Список заказов</p>
+     */
+    public function getOrdersDetailsByUser( int $customers_id ) : void
+    {
+        // Получение и возврат результатов
+        // Текст запроса к БД
+        $sql = 'SELECT orders.customers_id, customers.user_id, customers.name, customers.address, customers.phone, customers.comment, orders.date, orders.products, orders.status
+                FROM customers
+                JOIN orders ON customers.id = orders.customers_id
+                WHERE customers.user_id = :user_id AND orders.customers_id = :customers_id';
+        $stmt = $this->db->prepare( $sql );
+        $stmt->bindParam( ':user_id', $_SESSION[ 'user' ]->id, PDO::PARAM_INT );
+        $stmt->bindParam( ':customers_id', $customers_id, PDO::PARAM_INT );
+        $stmt->execute();
+
+        if ( $stmt->rowCount() > 0 ) {
+            $this->ordersDetails = $stmt->fetch();
         }
     }
 }

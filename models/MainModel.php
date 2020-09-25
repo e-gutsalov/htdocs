@@ -45,7 +45,7 @@ class MainModel
      * @return mixed
      */
 
-    public static function getCategoriesList(): array
+    public static function getCategoriesList() : array
     {
         // Соединение с БД
         $db = Db::getConnection();
@@ -68,7 +68,7 @@ class MainModel
      * @param int $count лимит товаров на странице
      * @return array|bool
      */
-    public static function getLatestProducts( $count = self::SHOW_BY_PRODUCTS ): array
+    public static function getLatestProducts( $count = self::SHOW_BY_PRODUCTS ) : array
     {
         // Соединение с БД
         $db = Db::getConnection();
@@ -94,7 +94,7 @@ class MainModel
      * Возвращает массив с рекомендованными товарами
      * @return array|bool
      */
-    public static function getRecommendedProducts(): array
+    public static function getRecommendedProducts() : array
     {
         // Соединение с БД
         $db = Db::getConnection();
@@ -119,7 +119,7 @@ class MainModel
      * Возвращает массив с количеством товаров в категории
      * @return array|bool
      */
-    public static function getCountProducts (): array
+    public static function getCountProducts() : array
     {
         // Соединение с БД
         $db = Db::getConnection();
@@ -132,7 +132,7 @@ class MainModel
         $stmt->execute();
         if ( $stmt->rowCount() > 0 ) {
             while ( $row = $stmt->fetch() ) {
-                self::$CountProducts[$row->categoryId] = $row;
+                self::$CountProducts[ $row->categoryId ] = $row;
             }
             return self::$CountProducts;
         }

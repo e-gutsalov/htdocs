@@ -35,6 +35,7 @@ return
         'user/logout' => 'user/logout',
         'user/edit' => 'user/edit',
         'user/history' => 'user/history',
+        'user/history/details/([0-9]+)' => 'user/details/$1',
         'user' => 'user/user',
 //  Корзина
         'cart' => 'cart/cart',

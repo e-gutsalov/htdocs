@@ -11,7 +11,7 @@ class AdminProductModel
 {
     private static array $param;
     private static array $productsList = [];
-    private static int $id = 0;
+    private static int $code = 0;
     private static string $page;
 
     public static function getParam()
@@ -20,7 +20,7 @@ class AdminProductModel
             [
                 'filename' => [ 'head', 'admin.tpl/header_admin', self::$page, 'admin.tpl/footer_admin', 'footer' ],
                 'productsList' => self::$productsList,
-                'id' => self::$id,
+                'code' => self::$code,
                 'title' => 'Админпанель',
                 'name' => 'Каталог сейчас недоступен!',
                 'admin' => 'active',
@@ -43,7 +43,7 @@ class AdminProductModel
 //        $sql = 'SELECT product.id, product.name, product.code, product.new, product.description, product.price, images.image1, images.image2, images.image3, images.image4, images.image5
 //                FROM handicrafts.product
 //                JOIN handicrafts.images ON images.code = product.code';
-        $sql = 'SELECT id, name, price, code FROM product ORDER BY id ASC';
+        $sql = 'SELECT product.id, product.name, product.price, product.code FROM product ORDER BY product.code ASC';
         $stmt = $db->prepare( $sql );
         $stmt->execute();
 
@@ -56,12 +56,12 @@ class AdminProductModel
 
     /**
      * Удаляет товар с указанным id
-     * @param integer $id <p>id товара</p>
+     * @param integer $code <p>code товара</p>
      * @return void <p>Результат выполнения метода</p>
      */
-    public static function deleteProductById( int $id ) : void
+    public static function deleteProductById( int $code ) : void
     {
-        self::$id = $id;
+        self::$code = $code;
         self::$page = 'admin.tpl/delete';
 
         // Обработка формы
@@ -73,11 +73,11 @@ class AdminProductModel
             $db = Db::getConnection();
 
             // Текст запроса к БД
-            $sql = 'DELETE FROM product WHERE id = :id';
+            $sql = 'DELETE FROM product WHERE product.code = :code';
 
             // Получение и возврат результатов. Используется подготовленный запрос
             $result = $db->prepare( $sql );
-            $result->bindParam( ':id', self::$id, PDO::PARAM_INT );
+            $result->bindParam( ':code', self::$code, PDO::PARAM_INT );
             $result->execute();
 
             // Перенаправляем пользователя на страницу управлениями товарами
