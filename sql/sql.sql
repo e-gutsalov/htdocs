@@ -1,1 +1,0 @@
-SELECT id, name FROM category WHERE status = :status ORDER BY category ASC;
